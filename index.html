@@ -157,8 +157,8 @@
 
         .paste-area {
             border: 2px dashed var(--border);
-            padding: 15px;
-            border-radius: 12px;
+            padding: 18px 15px;
+            border-radius: 14px;
             text-align: center;
             color: var(--text-secondary);
             font-size: 0.9rem;
@@ -166,11 +166,49 @@
             cursor: pointer;
             margin-top: 8px;
             outline: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
         }
         .paste-area:hover, .paste-area:focus {
             border-color: var(--primary);
             background: var(--hover-bg);
             color: var(--text);
+        }
+        .paste-area-icon {
+            font-size: 1.8rem;
+            line-height: 1;
+        }
+        .paste-area-text {
+            line-height: 1.6;
+        }
+        .paste-area-hint {
+            display: block;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            opacity: 0.8;
+            margin-top: 2px;
+        }
+        .paste-btn {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-top: 4px;
+            transition: var(--transition);
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+        }
+        .paste-btn:hover {
+            transform: scale(1.05);
+        }
+        .paste-btn:active {
+            transform: scale(0.97);
         }
 
         .preview-thumbnails {
@@ -607,7 +645,14 @@
                 <div class="file-upload-wrapper">
                     <input type="file" id="files" multiple accept="image/*,video/*" onchange="handleFileSelect(this, 'main')">
                 </div>
-                <div class="paste-area" id="mainPasteArea">ابتدا اینجا کلیک کنید، سپس عکس کپی شده را پیست (Ctrl+V) کنید</div>
+                <div class="paste-area" id="mainPasteArea">
+                    <div class="paste-area-icon">📋</div>
+                    <div class="paste-area-text">
+                        برای پیست عکس کپی‌شده (مثلاً از گالری یا گوگل)، روی دکمه زیر بزنید
+                        <span class="paste-area-hint">در دسکتاپ می‌توانید همینجا کلیک کرده و Ctrl+V هم بزنید</span>
+                    </div>
+                    <button type="button" class="paste-btn" onclick="pasteImageFromClipboard('main', event)">📥 پیست عکس از کلیپ‌بورد</button>
+                </div>
                 <div class="preview-thumbnails" id="mainPreview"></div>
             </div>
             
@@ -660,7 +705,14 @@
             <div class="form-group">
                 <label>مدیریت رسانه‌ها (افزودن فیلم یا عکس جدید)</label>
                 <input type="file" id="editFiles" multiple accept="image/*,video/*" onchange="handleFileSelect(this, 'edit')">
-                <div class="paste-area" id="editPasteArea">ابتدا اینجا کلیک کنید، سپس عکس کپی شده را پیست (Ctrl+V) کنید</div>
+                <div class="paste-area" id="editPasteArea">
+                    <div class="paste-area-icon">📋</div>
+                    <div class="paste-area-text">
+                        برای پیست عکس کپی‌شده، روی دکمه زیر بزنید
+                        <span class="paste-area-hint">در دسکتاپ می‌توانید همینجا کلیک کرده و Ctrl+V هم بزنید</span>
+                    </div>
+                    <button type="button" class="paste-btn" onclick="pasteImageFromClipboard('edit', event)">📥 پیست عکس از کلیپ‌بورد</button>
+                </div>
                 <div class="preview-thumbnails" id="editPreview"></div>
             </div>
             <div class="modal-actions">
@@ -868,6 +920,45 @@
             }
             input.value = '';
             renderThumbnails(target);
+        }
+
+        // پیست مستقیم عکس از کلیپ‌بورد با دکمه (مخصوص موبایل، چون Ctrl+V روی گوشی معنی ندارد)
+        async function pasteImageFromClipboard(target, event) {
+            if (event) event.stopPropagation();
+
+            if (!navigator.clipboard || !navigator.clipboard.read) {
+                alert('مرورگر شما از پیست مستقیم تصویر پشتیبانی نمی‌کند. لطفاً از دکمه "Choose Files" برای انتخاب عکس استفاده کنید.');
+                return;
+            }
+
+            try {
+                const clipboardItems = await navigator.clipboard.read();
+                let found = false;
+
+                for (const item of clipboardItems) {
+                    for (const type of item.types) {
+                        if (type.startsWith('image/')) {
+                            const blob = await item.getType(type);
+                            const mediaObj = { type: blob.type, blob: blob };
+                            if (target === 'main') {
+                                tempMainMedia.push(mediaObj);
+                            } else {
+                                tempEditMedia.push(mediaObj);
+                            }
+                            found = true;
+                        }
+                    }
+                }
+
+                if (found) {
+                    renderThumbnails(target);
+                } else {
+                    alert('هیچ عکسی در کلیپ‌بورد پیدا نشد. ابتدا یک عکس را کپی کنید (مثلاً نگه‌داشتن انگشت روی عکس و زدن «Copy image»)، سپس دوباره این دکمه را بزنید.');
+                }
+            } catch (e) {
+                console.error('خطا در خواندن کلیپ‌بورد:', e);
+                alert('اجازهٔ دسترسی به کلیپ‌بورد داده نشد یا چیزی در کلیپ‌بورد نبود. لطفاً دوباره عکس را کپی کرده و امتحان کنید.');
+            }
         }
 
         function setupPasteSupport(areaId, target) {
