@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دفترچه زبان حرفه‌ای</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --text: #f8fafc;
+            --text-secondary: #94a3b8;
+            --primary: #818cf8;
+            --primary-light: #a5b4fc;
+            --border: #334155;
+            --shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            --gradient: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
+            --input-bg: #0f172a;
+            --hover-bg: #334155;
+            --radius: 16px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="light"] {
+            --bg: #f1f5f9;
+            --card: #ffffff;
+            --text: #1e293b;
+            --text-secondary: #64748b;
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --border: #e2e8f0;
+            --shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            --input-bg: #f8fafc;
+            --hover-bg: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            transition: var(--transition);
+            min-height: 100vh;
+        }
+
+        header {
+            background: var(--gradient);
+            color: white;
+            padding: 25px 30px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .topbar h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .topbar h1 span {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .theme-btn {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        .theme-btn:hover {
+            background: rgba(255,255,255,0.25);
+            transform: scale(1.05);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 25px 20px;
+        }
+
+        .form {
+            background: var(--card);
+            padding: 25px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            border: 1px solid var(--border);
+        }
+
+        .form h2 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: var(--primary-light);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 2px solid var(--border);
+            background: var(--input-bg);
+            color: var(--text);
+            font-family: inherit;
+            font-size: 1rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+        }
+
+        textarea {
+            min-height: 90px;
+            line-height: 1.6;
+            resize: vertical;
+        }
+
+        .paste-area {
+            border: 2px dashed var(--border);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            background: var(--input-bg);
+            cursor: pointer;
+            margin-top: 8px;
+            outline: none;
+        }
+        .paste-area:hover, .paste-area:focus {
+            border-color: var(--primary);
+            background: var(--hover-bg);
+            color: var(--text);
+        }
+
+        .preview-thumbnails {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .thumb-container {
+            position: relative;
+            width: 70px;
+            height: 70px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+        .thumb-container img, .thumb-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .thumb-remove {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            background: rgba(248, 113, 113, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+        }
+
+        .stars-rating {
+            display: flex;
+            gap: 5px;
+            direction: ltr;
+            justify-content: flex-end;
+            margin-top: 5px;
+        }
+        .stars-rating span {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--border);
+            transition: var(--transition);
+        }
+        .stars-rating span.active {
+            color: #fbbf24;
+        }
+
+        .controls-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .search-wrapper {
+            position: relative;
+            flex: 1;
+        }
+        .search-wrapper input {
+            padding: 14px 20px;
+            padding-right: 50px;
+            border-radius: 30px;
+            background: var(--card);
+            border: 2px solid var(--border);
+        }
+        .search-wrapper::before {
+            content: "🔍";
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            opacity: 0.6;
+        }
+
+        .sort-wrapper {
+            min-width: 180px;
+        }
+        .sort-wrapper select {
+            border-radius: 30px;
+            padding: 14px 20px;
+            background: var(--card);
+            border: 2px solid var(--border);
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            transition: var(--transition);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+        }
+
+        .media-container {
+            width: 100%;
+            background: #000;
+            border-bottom: 2px solid var(--border);
+        }
+        .card img, .card video {
+            width: 100%;
+            max-height: 220px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .card-body {
+            padding: 20px;
+            position: relative;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        .card-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--gradient);
+            color: white;
+            border-radius: 30px;
+            padding: 4px 14px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .card-stars {
+            display: flex;
+            gap: 2px;
+            direction: ltr;
+        }
+        .card-stars span {
+            font-size: 1.2rem;
+            color: var(--border);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .card-stars span.active {
+            color: #fbbf24;
+        }
+
+        .word-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 6px 0;
+            width: 100%;
+        }
+        .word-row[dir="ltr"] { justify-content: flex-start; text-align: left; }
+        .word-row[dir="rtl"] { justify-content: flex-end; text-align: right; }
+
+        .word-display {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--primary-light);
+            word-break: break-word;
+        }
+
+        .audio-btn {
+            background: var(--hover-bg);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+        .audio-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .meaning-display {
+            font-size: 1.1rem;
+            margin: 6px 0 16px 0;
+            color: var(--text);
+            word-break: break-word;
+            width: 100%;
+        }
+        .meaning-display[dir="ltr"] { text-align: left; }
+        .meaning-display[dir="rtl"] { text-align: right; }
+
+        /* بازنویسی کامل بخش هوشمند باکس مثال */
+        .example-display {
+            margin-top: auto;
+            padding: 12px 14px;
+            background: var(--input-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            border-right: 4px solid var(--primary); /* کادر پیش‌فرض سمت راست */
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        /* استایل اختصاصی هر خط برای ممانعت از قرارگیری در وسط */
+        .example-line {
+            display: block;
+            width: 100%;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            word-break: break-word;
+            white-space: pre-wrap;
+        }
+        .example-line[dir="ltr"] {
+            text-align: left !important;
+        }
+        .example-line[dir="rtl"] {
+            text-align: right !important;
+        }
+
+        .menu-container {
+            position: relative;
+        }
+        .menu-btn {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            color: white;
+            border: 1px solid var(--border);
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        .menu-btn:hover {
+            background: var(--primary);
+        }
+
+        .menu-content {
+            display: none;
+            position: absolute;
+            top: 40px;
+            left: 0;
+            background: var(--card);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            min-width: 120px;
+            overflow: hidden;
+            z-index: 20;
+            border: 1px solid var(--border);
+        }
+        .menu-content.show {
+            display: block;
+        }
+        .menu-content button {
+            display: block;
+            width: 100%;
+            padding: 10px 16px;
+            background: none;
+            color: var(--text);
+            border: none;
+            text-align: right;
+            font-size: 0.85rem;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .menu-content button:hover {
+            background: var(--hover-bg);
+        }
+        .menu-content .edit-btn { color: var(--primary-light); }
+        .menu-content .delete-btn { color: #f87171; }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+        .modal.show { display: flex; }
+        .modal-content {
+            background: var(--card);
+            padding: 25px;
+            border-radius: var(--radius);
+            max-width: 500px;
+            width: 92%;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+            border: 1px solid var(--border);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+        .modal-actions button {
+            padding: 12px 24px;
+            border-radius: 30px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .cancel-btn { background: var(--hover-bg); color: var(--text); }
+        .save-edit-btn { background: var(--gradient); color: white; }
+
+        .empty-msg {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+            grid-column: 1 / -1;
+        }
+        .empty-msg span {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .topbar { flex-direction: column; gap: 15px; }
+            .controls-row { flex-direction: column; }
+            .sort-wrapper { min-width: 100%; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="topbar">
+            <h1>📘 دفترچه زبان <span>حرفه‌ای</span></h1>
+            <button class="theme-btn" onclick="toggleTheme()">☀️ تغییر به حالت روشن</button>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div class="form" id="mainForm">
+            <h2>➕ افزودن واژه جدید</h2>
+            
+            <div class="form-group">
+                <label>لغت</label>
+                <input type="text" id="word" placeholder="مثال: Book">
+            </div>
+            
+            <div class="form-group">
+                <label>معنی</label>
+                <input type="text" id="meaning" placeholder="مثال: کتاب">
+            </div>
+            
+            <div class="form-group">
+                <label>تعیین سطح سختی / لول</label>
+                <div class="stars-rating" id="formStars">
+                    <span data-value="5">★</span>
+                    <span data-value="4">★</span>
+                    <span data-value="3">★</span>
+                    <span data-value="2">★</span>
+                    <span data-value="1">★</span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>مثال (برای خط بعد می توانید Enter بزنید)</label>
+                <textarea id="example" placeholder="مثال خود را وارد کنید..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>پیوست فایل یا کپی/پیست عکس گوگل</label>
+                <div class="file-upload-wrapper">
+                    <input type="file" id="files" multiple accept="image/*,video/*" onchange="handleFileSelect(this, 'main')">
+                </div>
+                <div class="paste-area" id="mainPasteArea">ابتدا اینجا کلیک کنید، سپس عکس کپی شده را پیست (Ctrl+V) کنید</div>
+                <div class="preview-thumbnails" id="mainPreview"></div>
+            </div>
+            
+            <button class="btn-primary" onclick="addItem()">✨ ذخیره واژه</button>
+        </div>
+
+        <div class="controls-row">
+            <div class="search-wrapper">
+                <input type="text" id="search" placeholder="جستجو در لغات و معانی..." oninput="render()">
+            </div>
+            <div class="sort-wrapper">
+                <select id="sortBy" onchange="render()">
+                    <option value="newest">جدیدترین‌ها</option>
+                    <option value="oldest">قدیمی‌ترین‌ها</option>
+                    <option value="level-desc">سطح: بیشترین ستاره</option>
+                    <option value="level-asc">سطح: کمترین ستاره</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="list" class="grid"></div>
+
+    </div>
+
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <h3>✏️ ویرایش واژه</h3>
+            <div class="form-group">
+                <label>لغت</label>
+                <input type="text" id="editWord">
+            </div>
+            <div class="form-group">
+                <label>معنی</label>
+                <input type="text" id="editMeaning">
+            </div>
+            <div class="form-group">
+                <label>سطح سختی / لول</label>
+                <div class="stars-rating" id="editStars">
+                    <span data-value="5">★</span>
+                    <span data-value="4">★</span>
+                    <span data-value="3">★</span>
+                    <span data-value="2">★</span>
+                    <span data-value="1">★</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>مثال</label>
+                <textarea id="editExample"></textarea>
+            </div>
+            <div class="form-group">
+                <label>مدیریت رسانه‌ها (افزودن فیلم یا عکس جدید)</label>
+                <input type="file" id="editFiles" multiple accept="image/*,video/*" onchange="handleFileSelect(this, 'edit')">
+                <div class="paste-area" id="editPasteArea">ابتدا اینجا کلیک کنید، سپس عکس کپی شده را پیست (Ctrl+V) کنید</div>
+                <div class="preview-thumbnails" id="editPreview"></div>
+            </div>
+            <div class="modal-actions">
+                <button class="cancel-btn" onclick="closeEditModal()">انصراف</button>
+                <button class="save-edit-btn" onclick="saveEdit()">💾 ذخیره تغییرات</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let items = [];
+        let editIndex = null;
+        
+        let currentFormRating = 0;
+        let currentEditRating = 0;
+        
+        let tempMainMedia = [];
+        let tempEditMedia = [];
+
+        // ===================== لایه پایگاه‌داده (IndexedDB) =====================
+        // به جای LocalStorage از IndexedDB استفاده می‌شود تا حجم زیاد عکس و فیلم
+        // (چند صد مگابایت یا چند گیگابایت) بدون کرش و بدون محدودیت فضا ذخیره شود.
+        const DB_NAME = 'languageNotebookDB';
+        const DB_VERSION = 1;
+        const STORE_NAME = 'items';
+        let db = null;
+
+        function openDatabase() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, DB_VERSION);
+                request.onupgradeneeded = (e) => {
+                    const database = e.target.result;
+                    if (!database.objectStoreNames.contains(STORE_NAME)) {
+                        database.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
+                    }
+                };
+                request.onsuccess = (e) => { db = e.target.result; resolve(db); };
+                request.onerror = (e) => reject(e.target.error);
+            });
+        }
+
+        function dbGetAll() {
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction(STORE_NAME, 'readonly');
+                const store = tx.objectStore(STORE_NAME);
+                const req = store.getAll();
+                req.onsuccess = () => resolve(req.result);
+                req.onerror = () => reject(req.error);
+            });
+        }
+
+        function dbAdd(item) {
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction(STORE_NAME, 'readwrite');
+                const store = tx.objectStore(STORE_NAME);
+                const req = store.add(item);
+                req.onsuccess = () => resolve(req.result); // شناسه (id) جدید را برمی‌گرداند
+                req.onerror = () => reject(req.error);
+            });
+        }
+
+        function dbPut(item) {
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction(STORE_NAME, 'readwrite');
+                const store = tx.objectStore(STORE_NAME);
+                const req = store.put(item);
+                req.onsuccess = () => resolve(req.result);
+                req.onerror = () => reject(req.error);
+            });
+        }
+
+        function dbDelete(id) {
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction(STORE_NAME, 'readwrite');
+                const store = tx.objectStore(STORE_NAME);
+                const req = store.delete(id);
+                req.onsuccess = () => resolve();
+                req.onerror = () => reject(req.error);
+            });
+        }
+
+        // تبدیل یک رشته dataURL قدیمی (از LocalStorage) به Blob واقعی برای انتقال داده‌ها
+        async function dataURLtoBlob(dataurl) {
+            const res = await fetch(dataurl);
+            return await res.blob();
+        }
+
+        // انتقال یک‌بارهٔ داده‌های قبلی از LocalStorage به IndexedDB (در صورت وجود)
+        async function migrateFromLocalStorage() {
+            const saved = localStorage.getItem('languageNotebook');
+            if (!saved) return;
+            try {
+                const oldItems = JSON.parse(saved);
+                for (const oldItem of oldItems) {
+                    const media = [];
+                    if (oldItem.media && oldItem.media.length) {
+                        for (const m of oldItem.media) {
+                            try {
+                                const blob = await dataURLtoBlob(m.data);
+                                media.push({ type: m.type, blob: blob });
+                            } catch (mediaErr) {
+                                console.error('خطا در انتقال یک فایل رسانه‌ای:', mediaErr);
+                            }
+                        }
+                    }
+                    await dbAdd({
+                        word: oldItem.word,
+                        meaning: oldItem.meaning,
+                        example: oldItem.example || '',
+                        level: oldItem.level || 0,
+                        media: media
+                    });
+                }
+                // پس از انتقال موفق، داده‌های قدیمی حذف می‌شوند تا انتقال دوباره تکرار نشود
+                localStorage.removeItem('languageNotebook');
+            } catch (e) {
+                console.error('خطا در انتقال داده‌های قبلی از LocalStorage:', e);
+            }
+        }
+        // ===================== پایان لایه پایگاه‌داده =====================
+
+        // الگوریتم پیشرفته تشخیص جهت متن بر اساس کاراکترهای معتبر زبان انگلیسی و فارسی
+        function getDirection(text) {
+            if (!text || text.trim() === '') return 'ltr';
+            const cleanText = text.trim().replace(/[\s\d\.\,\?\!\-\_\(\)\[\]\{\}\:\;\"\'\’\‘\“\”\•\-\+\=\/\*]/g, ''); 
+            if (cleanText.length === 0) return 'ltr';
+            const firstCharCode = cleanText.charCodeAt(0);
+            return (firstCharCode >= 0x0600 && firstCharCode <= 0x06FF) || (firstCharCode >= 0xFB50 && firstCharCode <= 0xFDFF) ? 'rtl' : 'ltr';
+        }
+
+        function speakWord(text, event) {
+            if(event) event.stopPropagation();
+            if (!text) return;
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            window.speechSynthesis.cancel();
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function initStars(containerId, callback) {
+            const stars = document.querySelectorAll(`#${containerId} span`);
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    const val = parseInt(star.getAttribute('data-value'));
+                    callback(val);
+                    updateStarsDisplay(containerId, val);
+                });
+            });
+        }
+
+        function updateStarsDisplay(containerId, val) {
+            const stars = document.querySelectorAll(`#${containerId} span`);
+            stars.forEach(star => {
+                const starVal = parseInt(star.getAttribute('data-value'));
+                if (starVal <= val) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        async function load() {
+            try {
+                await openDatabase();
+                await migrateFromLocalStorage();
+                const all = await dbGetAll();
+                all.forEach(item => {
+                    if (item.level === undefined) item.level = 0;
+                    if (!item.media) item.media = [];
+                });
+                // جدیدترین واژه‌ها ابتدا نمایش داده می‌شوند (مشابه رفتار قبلی unshift)
+                items = all.reverse();
+            } catch (e) {
+                console.error('خطا در بازکردن پایگاه‌داده:', e);
+                alert('خطا در دسترسی به پایگاه‌داده مرورگر. لطفاً از یک مرورگر استاندارد (نه حالت Private/Incognito محدودشده) استفاده کنید.');
+                items = [];
+            }
+            render();
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-theme');
+            const btn = document.querySelector('.theme-btn');
+            if (current === 'light') {
+                html.removeAttribute('data-theme');
+                btn.textContent = '☀️ تغییر به حالت روشن';
+            } else {
+                html.setAttribute('data-theme', 'light');
+                btn.textContent = '🌙 تغییر به حالت تاریک';
+            }
+        }
+
+        // به جای تبدیل فایل به dataURL (که حجم را ۳۳٪ بیشتر و کندتر می‌کند)،
+        // خود فایل به صورت Blob نگه داشته می‌شود و مستقیماً در IndexedDB ذخیره می‌شود.
+        async function handleFileSelect(input, target) {
+            for (const file of input.files) {
+                const mediaObj = { type: file.type, blob: file };
+                if (target === 'main') {
+                    tempMainMedia.push(mediaObj);
+                } else {
+                    tempEditMedia.push(mediaObj);
+                }
+            }
+            input.value = '';
+            renderThumbnails(target);
+        }
+
+        function setupPasteSupport(areaId, target) {
+            const area = document.getElementById(areaId);
+            area.setAttribute('tabindex', '0');
+
+            area.addEventListener('paste', async (e) => {
+                const clipboardItems = (e.clipboardData || window.clipboardData).items;
+                for (const item of clipboardItems) {
+                    if (item.type.indexOf('image') !== -1) {
+                        const file = item.getAsFile();
+                        const mediaObj = { type: item.type, blob: file };
+                        
+                        if (target === 'main') {
+                            tempMainMedia.push(mediaObj);
+                        } else {
+                            tempEditMedia.push(mediaObj);
+                        }
+                        renderThumbnails(target);
+                        e.preventDefault();
+                    }
+                }
+            });
+        }
+
+        // مدیریت Object URL های موقت برای جلوگیری از نشت حافظه (Memory Leak)
+        let mainThumbURLs = [];
+        let editThumbURLs = [];
+        let listObjectURLs = [];
+
+        function revokeURLs(arr) {
+            arr.forEach(u => URL.revokeObjectURL(u));
+            arr.length = 0;
+        }
+
+        function renderThumbnails(target) {
+            const container = document.getElementById(target === 'main' ? 'mainPreview' : 'editPreview');
+            const list = target === 'main' ? tempMainMedia : tempEditMedia;
+            const urlStore = target === 'main' ? mainThumbURLs : editThumbURLs;
+
+            revokeURLs(urlStore);
+            container.innerHTML = '';
+            
+            list.forEach((m, idx) => {
+                const url = URL.createObjectURL(m.blob);
+                urlStore.push(url);
+
+                const div = document.createElement('div');
+                div.className = 'thumb-container';
+                if (m.type.startsWith('image/')) {
+                    div.innerHTML = `<img src="${url}"><button class="thumb-remove" onclick="removeThumb('${target}', ${idx}, event)">✕</button>`;
+                } else {
+                    div.innerHTML = `<video src="${url}"></video><button class="thumb-remove" onclick="removeThumb('${target}', ${idx}, event)">✕</button>`;
+                }
+                container.appendChild(div);
+            });
+        }
+
+        function removeThumb(target, idx, event) {
+            if(event) event.stopPropagation();
+            if (target === 'main') {
+                tempMainMedia.splice(idx, 1);
+            } else {
+                tempEditMedia.splice(idx, 1);
+            }
+            renderThumbnails(target);
+        }
+
+        async function addItem() {
+            const word = document.getElementById('word').value.trim();
+            const meaning = document.getElementById('meaning').value.trim();
+            if (!word || !meaning) {
+                alert('لطفاً لغت و معنی را وارد کنید');
+                return;
+            }
+
+            const example = document.getElementById('example').value;
+            const mediaToSave = tempMainMedia.map(m => ({ type: m.type, blob: m.blob }));
+
+            const newItem = { 
+                word: word, 
+                meaning: meaning, 
+                example: example, 
+                media: mediaToSave,
+                level: currentFormRating 
+            };
+
+            try {
+                const newId = await dbAdd(newItem);
+                newItem.id = newId;
+                items.unshift(newItem);
+            } catch (e) {
+                console.error('خطا در ذخیره واژه:', e);
+                alert('ذخیره واژه با خطا مواجه شد. لطفاً دوباره تلاش کنید.');
+                return;
+            }
+
+            document.getElementById('word').value = '';
+            document.getElementById('meaning').value = '';
+            document.getElementById('example').value = '';
+            tempMainMedia = [];
+            currentFormRating = 0;
+            updateStarsDisplay('formStars', 0);
+            renderThumbnails('main');
+            render();
+        }
+
+        async function deleteItem(index) {
+            if (confirm('آیا از حذف این واژه مطمئن هستید؟')) {
+                const item = items[index];
+                try {
+                    await dbDelete(item.id);
+                    items.splice(index, 1);
+                    render();
+                } catch (e) {
+                    console.error('خطا در حذف واژه:', e);
+                    alert('حذف واژه با خطا مواجه شد.');
+                }
+            }
+        }
+
+        function openEditModal(index) {
+            editIndex = index;
+            const item = items[index];
+            document.getElementById('editWord').value = item.word;
+            document.getElementById('editMeaning').value = item.meaning;
+            document.getElementById('editExample').value = item.example || '';
+            
+            currentEditRating = item.level || 0;
+            updateStarsDisplay('editStars', currentEditRating);
+            
+            tempEditMedia = item.media ? item.media.map(m => ({ type: m.type, blob: m.blob })) : [];
+            renderThumbnails('edit');
+            
+            document.getElementById('editModal').classList.add('show');
+        }
+
+        function closeEditModal() {
+            revokeURLs(editThumbURLs);
+            document.getElementById('editModal').classList.remove('show');
+            editIndex = null;
+        }
+
+        async function saveEdit() {
+            const word = document.getElementById('editWord').value.trim();
+            const meaning = document.getElementById('editMeaning').value.trim();
+            if (!word || !meaning) {
+                alert('لغت و معنی نمی‌توانند خالی باشند');
+                return;
+            }
+            const example = document.getElementById('editExample').value;
+            
+            items[editIndex].word = word;
+            items[editIndex].meaning = meaning;
+            items[editIndex].example = example;
+            items[editIndex].level = currentEditRating;
+            items[editIndex].media = tempEditMedia.map(m => ({ type: m.type, blob: m.blob }));
+            
+            try {
+                await dbPut(items[editIndex]);
+                render();
+                closeEditModal();
+            } catch (e) {
+                console.error('خطا در ذخیره ویرایش:', e);
+                alert('ذخیره تغییرات با خطا مواجه شد.');
+            }
+        }
+
+        function toggleMenu(index, event) {
+            event.stopPropagation();
+            const menu = document.getElementById('menu-' + index);
+            document.querySelectorAll('.menu-content').forEach(m => {
+                if (m.id !== 'menu-' + index) {
+                    m.classList.remove('show');
+                }
+            });
+            menu.classList.toggle('show');
+        }
+
+        document.addEventListener('click', function() {
+            document.querySelectorAll('.menu-content').forEach(m => {
+                m.classList.remove('show');
+            });
+        });
+
+        async function changeCardLevel(realIndex, newLevel) {
+            items[realIndex].level = newLevel;
+            try {
+                await dbPut(items[realIndex]);
+                render();
+            } catch (e) {
+                console.error('خطا در ذخیره امتیاز:', e);
+            }
+        }
+
+        function render() {
+            const search = document.getElementById('search').value.toLowerCase().trim();
+            const sortBy = document.getElementById('sortBy').value;
+            const list = document.getElementById('list');
+
+            // قبل از رندر جدید، Object URL های لیست قبلی آزاد می‌شوند تا حافظه رم اشغال نشود
+            revokeURLs(listObjectURLs);
+            list.innerHTML = '';
+
+            let processedItems = items.map((item, index) => ({ ...item, realIndex: index }));
+
+            processedItems = processedItems.filter(item =>
+                item.word.toLowerCase().includes(search) ||
+                item.meaning.toLowerCase().includes(search)
+            );
+
+            if (sortBy === 'oldest') {
+                processedItems.reverse();
+            } else if (sortBy === 'level-desc') {
+                processedItems.sort((a, b) => (b.level || 0) - (a.level || 0));
+            } else if (sortBy === 'level-asc') {
+                processedItems.sort((a, b) => (a.level || 0) - (b.level || 0));
+            }
+
+            if (processedItems.length === 0) {
+                list.innerHTML = `<div class="empty-msg"><span>📭</span>واژه‌ای یافت نشد</div>`;
+                return;
+            }
+
+            processedItems.forEach((item) => {
+                let mediaHtml = '';
+                if (item.media && item.media.length > 0) {
+                    mediaHtml += `<div class="media-container">`;
+                    item.media.forEach(m => {
+                        const url = URL.createObjectURL(m.blob);
+                        listObjectURLs.push(url);
+                        if (m.type.startsWith('image/')) {
+                            mediaHtml += `<img src="${url}" alt="تصویر">`;
+                        } else if (m.type.startsWith('video/')) {
+                            mediaHtml += `<video controls preload="metadata"><source src="${url}"></video>`;
+                        }
+                    });
+                    mediaHtml += `</div>`;
+                }
+
+                const wordDir = getDirection(item.word);
+                const meaningDir = getDirection(item.meaning);
+
+                // بازنویسی هوشمند و تفکیک خط به خط باکس مثال بر اساس زبان هر خط
+                let exampleHtml = '';
+                if (item.example && item.example.trim() !== '') {
+                    // شکستن متن باکس مثال به خطوط مجزا
+                    const lines = item.example.split('\n');
+                    let linesHtml = '';
+                    
+                    lines.forEach(line => {
+                        if (line.trim() !== '') {
+                            const lineDir = getDirection(line);
+                            linesHtml += `<div class="example-line" dir="${lineDir}">${line}</div>`;
+                        } else {
+                            linesHtml += `<div style="height: 8px;"></div>`; // حفظ خطوط خالی عمودی به شکل اصولی
+                        }
+                    });
+
+                    exampleHtml = `<div class="example-display">${linesHtml}</div>`;
+                }
+
+                let starsHtml = '';
+                for(let i = 5; i >= 1; i--) {
+                    let activeClass = i <= (item.level || 0) ? 'active' : '';
+                    starsHtml += `<span class="${activeClass}" onclick="changeCardLevel(${item.realIndex}, ${i})">★</span>`;
+                }
+
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    ${mediaHtml}
+                    <div class="card-body">
+                        <div class="card-header-actions">
+                            <div class="card-meta">
+                                <div class="badge">#${item.realIndex + 1}</div>
+                                <div class="card-stars">${starsHtml}</div>
+                            </div>
+                            <div class="menu-container">
+                                <button class="menu-btn" onclick="toggleMenu(${item.realIndex}, event)">⋮</button>
+                                <div class="menu-content" id="menu-${item.realIndex}">
+                                    <button class="edit-btn" onclick="openEditModal(${item.realIndex})">✏️ ویرایش</button>
+                                    <button class="delete-btn" onclick="deleteItem(${item.realIndex})">🗑 حذف</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="word-row" dir="${wordDir}">
+                            ${wordDir === 'ltr' ? `
+                                <div class="word-display">${item.word}</div>
+                                <button class="audio-btn" onclick="speakWord('${item.word.replace(/'/g, "\\'")}', event)" title="تلفظ صوتی">🔊</button>
+                            ` : `
+                                <button class="audio-btn" onclick="speakWord('${item.word.replace(/'/g, "\\'")}', event)" title="تلفظ صوتی">🔊</button>
+                                <div class="word-display">${item.word}</div>
+                            `}
+                        </div>
+                        
+                        <div class="meaning-display" dir="${meaningDir}">
+                            ${item.meaning}
+                        </div>
+                        
+                        ${exampleHtml}
+                    </div>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        initStars('formStars', (v) => currentFormRating = v);
+        initStars('editStars', (v) => currentEditRating = v);
+        
+        setupPasteSupport('mainPasteArea', 'main');
+        setupPasteSupport('editPasteArea', 'edit');
+
+        load();
+    </script>
+
+</body>
+</html>
