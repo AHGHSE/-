@@ -3,55 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دفترچه زبان حرفه‌ای</title>
+    <title>دفترچه زبان حرفه‌ای - با Topic</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700;800;900&display=swap');
 
         :root {
-    --bg: #0c1220;
-    --bg-secondary: #111b2e;
-    --card: #152238;
-    --card-hover: #1d2f4a;
-    --text: #eef2f8;
-    --text-secondary: #8fa4c8;
-    --text-muted: #5a7298;
-    --primary: #2b5797;        /* ← تغییر از بنفش به آبی */
-    --primary-light: #4a7fbf;  /* ← تغییر از بنفش به آبی روشن‌تر */
-    --primary-dark: #1a3d6b;   /* ← تغییر از بنفش به آبی تیره‌تر */
-    --primary-glow: rgba(74, 144, 217, 0.25); /* ← تغییر از بنفش به آبی */
-    --border: #1e3350;
-    --shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-    --shadow-glow: 0 0 40px rgba(74, 144, 217, 0.08); /* ← تغییر */
-    --gradient: linear-gradient(135deg, #4A90D9, #6BB5FF, #87CEEB); /* ← تغییر */
-    --gradient-soft: linear-gradient(135deg, rgba(74, 144, 217, 0.15), rgba(74, 144, 217, 0.15)); /* ← تغییر */
-    --input-bg: #0c1628;
-    --hover-bg: #1a2d48;
-    --radius: 20px;
-    --radius-sm: 12px;
-    --transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    --font: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
-}
+            --bg: #0c1220;
+            --bg-secondary: #111b2e;
+            --card: #152238;
+            --card-hover: #1d2f4a;
+            --text: #eef2f8;
+            --text-secondary: #8fa4c8;
+            --text-muted: #5a7298;
+            --primary: #4A90D9;
+            --primary-light: #6BB5FF;
+            --primary-dark: #2E6DB4;
+            --primary-glow: rgba(74, 144, 217, 0.25);
+            --border: #1e3350;
+            --shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            --shadow-glow: 0 0 40px rgba(74, 144, 217, 0.08);
+            --gradient: linear-gradient(135deg, #4A90D9, #6BB5FF, #87CEEB);
+            --gradient-soft: linear-gradient(135deg, rgba(74, 144, 217, 0.15), rgba(74, 144, 217, 0.15));
+            --input-bg: #0c1628;
+            --hover-bg: #1a2d48;
+            --radius: 20px;
+            --radius-sm: 12px;
+            --transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --font: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
+            
+            /* رنگ‌های تاپیک‌ها */
+            --topic-colors: #FF6B6B, #4ECDC4, #45B7D1, #96CEB4, #FFEAA7, #DDA0DD, #FF8A5C, #A29BFE, #FD79A8, #00CEC9;
+        }
 
         [data-theme="light"] {
-           --bg: #f0f4ff;
-           --bg-secondary: #e8edf9;
-           --card: #ffffff;
-           --card-hover: #f5f8ff;
-           --text: #1a2332;
-           --text-secondary: #4a5a7a;
-           --text-muted: #7a8aaa;
-           --primary: #4A90D9;        /* ← تغییر */
-           --primary-light: #6BB5FF;  /* ← تغییر */
-           --primary-dark: #2E6DB4;   /* ← تغییر */
-           --primary-glow: rgba(74, 144, 217, 0.15); /* ← تغییر */
-           --border: #d0dcee;
-           --shadow: 0 20px 60px rgba(0, 0, 0, 0.06);
-           --shadow-glow: 0 0 40px rgba(74, 144, 217, 0.06); /* ← تغییر */
-           --gradient: linear-gradient(135deg, #4A90D9, #6BB5FF, #87CEEB); /* ← تغییر */
-           --gradient-soft: linear-gradient(135deg, rgba(74, 144, 217, 0.08), rgba(74, 144, 217, 0.08)); /* ← تغییر */
-           --input-bg: #f0f4ff;
-           --hover-bg: #e0e8f8;
-     }
+            --bg: #f0f4ff;
+            --bg-secondary: #e8edf9;
+            --card: #ffffff;
+            --card-hover: #f5f8ff;
+            --text: #1a2332;
+            --text-secondary: #4a5a7a;
+            --text-muted: #7a8aaa;
+            --primary: #4A90D9;
+            --primary-light: #6BB5FF;
+            --primary-dark: #2E6DB4;
+            --primary-glow: rgba(74, 144, 217, 0.15);
+            --border: #d0dcee;
+            --shadow: 0 20px 60px rgba(0, 0, 0, 0.06);
+            --shadow-glow: 0 0 40px rgba(74, 144, 217, 0.06);
+            --gradient: linear-gradient(135deg, #4A90D9, #6BB5FF, #87CEEB);
+            --gradient-soft: linear-gradient(135deg, rgba(74, 144, 217, 0.08), rgba(74, 144, 217, 0.08));
+            --input-bg: #f0f4ff;
+            --hover-bg: #e0e8f8;
+        }
 
         * {
             box-sizing: border-box;
@@ -66,18 +69,13 @@
             transition: var(--transition);
             min-height: 100vh;
             line-height: 1.6;
-            background-image: 
-                radial-gradient(ellipse at 10% 20%, rgba(108, 140, 255, 0.05) 0%, transparent 60%),
-                radial-gradient(ellipse at 90% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 60%);
         }
 
-        /* ===== Scrollbar ===== */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: var(--bg-secondary); }
         ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--primary-light); }
 
-        /* ===== Header ===== */
         header {
             background: var(--gradient);
             color: white;
@@ -87,7 +85,7 @@
             z-index: 100;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 4px 30px rgba(108, 140, 255, 0.3);
+            box-shadow: 0 4px 30px rgba(74, 144, 217, 0.3);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
@@ -146,11 +144,59 @@
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
 
-        /* ===== Container ===== */
         .container {
             max-width: 1200px;
             margin: auto;
             padding: 30px 20px;
+        }
+
+        /* ===== Tabs ===== */
+        .tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 30px;
+            background: var(--card);
+            padding: 6px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            overflow-x: auto;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 14px 24px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-family: var(--font);
+            font-weight: 700;
+            font-size: 0.95rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        .tab-btn:hover {
+            background: var(--hover-bg);
+            color: var(--text);
+        }
+        .tab-btn.active {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(74, 144, 217, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* ===== Form ===== */
@@ -233,199 +279,74 @@
             resize: vertical;
         }
 
-        /* ===== Paste Area ===== */
-        .paste-area {
-            border: 2px dashed var(--border);
-            padding: 20px 18px;
-            border-radius: var(--radius-sm);
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            background: var(--input-bg);
-            cursor: pointer;
-            margin-top: 8px;
-            outline: none;
-            transition: var(--transition);
-            position: relative;
-        }
-        .paste-area:hover {
-            border-color: var(--primary);
-            background: var(--hover-bg);
-            color: var(--text);
-            transform: translateY(-2px);
-        }
-        .paste-area:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px var(--primary-glow);
-        }
-        .paste-area-icon {
-            font-size: 2.2rem;
-            line-height: 1;
-            margin-bottom: 4px;
-        }
-        .paste-area-text {
-            line-height: 1.6;
-            font-weight: 500;
-        }
-        .paste-area-hint {
-            display: block;
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            opacity: 0.7;
-            margin-top: 4px;
-        }
-        .paste-btn {
+        .btn-primary {
             background: var(--gradient);
             color: white;
             border: none;
-            padding: 12px 28px;
+            padding: 16px 30px;
             border-radius: 30px;
             cursor: pointer;
-            font-weight: 700;
-            font-size: 0.85rem;
-            margin-top: 10px;
-            transition: var(--transition);
-            box-shadow: 0 4px 20px rgba(108, 140, 255, 0.3);
-            font-family: var(--font);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .paste-btn:hover {
-            transform: scale(1.05) translateY(-2px);
-            box-shadow: 0 8px 30px rgba(108, 140, 255, 0.4);
-        }
-        .paste-btn:active {
-            transform: scale(0.97);
-        }
-
-        /* ===== Thumbnails ===== */
-        .preview-thumbnails {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 12px;
-        }
-        .thumb-container {
-            position: relative;
-            width: 80px;
-            height: 80px;
-            border-radius: var(--radius-sm);
-            overflow: hidden;
-            border: 2px solid var(--border);
-            background: var(--input-bg);
-            transition: var(--transition);
-        }
-        .thumb-container:hover {
-            border-color: var(--primary);
-            transform: scale(1.04);
-        }
-        .thumb-container img, .thumb-container video {
+            font-weight: 800;
+            font-size: 1rem;
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .thumb-remove {
-            position: absolute;
-            top: 4px;
-            left: 4px;
-            background: rgba(239, 68, 68, 0.9);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 22px;
-            height: 22px;
-            font-size: 11px;
-            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(74, 144, 217, 0.35);
+            transition: var(--transition);
+            font-family: var(--font);
+            letter-spacing: 0.3px;
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 5;
-            transition: var(--transition);
+            gap: 10px;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 35px rgba(74, 144, 217, 0.45);
+        }
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .btn-secondary {
+            background: var(--hover-bg);
+            color: var(--text);
+            border: 2px solid var(--border);
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
             font-weight: 700;
-        }
-        .thumb-remove:hover {
-            transform: scale(1.15);
-            background: #ef4444;
-        }
-
-        /* ===== Stars Rating ===== */
-        .stars-rating {
-            display: flex;
-            gap: 6px;
-            direction: ltr;
-            justify-content: flex-end;
-            margin-top: 4px;
-        }
-        .stars-rating span {
-            font-size: 1.8rem;
-            cursor: pointer;
-            color: var(--border);
-            transition: var(--transition);
-            line-height: 1;
-        }
-        .stars-rating span:hover {
-            transform: scale(1.2);
-            color: #fbbf24;
-        }
-        .stars-rating span.active {
-            color: #fbbf24;
-            text-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
-        }
-
-        /* ===== Controls Row ===== */
-        .controls-row {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 30px;
-        }
-        .search-wrapper {
-            position: relative;
-            flex: 1;
-        }
-        .search-wrapper input {
-            padding: 16px 22px;
-            padding-right: 55px;
-            border-radius: 30px;
-            background: var(--card);
-            border: 2px solid var(--border);
-            font-size: 0.95rem;
-            transition: var(--transition);
-        }
-        .search-wrapper input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px var(--primary-glow);
-        }
-        .search-wrapper .search-icon {
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.2rem;
-            opacity: 0.5;
-            pointer-events: none;
-        }
-
-        .sort-wrapper {
-            min-width: 200px;
-        }
-        .sort-wrapper select {
-            border-radius: 30px;
-            padding: 16px 22px;
-            background: var(--card);
-            border: 2px solid var(--border);
-            cursor: pointer;
-            font-weight: 600;
             font-size: 0.9rem;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238fa4c8' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: left 16px center;
-            padding-left: 45px;
+            transition: var(--transition);
+            font-family: var(--font);
         }
-        .sort-wrapper select:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px var(--primary-glow);
+        .btn-secondary:hover {
+            background: var(--border);
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: var(--transition);
+            font-family: var(--font);
+        }
+        .btn-danger:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        /* ===== Topic Colors ===== */
+        .topic-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: white;
         }
 
         /* ===== Grid ===== */
@@ -451,7 +372,7 @@
         .card:hover {
             transform: translateY(-10px);
             border-color: var(--primary);
-            box-shadow: var(--shadow), 0 20px 60px rgba(108, 140, 255, 0.1);
+            box-shadow: var(--shadow), 0 20px 60px rgba(74, 144, 217, 0.1);
         }
 
         .card .media-container {
@@ -536,7 +457,6 @@
             text-shadow: 0 0 15px rgba(251, 191, 36, 0.2);
         }
 
-        /* ===== Word Row ===== */
         .word-row {
             display: flex;
             align-items: center;
@@ -591,7 +511,6 @@
         .meaning-display[dir="ltr"] { text-align: left; }
         .meaning-display[dir="rtl"] { text-align: right; }
 
-        /* ===== Example Display ===== */
         .example-display {
             margin-top: auto;
             padding: 14px 16px;
@@ -625,6 +544,117 @@
         }
         .example-line[dir="rtl"] {
             text-align: right !important;
+        }
+
+        /* ===== Topic Manager ===== */
+        .topic-manager {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .topic-manager input {
+            flex: 1;
+            min-width: 150px;
+        }
+        .topic-color-picker {
+            width: 50px;
+            height: 50px;
+            padding: 0;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            background: none;
+        }
+        .topic-color-picker::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+        .topic-color-picker::-webkit-color-swatch {
+            border: none;
+            border-radius: var(--radius-sm);
+        }
+
+        .topic-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .topic-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px 6px 10px;
+            border-radius: 30px;
+            border: 2px solid var(--border);
+            background: var(--input-bg);
+            transition: var(--transition);
+        }
+        .topic-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        .topic-item .color-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.2);
+            flex-shrink: 0;
+        }
+        .topic-item .topic-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .topic-item .topic-remove {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 0 4px;
+            transition: var(--transition);
+        }
+        .topic-item .topic-remove:hover {
+            color: #ef4444;
+            transform: scale(1.2);
+        }
+
+        /* ===== Topic Selector in Form ===== */
+        .topic-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 6px;
+        }
+        .topic-option {
+            padding: 6px 16px;
+            border-radius: 30px;
+            border: 2px solid var(--border);
+            background: var(--input-bg);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: var(--transition);
+            color: var(--text-secondary);
+            font-family: var(--font);
+        }
+        .topic-option:hover {
+            transform: scale(1.04);
+            border-color: var(--primary);
+        }
+        .topic-option.active {
+            border-color: var(--primary);
+            background: var(--primary-glow);
+            color: var(--text);
+        }
+        .topic-option .color-dot-small {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-left: 6px;
+            vertical-align: middle;
         }
 
         /* ===== Menu ===== */
@@ -768,13 +798,12 @@
         .save-edit-btn { 
             background: var(--gradient); 
             color: white;
-            box-shadow: 0 4px 20px rgba(108, 140, 255, 0.3);
+            box-shadow: 0 4px 20px rgba(74, 144, 217, 0.3);
         }
         .save-edit-btn:hover {
-            box-shadow: 0 8px 30px rgba(108, 140, 255, 0.4);
+            box-shadow: 0 8px 30px rgba(74, 144, 217, 0.4);
         }
 
-        /* ===== Empty Message ===== */
         .empty-msg {
             text-align: center;
             padding: 70px 20px;
@@ -792,32 +821,59 @@
             opacity: 0.6;
         }
 
-        /* ===== Button Primary ===== */
-        .btn-primary {
-            background: var(--gradient);
-            color: white;
-            border: none;
-            padding: 16px 30px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: 800;
-            font-size: 1rem;
-            width: 100%;
-            box-shadow: 0 4px 20px rgba(108, 140, 255, 0.35);
-            transition: var(--transition);
-            font-family: var(--font);
-            letter-spacing: 0.3px;
+        /* ===== Controls Row ===== */
+        .controls-row {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            gap: 16px;
+            margin-bottom: 30px;
         }
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 35px rgba(108, 140, 255, 0.45);
+        .search-wrapper {
+            position: relative;
+            flex: 1;
         }
-        .btn-primary:active {
-            transform: scale(0.98);
+        .search-wrapper input {
+            padding: 16px 22px;
+            padding-right: 55px;
+            border-radius: 30px;
+            background: var(--card);
+            border: 2px solid var(--border);
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+        .search-wrapper input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--primary-glow);
+        }
+        .search-wrapper .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .sort-wrapper {
+            min-width: 200px;
+        }
+        .sort-wrapper select {
+            border-radius: 30px;
+            padding: 16px 22px;
+            background: var(--card);
+            border: 2px solid var(--border);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238fa4c8' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: left 16px center;
+            padding-left: 45px;
+        }
+        .sort-wrapper select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--primary-glow);
         }
 
         /* ===== Responsive ===== */
@@ -834,6 +890,8 @@
             .form { padding: 20px 18px; }
             .card-body { padding: 16px 18px 18px; }
             .modal-content { padding: 22px 18px; }
+            .tabs { flex-wrap: nowrap; overflow-x: auto; }
+            .tab-btn { padding: 10px 16px; font-size: 0.8rem; flex: none; }
         }
 
         @media (max-width: 400px) {
@@ -858,73 +916,130 @@
 
     <div class="container">
 
-        <div class="form" id="mainForm">
-            <h2>➕ افزودن واژه جدید</h2>
-            
-            <div class="form-group">
-                <label>لغت</label>
-                <input type="text" id="word" placeholder="مثال: Book">
-            </div>
-            
-            <div class="form-group">
-                <label>معنی</label>
-                <input type="text" id="meaning" placeholder="مثال: کتاب">
-            </div>
-            
-            <div class="form-group">
-                <label>تعیین سطح سختی / لول</label>
-                <div class="stars-rating" id="formStars">
-                    <span data-value="5">★</span>
-                    <span data-value="4">★</span>
-                    <span data-value="3">★</span>
-                    <span data-value="2">★</span>
-                    <span data-value="1">★</span>
+        <!-- ===== Tabs ===== -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('vocab')">📝 لغات</button>
+            <button class="tab-btn" onclick="switchTab('topics')">📂 تاپیک‌ها</button>
+        </div>
+
+        <!-- ===== Tab: Vocabulary ===== -->
+        <div class="tab-content active" id="tab-vocab">
+            <div class="form" id="mainForm">
+                <h2>➕ افزودن واژه جدید</h2>
+                
+                <div class="form-group">
+                    <label>لغت</label>
+                    <input type="text" id="word" placeholder="مثال: Book">
                 </div>
-            </div>
-            
-            <div class="form-group">
-                <label>مثال (برای خط بعد می توانید Enter بزنید)</label>
-                <textarea id="example" placeholder="مثال خود را وارد کنید..."></textarea>
-            </div>
-            
-            <div class="form-group">
-                <label>پیوست فایل یا کپی/پیست عکس گوگل</label>
-                <div class="file-upload-wrapper">
-                    <input type="file" id="files" multiple accept="image/*,video/*" onchange="handleFileSelect(this, 'main')">
+                
+                <div class="form-group">
+                    <label>معنی</label>
+                    <input type="text" id="meaning" placeholder="مثال: کتاب">
                 </div>
-                <div class="paste-area" id="mainPasteArea" tabindex="0">
-                    <div class="paste-area-icon">📋</div>
-                    <div class="paste-area-text">
-                        برای پیست عکس کپی‌شده (مثلاً از گالری یا گوگل)، روی دکمه زیر بزنید
-                        <span class="paste-area-hint">در دسکتاپ می‌توانید همینجا کلیک کرده و Ctrl+V هم بزنید</span>
+                
+                <div class="form-group">
+                    <label>تاپیک (اختیاری)</label>
+                    <div class="topic-selector" id="vocabTopicSelector"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label>تعیین سطح سختی / لول</label>
+                    <div class="stars-rating" id="formStars">
+                        <span data-value="5">★</span>
+                        <span data-value="4">★</span>
+                        <span data-value="3">★</span>
+                        <span data-value="2">★</span>
+                        <span data-value="1">★</span>
                     </div>
-                    <button type="button" class="paste-btn" onclick="pasteImageFromClipboard('main', event)">📥 پیست عکس از کلیپ‌بورد</button>
                 </div>
-                <div class="preview-thumbnails" id="mainPreview"></div>
+                
+                <div class="form-group">
+                    <label>مثال (برای خط بعد می توانید Enter بزنید)</label>
+                    <textarea id="example" placeholder="مثال خود را وارد کنید..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>پیوست فایل یا کپی/پیست عکس گوگل</label>
+                    <div class="file-upload-wrapper">
+                        <input type="file" id="files" multiple accept="image/*,video/*" onchange="handleFileSelect(this, 'main')">
+                    </div>
+                    <div class="paste-area" id="mainPasteArea" tabindex="0" style="border:2px dashed var(--border);padding:20px 18px;border-radius:var(--radius-sm);text-align:center;color:var(--text-secondary);background:var(--input-bg);cursor:pointer;margin-top:8px;outline:none;transition:var(--transition);">
+                        <div style="font-size:2.2rem;line-height:1;margin-bottom:4px;">📋</div>
+                        <div style="line-height:1.6;font-weight:500;">
+                            برای پیست عکس کپی‌شده (مثلاً از گالری یا گوگل)، روی دکمه زیر بزنید
+                            <span style="display:block;font-size:0.7rem;color:var(--text-muted);opacity:0.7;margin-top:4px;">در دسکتاپ می‌توانید همینجا کلیک کرده و Ctrl+V هم بزنید</span>
+                        </div>
+                        <button type="button" class="paste-btn" onclick="pasteImageFromClipboard('main', event)" style="background:var(--gradient);color:white;border:none;padding:12px 28px;border-radius:30px;cursor:pointer;font-weight:700;font-size:0.85rem;margin-top:10px;transition:var(--transition);font-family:var(--font);display:inline-flex;align-items:center;gap:8px;">📥 پیست عکس از کلیپ‌بورد</button>
+                    </div>
+                    <div class="preview-thumbnails" id="mainPreview"></div>
+                </div>
+                
+                <button class="btn-primary" onclick="addItem()">✨ ذخیره واژه</button>
             </div>
-            
-            <button class="btn-primary" onclick="addItem()">✨ ذخیره واژه</button>
+
+            <div class="controls-row">
+                <div class="search-wrapper">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="search" placeholder="جستجو در لغات و معانی..." oninput="render()">
+                </div>
+                <div class="sort-wrapper">
+                    <select id="sortBy" onchange="render()">
+                        <option value="newest">جدیدترین‌ها</option>
+                        <option value="oldest">قدیمی‌ترین‌ها</option>
+                        <option value="level-desc">سطح: بیشترین ستاره</option>
+                        <option value="level-asc">سطح: کمترین ستاره</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="list" class="grid"></div>
         </div>
 
-        <div class="controls-row">
-            <div class="search-wrapper">
-                <span class="search-icon">🔍</span>
-                <input type="text" id="search" placeholder="جستجو در لغات و معانی..." oninput="render()">
+        <!-- ===== Tab: Topics ===== -->
+        <div class="tab-content" id="tab-topics">
+            <div class="form">
+                <h2>📂 مدیریت تاپیک‌ها</h2>
+                
+                <div class="topic-manager">
+                    <input type="text" id="newTopicName" placeholder="نام تاپیک جدید...">
+                    <input type="color" id="newTopicColor" class="topic-color-picker" value="#4A90D9">
+                    <button class="btn-primary" onclick="addTopic()" style="width:auto;padding:12px 28px;">➕ افزودن تاپیک</button>
+                </div>
+                
+                <div class="topic-list" id="topicList"></div>
             </div>
-            <div class="sort-wrapper">
-                <select id="sortBy" onchange="render()">
-                    <option value="newest">جدیدترین‌ها</option>
-                    <option value="oldest">قدیمی‌ترین‌ها</option>
-                    <option value="level-desc">سطح: بیشترین ستاره</option>
-                    <option value="level-asc">سطح: کمترین ستاره</option>
-                </select>
+
+            <div class="form" style="margin-top:20px;">
+                <h2>📋 جملات تاپیک</h2>
+                <p style="color:var(--text-secondary);margin-bottom:15px;">یک تاپیک را انتخاب کنید و جملات مرتبط را اضافه کنید</p>
+                
+                <div class="form-group">
+                    <label>انتخاب تاپیک</label>
+                    <select id="topicSentenceSelector" onchange="loadTopicSentences()"></select>
+                </div>
+                
+                <div class="form-group">
+                    <label>جمله جدید</label>
+                    <textarea id="newSentence" placeholder="جمله را وارد کنید..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>ترجمه</label>
+                    <input type="text" id="newSentenceTranslation" placeholder="ترجمه جمله...">
+                </div>
+                
+                <button class="btn-primary" onclick="addSentence()">➕ افزودن جمله</button>
+                
+                <div style="margin-top:20px;">
+                    <h3 style="font-size:1rem;color:var(--primary-light);margin-bottom:12px;">جملات این تاپیک</h3>
+                    <div id="topicSentencesList"></div>
+                </div>
             </div>
         </div>
-
-        <div id="list" class="grid"></div>
 
     </div>
 
+    <!-- ===== Edit Modal ===== -->
     <div class="modal" id="editModal">
         <div class="modal-content">
             <h3>✏️ ویرایش واژه</h3>
@@ -935,6 +1050,10 @@
             <div class="form-group">
                 <label>معنی</label>
                 <input type="text" id="editMeaning">
+            </div>
+            <div class="form-group">
+                <label>تاپیک</label>
+                <div class="topic-selector" id="editTopicSelector"></div>
             </div>
             <div class="form-group">
                 <label>سطح سختی / لول</label>
@@ -953,13 +1072,13 @@
             <div class="form-group">
                 <label>مدیریت رسانه‌ها (افزودن فیلم یا عکس جدید)</label>
                 <input type="file" id="editFiles" multiple accept="image/*,video/*" onchange="handleFileSelect(this, 'edit')">
-                <div class="paste-area" id="editPasteArea" tabindex="0">
-                    <div class="paste-area-icon">📋</div>
-                    <div class="paste-area-text">
+                <div class="paste-area" id="editPasteArea" tabindex="0" style="border:2px dashed var(--border);padding:20px 18px;border-radius:var(--radius-sm);text-align:center;color:var(--text-secondary);background:var(--input-bg);cursor:pointer;margin-top:8px;outline:none;transition:var(--transition);">
+                    <div style="font-size:2.2rem;line-height:1;margin-bottom:4px;">📋</div>
+                    <div style="line-height:1.6;font-weight:500;">
                         برای پیست عکس کپی‌شده، روی دکمه زیر بزنید
-                        <span class="paste-area-hint">در دسکتاپ می‌توانید همینجا کلیک کرده و Ctrl+V هم بزنید</span>
+                        <span style="display:block;font-size:0.7rem;color:var(--text-muted);opacity:0.7;margin-top:4px;">در دسکتاپ می‌توانید همینجا کلیک کرده و Ctrl+V هم بزنید</span>
                     </div>
-                    <button type="button" class="paste-btn" onclick="pasteImageFromClipboard('edit', event)">📥 پیست عکس از کلیپ‌بورد</button>
+                    <button type="button" class="paste-btn" onclick="pasteImageFromClipboard('edit', event)" style="background:var(--gradient);color:white;border:none;padding:12px 28px;border-radius:30px;cursor:pointer;font-weight:700;font-size:0.85rem;margin-top:10px;transition:var(--transition);font-family:var(--font);display:inline-flex;align-items:center;gap:8px;">📥 پیست عکس از کلیپ‌بورد</button>
                 </div>
                 <div class="preview-thumbnails" id="editPreview"></div>
             </div>
@@ -971,19 +1090,26 @@
     </div>
 
     <script>
-        // ===== کد اصلی بدون تغییر =====
+        // ===== داده‌ها =====
         let items = [];
+        let topics = [];
+        let sentences = {}; // { topicId: [ {text, translation} ] }
         let editIndex = null;
         
         let currentFormRating = 0;
         let currentEditRating = 0;
+        let selectedFormTopic = null;
+        let selectedEditTopic = null;
         
         let tempMainMedia = [];
         let tempEditMedia = [];
 
+        // ===== IndexedDB =====
         const DB_NAME = 'languageNotebookDB';
-        const DB_VERSION = 1;
+        const DB_VERSION = 2;
         const STORE_NAME = 'items';
+        const STORE_TOPICS = 'topics';
+        const STORE_SENTENCES = 'sentences';
         let db = null;
 
         function openDatabase() {
@@ -994,12 +1120,115 @@
                     if (!database.objectStoreNames.contains(STORE_NAME)) {
                         database.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
                     }
+                    if (!database.objectStoreNames.contains(STORE_TOPICS)) {
+                        database.createObjectStore(STORE_TOPICS, { keyPath: 'id', autoIncrement: true });
+                    }
+                    if (!database.objectStoreNames.contains(STORE_SENTENCES)) {
+                        database.createObjectStore(STORE_SENTENCES, { keyPath: 'id', autoIncrement: true });
+                    }
                 };
                 request.onsuccess = (e) => { db = e.target.result; resolve(db); };
                 request.onerror = (e) => reject(e.target.error);
             });
         }
 
+        // ===== Topic Functions =====
+        async function loadTopicsFromDB() {
+            try {
+                const tx = db.transaction(STORE_TOPICS, 'readonly');
+                const store = tx.objectStore(STORE_TOPICS);
+                const req = store.getAll();
+                return new Promise((resolve) => {
+                    req.onsuccess = () => resolve(req.result);
+                    req.onerror = () => resolve([]);
+                });
+            } catch { return []; }
+        }
+
+        async function saveTopicToDB(topic) {
+            const tx = db.transaction(STORE_TOPICS, 'readwrite');
+            const store = tx.objectStore(STORE_TOPICS);
+            return new Promise((resolve, reject) => {
+                const req = store.add(topic);
+                req.onsuccess = () => resolve(req.result);
+                req.onerror = () => reject(req.error);
+            });
+        }
+
+        async function deleteTopicFromDB(id) {
+            const tx = db.transaction(STORE_TOPICS, 'readwrite');
+            const store = tx.objectStore(STORE_TOPICS);
+            return new Promise((resolve, reject) => {
+                const req = store.delete(id);
+                req.onsuccess = () => resolve();
+                req.onerror = () => reject(req.error);
+            });
+        }
+
+        // ===== Sentence Functions =====
+        async function loadSentencesFromDB() {
+            try {
+                const tx = db.transaction(STORE_SENTENCES, 'readonly');
+                const store = tx.objectStore(STORE_SENTENCES);
+                const req = store.getAll();
+                return new Promise((resolve) => {
+                    req.onsuccess = () => {
+                        const result = {};
+                        req.result.forEach(s => {
+                            if (!result[s.topicId]) result[s.topicId] = [];
+                            result[s.topicId].push({ id: s.id, text: s.text, translation: s.translation });
+                        });
+                        resolve(result);
+                    };
+                    req.onerror = () => resolve({});
+                });
+            } catch { return {}; }
+        }
+
+        async function saveSentenceToDB(sentence) {
+            const tx = db.transaction(STORE_SENTENCES, 'readwrite');
+            const store = tx.objectStore(STORE_SENTENCES);
+            return new Promise((resolve, reject) => {
+                const req = store.add(sentence);
+                req.onsuccess = () => resolve(req.result);
+                req.onerror = () => reject(req.error);
+            });
+        }
+
+        async function deleteSentenceFromDB(id) {
+            const tx = db.transaction(STORE_SENTENCES, 'readwrite');
+            const store = tx.objectStore(STORE_SENTENCES);
+            return new Promise((resolve, reject) => {
+                const req = store.delete(id);
+                req.onsuccess = () => resolve();
+                req.onerror = () => reject(req.error);
+            });
+        }
+
+        // ===== Load All Data =====
+        async function loadAllData() {
+            try {
+                await openDatabase();
+                const allItems = await dbGetAll();
+                allItems.forEach(item => {
+                    if (item.level === undefined) item.level = 0;
+                    if (!item.media) item.media = [];
+                    if (!item.topicId) item.topicId = null;
+                });
+                items = allItems.reverse();
+
+                topics = await loadTopicsFromDB();
+                sentences = await loadSentencesFromDB();
+            } catch (e) {
+                console.error('خطا در بارگذاری داده:', e);
+                items = [];
+                topics = [];
+                sentences = {};
+            }
+            renderAll();
+        }
+
+        // ===== DB Functions for Items =====
         function dbGetAll() {
             return new Promise((resolve, reject) => {
                 const tx = db.transaction(STORE_NAME, 'readonly');
@@ -1040,42 +1269,7 @@
             });
         }
 
-        async function dataURLtoBlob(dataurl) {
-            const res = await fetch(dataurl);
-            return await res.blob();
-        }
-
-        async function migrateFromLocalStorage() {
-            const saved = localStorage.getItem('languageNotebook');
-            if (!saved) return;
-            try {
-                const oldItems = JSON.parse(saved);
-                for (const oldItem of oldItems) {
-                    const media = [];
-                    if (oldItem.media && oldItem.media.length) {
-                        for (const m of oldItem.media) {
-                            try {
-                                const blob = await dataURLtoBlob(m.data);
-                                media.push({ type: m.type, blob: blob });
-                            } catch (mediaErr) {
-                                console.error('خطا در انتقال یک فایل رسانه‌ای:', mediaErr);
-                            }
-                        }
-                    }
-                    await dbAdd({
-                        word: oldItem.word,
-                        meaning: oldItem.meaning,
-                        example: oldItem.example || '',
-                        level: oldItem.level || 0,
-                        media: media
-                    });
-                }
-                localStorage.removeItem('languageNotebook');
-            } catch (e) {
-                console.error('خطا در انتقال داده‌های قبلی از LocalStorage:', e);
-            }
-        }
-
+        // ===== Helper Functions =====
         function getDirection(text) {
             if (!text || text.trim() === '') return 'ltr';
             const cleanText = text.trim().replace(/[\s\d\.\,\?\!\-\_\(\)\[\]\{\}\:\;\"\'\’\‘\“\”\•\-\+\=\/\*]/g, ''); 
@@ -1093,301 +1287,210 @@
             window.speechSynthesis.speak(utterance);
         }
 
-        function initStars(containerId, callback) {
-            const stars = document.querySelectorAll(`#${containerId} span`);
-            stars.forEach(star => {
-                star.addEventListener('click', () => {
-                    const val = parseInt(star.getAttribute('data-value'));
-                    callback(val);
-                    updateStarsDisplay(containerId, val);
-                });
-            });
+        function speakSentence(text, event) {
+            if(event) event.stopPropagation();
+            if (!text) return;
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            window.speechSynthesis.cancel();
+            window.speechSynthesis.speak(utterance);
         }
 
-        function updateStarsDisplay(containerId, val) {
-            const stars = document.querySelectorAll(`#${containerId} span`);
-            stars.forEach(star => {
-                const starVal = parseInt(star.getAttribute('data-value'));
-                if (starVal <= val) {
-                    star.classList.add('active');
-                } else {
-                    star.classList.remove('active');
-                }
-            });
+        function getTopicColor(topicId) {
+            const topic = topics.find(t => t.id === topicId);
+            return topic ? topic.color : '#4A90D9';
         }
 
-        async function load() {
+        function getTopicName(topicId) {
+            const topic = topics.find(t => t.id === topicId);
+            return topic ? topic.name : 'بدون تاپیک';
+        }
+
+        // ===== Topic Management =====
+        async function addTopic() {
+            const name = document.getElementById('newTopicName').value.trim();
+            const color = document.getElementById('newTopicColor').value;
+            if (!name) {
+                alert('لطفاً نام تاپیک را وارد کنید');
+                return;
+            }
+            if (topics.some(t => t.name === name)) {
+                alert('این تاپیک قبلاً وجود دارد');
+                return;
+            }
             try {
-                await openDatabase();
-                await migrateFromLocalStorage();
-                const all = await dbGetAll();
-                all.forEach(item => {
-                    if (item.level === undefined) item.level = 0;
-                    if (!item.media) item.media = [];
-                });
-                items = all.reverse();
+                const id = await saveTopicToDB({ name, color });
+                topics.push({ id, name, color });
+                renderAll();
+                document.getElementById('newTopicName').value = '';
             } catch (e) {
-                console.error('خطا در بازکردن پایگاه‌داده:', e);
-                alert('خطا در دسترسی به پایگاه‌داده مرورگر. لطفاً از یک مرورگر استاندارد (نه حالت Private/Incognito محدودشده) استفاده کنید.');
-                items = [];
-            }
-            render();
-        }
-
-        function toggleTheme() {
-            const html = document.documentElement;
-            const current = html.getAttribute('data-theme');
-            const btn = document.querySelector('.theme-btn');
-            if (current === 'light') {
-                html.removeAttribute('data-theme');
-                btn.textContent = '☀️ تغییر به حالت روشن';
-            } else {
-                html.setAttribute('data-theme', 'light');
-                btn.textContent = '🌙 تغییر به حالت تاریک';
+                console.error('خطا در افزودن تاپیک:', e);
+                alert('خطا در افزودن تاپیک');
             }
         }
 
-        async function handleFileSelect(input, target) {
-            for (const file of input.files) {
-                const mediaObj = { type: file.type, blob: file };
-                if (target === 'main') {
-                    tempMainMedia.push(mediaObj);
-                } else {
-                    tempEditMedia.push(mediaObj);
+        async function deleteTopic(id) {
+            if (!confirm('آیا از حذف این تاپیک مطمئن هستید؟')) return;
+            try {
+                await deleteTopicFromDB(id);
+                topics = topics.filter(t => t.id !== id);
+                // حذف جملات مرتبط
+                if (sentences[id]) {
+                    for (const s of sentences[id]) {
+                        await deleteSentenceFromDB(s.id);
+                    }
+                    delete sentences[id];
                 }
+                // به‌روزرسانی آیتم‌ها
+                for (const item of items) {
+                    if (item.topicId === id) {
+                        item.topicId = null;
+                        await dbPut(item);
+                    }
+                }
+                renderAll();
+            } catch (e) {
+                console.error('خطا در حذف تاپیک:', e);
+                alert('خطا در حذف تاپیک');
             }
-            input.value = '';
-            renderThumbnails(target);
         }
 
-        async function pasteImageFromClipboard(target, event) {
-            if (event) event.stopPropagation();
+        // ===== Sentence Management =====
+        async function addSentence() {
+            const selector = document.getElementById('topicSentenceSelector');
+            const topicId = parseInt(selector.value);
+            if (!topicId) {
+                alert('لطفاً یک تاپیک انتخاب کنید');
+                return;
+            }
+            const text = document.getElementById('newSentence').value.trim();
+            const translation = document.getElementById('newSentenceTranslation').value.trim();
+            if (!text) {
+                alert('لطفاً جمله را وارد کنید');
+                return;
+            }
+            try {
+                const id = await saveSentenceToDB({ topicId, text, translation });
+                if (!sentences[topicId]) sentences[topicId] = [];
+                sentences[topicId].push({ id, text, translation });
+                document.getElementById('newSentence').value = '';
+                document.getElementById('newSentenceTranslation').value = '';
+                loadTopicSentences();
+            } catch (e) {
+                console.error('خطا در افزودن جمله:', e);
+                alert('خطا در افزودن جمله');
+            }
+        }
 
-            if (!navigator.clipboard || !navigator.clipboard.read) {
-                alert('مرورگر شما از پیست مستقیم تصویر پشتیبانی نمی‌کند. لطفاً از دکمه "Choose Files" برای انتخاب عکس استفاده کنید.');
+        async function deleteSentence(topicId, sentenceId) {
+            if (!confirm('آیا از حذف این جمله مطمئن هستید؟')) return;
+            try {
+                await deleteSentenceFromDB(sentenceId);
+                sentences[topicId] = sentences[topicId].filter(s => s.id !== sentenceId);
+                loadTopicSentences();
+            } catch (e) {
+                console.error('خطا در حذف جمله:', e);
+                alert('خطا در حذف جمله');
+            }
+        }
+
+        function loadTopicSentences() {
+            const selector = document.getElementById('topicSentenceSelector');
+            const topicId = parseInt(selector.value);
+            const container = document.getElementById('topicSentencesList');
+            container.innerHTML = '';
+
+            if (!topicId || !sentences[topicId]) {
+                container.innerHTML = '<p style="color:var(--text-secondary);">هیچ جمله‌ای در این تاپیک وجود ندارد</p>';
                 return;
             }
 
-            try {
-                const clipboardItems = await navigator.clipboard.read();
-                let found = false;
-
-                for (const item of clipboardItems) {
-                    for (const type of item.types) {
-                        if (type.startsWith('image/')) {
-                            const blob = await item.getType(type);
-                            const mediaObj = { type: blob.type, blob: blob };
-                            if (target === 'main') {
-                                tempMainMedia.push(mediaObj);
-                            } else {
-                                tempEditMedia.push(mediaObj);
-                            }
-                            found = true;
-                        }
-                    }
-                }
-
-                if (found) {
-                    renderThumbnails(target);
-                } else {
-                    alert('هیچ عکسی در کلیپ‌بورد پیدا نشد. ابتدا یک عکس را کپی کنید (مثلاً نگه‌داشتن انگشت روی عکس و زدن «Copy image»)، سپس دوباره این دکمه را بزنید.');
-                }
-            } catch (e) {
-                console.error('خطا در خواندن کلیپ‌بورد:', e);
-                alert('اجازهٔ دسترسی به کلیپ‌بورد داده نشد یا چیزی در کلیپ‌بورد نبود. لطفاً دوباره عکس را کپی کرده و امتحان کنید.');
-            }
-        }
-
-        function setupPasteSupport(areaId, target) {
-            const area = document.getElementById(areaId);
-            area.setAttribute('tabindex', '0');
-
-            area.addEventListener('paste', async (e) => {
-                const clipboardItems = (e.clipboardData || window.clipboardData).items;
-                for (const item of clipboardItems) {
-                    if (item.type.indexOf('image') !== -1) {
-                        const file = item.getAsFile();
-                        const mediaObj = { type: item.type, blob: file };
-                        
-                        if (target === 'main') {
-                            tempMainMedia.push(mediaObj);
-                        } else {
-                            tempEditMedia.push(mediaObj);
-                        }
-                        renderThumbnails(target);
-                        e.preventDefault();
-                    }
-                }
-            });
-        }
-
-        let mainThumbURLs = [];
-        let editThumbURLs = [];
-        let listObjectURLs = [];
-
-        function revokeURLs(arr) {
-            arr.forEach(u => URL.revokeObjectURL(u));
-            arr.length = 0;
-        }
-
-        function renderThumbnails(target) {
-            const container = document.getElementById(target === 'main' ? 'mainPreview' : 'editPreview');
-            const list = target === 'main' ? tempMainMedia : tempEditMedia;
-            const urlStore = target === 'main' ? mainThumbURLs : editThumbURLs;
-
-            revokeURLs(urlStore);
-            container.innerHTML = '';
-            
-            list.forEach((m, idx) => {
-                const url = URL.createObjectURL(m.blob);
-                urlStore.push(url);
-
+            sentences[topicId].forEach((s, idx) => {
                 const div = document.createElement('div');
-                div.className = 'thumb-container';
-                if (m.type.startsWith('image/')) {
-                    div.innerHTML = `<img src="${url}"><button class="thumb-remove" onclick="removeThumb('${target}', ${idx}, event)">✕</button>`;
-                } else {
-                    div.innerHTML = `<video src="${url}"></video><button class="thumb-remove" onclick="removeThumb('${target}', ${idx}, event)">✕</button>`;
-                }
+                div.style.cssText = `
+                    display: flex; justify-content: space-between; align-items: center;
+                    padding: 12px 16px; background: var(--input-bg); border-radius: var(--radius-sm);
+                    margin-bottom: 8px; border: 1px solid var(--border);
+                    transition: var(--transition);
+                `;
+                div.innerHTML = `
+                    <div style="flex:1;display:flex;flex-direction:column;gap:4px;">
+                        <div style="display:flex;align-items:center;gap:10px;">
+                            <span style="font-weight:600;">${s.text}</span>
+                            <button class="audio-btn" onclick="speakSentence('${s.text.replace(/'/g, "\\'")}', event)" style="width:28px;height:28px;font-size:0.7rem;">🔊</button>
+                        </div>
+                        <span style="color:var(--text-secondary);font-size:0.9rem;">${s.translation || ''}</span>
+                    </div>
+                    <button onclick="deleteSentence(${topicId}, ${s.id})" style="background:none;border:none;color:#ef4444;cursor:pointer;font-size:1.2rem;padding:0 8px;">✕</button>
+                `;
                 container.appendChild(div);
             });
         }
 
-        function removeThumb(target, idx, event) {
-            if(event) event.stopPropagation();
-            if (target === 'main') {
-                tempMainMedia.splice(idx, 1);
-            } else {
-                tempEditMedia.splice(idx, 1);
-            }
-            renderThumbnails(target);
-        }
+        // ===== Render Functions =====
+        function renderTopics() {
+            // Topic List
+            const container = document.getElementById('topicList');
+            container.innerHTML = '';
+            topics.forEach(t => {
+                const div = document.createElement('div');
+                div.className = 'topic-item';
+                div.innerHTML = `
+                    <span class="color-dot" style="background:${t.color};"></span>
+                    <span class="topic-name">${t.name}</span>
+                    <button class="topic-remove" onclick="deleteTopic(${t.id})">✕</button>
+                `;
+                container.appendChild(div);
+            });
 
-        async function addItem() {
-            const word = document.getElementById('word').value.trim();
-            const meaning = document.getElementById('meaning').value.trim();
-            if (!word || !meaning) {
-                alert('لطفاً لغت و معنی را وارد کنید');
-                return;
-            }
-
-            const example = document.getElementById('example').value;
-            const mediaToSave = tempMainMedia.map(m => ({ type: m.type, blob: m.blob }));
-
-            const newItem = { 
-                word: word, 
-                meaning: meaning, 
-                example: example, 
-                media: mediaToSave,
-                level: currentFormRating 
-            };
-
-            try {
-                const newId = await dbAdd(newItem);
-                newItem.id = newId;
-                items.unshift(newItem);
-            } catch (e) {
-                console.error('خطا در ذخیره واژه:', e);
-                alert('ذخیره واژه با خطا مواجه شد. لطفاً دوباره تلاش کنید.');
-                return;
-            }
-
-            document.getElementById('word').value = '';
-            document.getElementById('meaning').value = '';
-            document.getElementById('example').value = '';
-            tempMainMedia = [];
-            currentFormRating = 0;
-            updateStarsDisplay('formStars', 0);
-            renderThumbnails('main');
-            render();
-        }
-
-        async function deleteItem(index) {
-            if (confirm('آیا از حذف این واژه مطمئن هستید؟')) {
-                const item = items[index];
-                try {
-                    await dbDelete(item.id);
-                    items.splice(index, 1);
-                    render();
-                } catch (e) {
-                    console.error('خطا در حذف واژه:', e);
-                    alert('حذف واژه با خطا مواجه شد.');
+            // Topic Selectors
+            const selectors = ['vocabTopicSelector', 'editTopicSelector', 'topicSentenceSelector'];
+            selectors.forEach(selectorId => {
+                const selector = document.getElementById(selectorId);
+                if (!selector) return;
+                const currentVal = selectorId === 'vocabTopicSelector' ? selectedFormTopic : 
+                                  selectorId === 'editTopicSelector' ? selectedEditTopic : 
+                                  parseInt(selector.value);
+                
+                if (selectorId === 'topicSentenceSelector') {
+                    selector.innerHTML = '<option value="">انتخاب تاپیک...</option>';
+                } else {
+                    selector.innerHTML = '';
                 }
-            }
-        }
+                
+                topics.forEach(t => {
+                    const option = document.createElement(selectorId === 'topicSentenceSelector' ? 'option' : 'div');
+                    if (selectorId === 'topicSentenceSelector') {
+                        option.value = t.id;
+                        option.textContent = t.name;
+                    } else {
+                        option.className = 'topic-option';
+                        if (selectorId === 'vocabTopicSelector' && selectedFormTopic === t.id) {
+                            option.classList.add('active');
+                        }
+                        if (selectorId === 'editTopicSelector' && selectedEditTopic === t.id) {
+                            option.classList.add('active');
+                        }
+                        option.innerHTML = `
+                            <span class="color-dot-small" style="background:${t.color};"></span>
+                            ${t.name}
+                        `;
+                        option.onclick = () => {
+                            if (selectorId === 'vocabTopicSelector') {
+                                selectedFormTopic = t.id;
+                            } else if (selectorId === 'editTopicSelector') {
+                                selectedEditTopic = t.id;
+                            }
+                            renderTopics();
+                        };
+                    }
+                    selector.appendChild(option);
+                });
 
-        function openEditModal(index) {
-            editIndex = index;
-            const item = items[index];
-            document.getElementById('editWord').value = item.word;
-            document.getElementById('editMeaning').value = item.meaning;
-            document.getElementById('editExample').value = item.example || '';
-            
-            currentEditRating = item.level || 0;
-            updateStarsDisplay('editStars', currentEditRating);
-            
-            tempEditMedia = item.media ? item.media.map(m => ({ type: m.type, blob: m.blob })) : [];
-            renderThumbnails('edit');
-            
-            document.getElementById('editModal').classList.add('show');
-        }
-
-        function closeEditModal() {
-            revokeURLs(editThumbURLs);
-            document.getElementById('editModal').classList.remove('show');
-            editIndex = null;
-        }
-
-        async function saveEdit() {
-            const word = document.getElementById('editWord').value.trim();
-            const meaning = document.getElementById('editMeaning').value.trim();
-            if (!word || !meaning) {
-                alert('لغت و معنی نمی‌توانند خالی باشند');
-                return;
-            }
-            const example = document.getElementById('editExample').value;
-            
-            items[editIndex].word = word;
-            items[editIndex].meaning = meaning;
-            items[editIndex].example = example;
-            items[editIndex].level = currentEditRating;
-            items[editIndex].media = tempEditMedia.map(m => ({ type: m.type, blob: m.blob }));
-            
-            try {
-                await dbPut(items[editIndex]);
-                render();
-                closeEditModal();
-            } catch (e) {
-                console.error('خطا در ذخیره ویرایش:', e);
-                alert('ذخیره تغییرات با خطا مواجه شد.');
-            }
-        }
-
-        function toggleMenu(index, event) {
-            event.stopPropagation();
-            const menu = document.getElementById('menu-' + index);
-            document.querySelectorAll('.menu-content').forEach(m => {
-                if (m.id !== 'menu-' + index) {
-                    m.classList.remove('show');
+                if (selectorId === 'topicSentenceSelector' && currentVal) {
+                    selector.value = currentVal;
                 }
             });
-            menu.classList.toggle('show');
-        }
-
-        document.addEventListener('click', function() {
-            document.querySelectorAll('.menu-content').forEach(m => {
-                m.classList.remove('show');
-            });
-        });
-
-        async function changeCardLevel(realIndex, newLevel) {
-            items[realIndex].level = newLevel;
-            try {
-                await dbPut(items[realIndex]);
-                render();
-            } catch (e) {
-                console.error('خطا در ذخیره امتیاز:', e);
-            }
         }
 
         function render() {
@@ -1395,16 +1498,24 @@
             const sortBy = document.getElementById('sortBy').value;
             const list = document.getElementById('list');
 
-            revokeURLs(listObjectURLs);
+            // Revoke old URLs
+            if (window.listObjectURLs) {
+                window.listObjectURLs.forEach(u => URL.revokeObjectURL(u));
+            }
+            window.listObjectURLs = [];
             list.innerHTML = '';
 
             let processedItems = items.map((item, index) => ({ ...item, realIndex: index }));
 
-            processedItems = processedItems.filter(item =>
-                item.word.toLowerCase().includes(search) ||
-                item.meaning.toLowerCase().includes(search)
-            );
+            // Filter by search
+            if (search) {
+                processedItems = processedItems.filter(item =>
+                    item.word.toLowerCase().includes(search) ||
+                    item.meaning.toLowerCase().includes(search)
+                );
+            }
 
+            // Sort
             if (sortBy === 'oldest') {
                 processedItems.reverse();
             } else if (sortBy === 'level-desc') {
@@ -1419,12 +1530,16 @@
             }
 
             processedItems.forEach((item) => {
+                const topicColor = getTopicColor(item.topicId);
+                const topicName = getTopicName(item.topicId);
+
                 let mediaHtml = '';
                 if (item.media && item.media.length > 0) {
                     mediaHtml += `<div class="media-container">`;
                     item.media.forEach(m => {
                         const url = URL.createObjectURL(m.blob);
-                        listObjectURLs.push(url);
+                        if (!window.listObjectURLs) window.listObjectURLs = [];
+                        window.listObjectURLs.push(url);
                         if (m.type.startsWith('image/')) {
                             mediaHtml += `<img src="${url}" alt="تصویر" loading="lazy">`;
                         } else if (m.type.startsWith('video/')) {
@@ -1441,16 +1556,14 @@
                 if (item.example && item.example.trim() !== '') {
                     const lines = item.example.split('\n');
                     let linesHtml = '';
-                    
                     lines.forEach(line => {
                         if (line.trim() !== '') {
                             const lineDir = getDirection(line);
                             linesHtml += `<div class="example-line" dir="${lineDir}">${line}</div>`;
                         } else {
-                            linesHtml += `<div style="height: 6px;"></div>`;
+                            linesHtml += `<div style="height:6px;"></div>`;
                         }
                     });
-
                     exampleHtml = `<div class="example-display">${linesHtml}</div>`;
                 }
 
@@ -1468,6 +1581,7 @@
                         <div class="card-header-actions">
                             <div class="card-meta">
                                 <div class="badge">#${item.realIndex + 1}</div>
+                                ${item.topicId ? `<span class="topic-badge" style="background:${topicColor};">${topicName}</span>` : ''}
                                 <div class="card-stars">${starsHtml}</div>
                             </div>
                             <div class="menu-container">
@@ -1500,13 +1614,314 @@
             });
         }
 
+        function renderAll() {
+            renderTopics();
+            render();
+            loadTopicSentences();
+        }
+
+        // ===== Switch Tab =====
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById('tab-' + tab).classList.add('active');
+            document.querySelector(`.tab-btn[onclick="switchTab('${tab}')"]`).classList.add('active');
+            if (tab === 'topics') {
+                renderTopics();
+                loadTopicSentences();
+            }
+        }
+
+        // ===== Item Functions =====
+        async function addItem() {
+            const word = document.getElementById('word').value.trim();
+            const meaning = document.getElementById('meaning').value.trim();
+            if (!word || !meaning) {
+                alert('لطفاً لغت و معنی را وارد کنید');
+                return;
+            }
+
+            const example = document.getElementById('example').value;
+            const mediaToSave = tempMainMedia.map(m => ({ type: m.type, blob: m.blob }));
+
+            const newItem = { 
+                word, meaning, example,
+                media: mediaToSave,
+                level: currentFormRating,
+                topicId: selectedFormTopic
+            };
+
+            try {
+                const newId = await dbAdd(newItem);
+                newItem.id = newId;
+                items.unshift(newItem);
+            } catch (e) {
+                console.error('خطا در ذخیره واژه:', e);
+                alert('ذخیره واژه با خطا مواجه شد.');
+                return;
+            }
+
+            document.getElementById('word').value = '';
+            document.getElementById('meaning').value = '';
+            document.getElementById('example').value = '';
+            tempMainMedia = [];
+            currentFormRating = 0;
+            selectedFormTopic = null;
+            updateStarsDisplay('formStars', 0);
+            renderThumbnails('main');
+            render();
+            renderTopics();
+        }
+
+        async function deleteItem(index) {
+            if (confirm('آیا از حذف این واژه مطمئن هستید؟')) {
+                const item = items[index];
+                try {
+                    await dbDelete(item.id);
+                    items.splice(index, 1);
+                    render();
+                } catch (e) {
+                    console.error('خطا در حذف واژه:', e);
+                    alert('حذف واژه با خطا مواجه شد.');
+                }
+            }
+        }
+
+        function openEditModal(index) {
+            editIndex = index;
+            const item = items[index];
+            document.getElementById('editWord').value = item.word;
+            document.getElementById('editMeaning').value = item.meaning;
+            document.getElementById('editExample').value = item.example || '';
+            
+            selectedEditTopic = item.topicId || null;
+            currentEditRating = item.level || 0;
+            updateStarsDisplay('editStars', currentEditRating);
+            
+            tempEditMedia = item.media ? item.media.map(m => ({ type: m.type, blob: m.blob })) : [];
+            renderThumbnails('edit');
+            renderTopics();
+            
+            document.getElementById('editModal').classList.add('show');
+        }
+
+        function closeEditModal() {
+            if (window.editThumbURLs) {
+                window.editThumbURLs.forEach(u => URL.revokeObjectURL(u));
+            }
+            document.getElementById('editModal').classList.remove('show');
+            editIndex = null;
+        }
+
+        async function saveEdit() {
+            const word = document.getElementById('editWord').value.trim();
+            const meaning = document.getElementById('editMeaning').value.trim();
+            if (!word || !meaning) {
+                alert('لغت و معنی نمی‌توانند خالی باشند');
+                return;
+            }
+            const example = document.getElementById('editExample').value;
+            
+            items[editIndex].word = word;
+            items[editIndex].meaning = meaning;
+            items[editIndex].example = example;
+            items[editIndex].level = currentEditRating;
+            items[editIndex].topicId = selectedEditTopic;
+            items[editIndex].media = tempEditMedia.map(m => ({ type: m.type, blob: m.blob }));
+            
+            try {
+                await dbPut(items[editIndex]);
+                render();
+                closeEditModal();
+            } catch (e) {
+                console.error('خطا در ذخیره ویرایش:', e);
+                alert('ذخیره تغییرات با خطا مواجه شد.');
+            }
+        }
+
+        async function changeCardLevel(realIndex, newLevel) {
+            items[realIndex].level = newLevel;
+            try {
+                await dbPut(items[realIndex]);
+                render();
+            } catch (e) {
+                console.error('خطا در ذخیره امتیاز:', e);
+            }
+        }
+
+        // ===== Media Functions =====
+        function handleFileSelect(input, target) {
+            for (const file of input.files) {
+                const mediaObj = { type: file.type, blob: file };
+                if (target === 'main') {
+                    tempMainMedia.push(mediaObj);
+                } else {
+                    tempEditMedia.push(mediaObj);
+                }
+            }
+            input.value = '';
+            renderThumbnails(target);
+        }
+
+        async function pasteImageFromClipboard(target, event) {
+            if (event) event.stopPropagation();
+
+            if (!navigator.clipboard || !navigator.clipboard.read) {
+                alert('مرورگر شما از پیست مستقیم تصویر پشتیبانی نمی‌کند.');
+                return;
+            }
+
+            try {
+                const clipboardItems = await navigator.clipboard.read();
+                let found = false;
+                for (const item of clipboardItems) {
+                    for (const type of item.types) {
+                        if (type.startsWith('image/')) {
+                            const blob = await item.getType(type);
+                            const mediaObj = { type: blob.type, blob: blob };
+                            if (target === 'main') {
+                                tempMainMedia.push(mediaObj);
+                            } else {
+                                tempEditMedia.push(mediaObj);
+                            }
+                            found = true;
+                        }
+                    }
+                }
+                if (found) {
+                    renderThumbnails(target);
+                } else {
+                    alert('هیچ عکسی در کلیپ‌بورد پیدا نشد.');
+                }
+            } catch (e) {
+                console.error('خطا در خواندن کلیپ‌بورد:', e);
+                alert('خطا در خواندن کلیپ‌بورد');
+            }
+        }
+
+        function setupPasteSupport(areaId, target) {
+            const area = document.getElementById(areaId);
+            if (!area) return;
+            area.setAttribute('tabindex', '0');
+            area.addEventListener('paste', async (e) => {
+                const clipboardItems = (e.clipboardData || window.clipboardData).items;
+                for (const item of clipboardItems) {
+                    if (item.type.indexOf('image') !== -1) {
+                        const file = item.getAsFile();
+                        const mediaObj = { type: item.type, blob: file };
+                        if (target === 'main') {
+                            tempMainMedia.push(mediaObj);
+                        } else {
+                            tempEditMedia.push(mediaObj);
+                        }
+                        renderThumbnails(target);
+                        e.preventDefault();
+                    }
+                }
+            });
+        }
+
+        let mainThumbURLs = [];
+        let editThumbURLs = [];
+
+        function renderThumbnails(target) {
+            const container = document.getElementById(target === 'main' ? 'mainPreview' : 'editPreview');
+            const list = target === 'main' ? tempMainMedia : tempEditMedia;
+            const urlStore = target === 'main' ? mainThumbURLs : editThumbURLs;
+
+            urlStore.forEach(u => URL.revokeObjectURL(u));
+            urlStore.length = 0;
+            container.innerHTML = '';
+            
+            list.forEach((m, idx) => {
+                const url = URL.createObjectURL(m.blob);
+                urlStore.push(url);
+
+                const div = document.createElement('div');
+                div.className = 'thumb-container';
+                if (m.type.startsWith('image/')) {
+                    div.innerHTML = `<img src="${url}"><button class="thumb-remove" onclick="removeThumb('${target}', ${idx}, event)">✕</button>`;
+                } else {
+                    div.innerHTML = `<video src="${url}"></video><button class="thumb-remove" onclick="removeThumb('${target}', ${idx}, event)">✕</button>`;
+                }
+                container.appendChild(div);
+            });
+        }
+
+        function removeThumb(target, idx, event) {
+            if(event) event.stopPropagation();
+            if (target === 'main') {
+                tempMainMedia.splice(idx, 1);
+            } else {
+                tempEditMedia.splice(idx, 1);
+            }
+            renderThumbnails(target);
+        }
+
+        // ===== Stars =====
+        function initStars(containerId, callback) {
+            const stars = document.querySelectorAll(`#${containerId} span`);
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    const val = parseInt(star.getAttribute('data-value'));
+                    callback(val);
+                    updateStarsDisplay(containerId, val);
+                });
+            });
+        }
+
+        function updateStarsDisplay(containerId, val) {
+            const stars = document.querySelectorAll(`#${containerId} span`);
+            stars.forEach(star => {
+                const starVal = parseInt(star.getAttribute('data-value'));
+                if (starVal <= val) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        // ===== Menu =====
+        function toggleMenu(index, event) {
+            event.stopPropagation();
+            const menu = document.getElementById('menu-' + index);
+            document.querySelectorAll('.menu-content').forEach(m => {
+                if (m.id !== 'menu-' + index) {
+                    m.classList.remove('show');
+                }
+            });
+            menu.classList.toggle('show');
+        }
+
+        document.addEventListener('click', function() {
+            document.querySelectorAll('.menu-content').forEach(m => {
+                m.classList.remove('show');
+            });
+        });
+
+        // ===== Theme =====
+        function toggleTheme() {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-theme');
+            const btn = document.querySelector('.theme-btn');
+            if (current === 'light') {
+                html.removeAttribute('data-theme');
+                btn.textContent = '☀️ تغییر به حالت روشن';
+            } else {
+                html.setAttribute('data-theme', 'light');
+                btn.textContent = '🌙 تغییر به حالت تاریک';
+            }
+        }
+
+        // ===== Init =====
         initStars('formStars', (v) => currentFormRating = v);
         initStars('editStars', (v) => currentEditRating = v);
         
         setupPasteSupport('mainPasteArea', 'main');
         setupPasteSupport('editPasteArea', 'edit');
 
-        load();
+        loadAllData();
     </script>
 
 </body>
