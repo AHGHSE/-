@@ -198,7 +198,7 @@
         .topic-card .topic-menu-btn:hover { color:var(--text); transform:rotate(90deg); }
 
         .topic-menu-content {
-            display:none; position:absolute; top:30px; left:0; background:var(--card);
+            display:none; position:absolute; top:30px; right:0; background:var(--card);
             border:1px solid var(--border); border-radius:var(--radius-sm);
             box-shadow:var(--shadow); min-width:120px; z-index:10; overflow:hidden;
         }
@@ -213,7 +213,7 @@
         .topic-menu-content .edit-topic-btn { color:var(--primary-light); }
         .topic-menu-content .delete-topic-btn { color:#f87171; }
 
-        /* Sentences List - با راست‌چین و چپ‌چین دقیق */
+        /* Sentences List */
         .sentence-item {
             display:flex; justify-content:space-between; align-items:center;
             padding:12px 16px; background:var(--input-bg); border-radius:var(--radius-sm);
@@ -224,16 +224,16 @@
             flex:1; display:flex; flex-direction:column; gap:4px; min-width:0;
         }
         .sentence-item .sentence-text {
-            display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+            display:flex; align-items:center; gap:10px; flex-wrap:wrap; width: 100%;
         }
         .sentence-item .sentence-text .text {
-            font-weight:600; word-break:break-word;
+            font-weight:600; word-break:break-word; flex: 1;
         }
         .sentence-item .sentence-translation {
-            color:var(--text-secondary); font-size:0.9rem; word-break:break-word;
+            color:var(--text-secondary); font-size:0.9rem; word-break:break-word; width: 100%;
         }
         .sentence-item .sentence-actions {
-            position:relative; flex-shrink:0; margin-right:8px;
+            position:relative; flex-shrink:0; margin-right:8px; margin-left: 8px;
         }
         .sentence-item .sentence-menu-btn {
             background:none; border:none; color:var(--text-secondary); font-size:1.2rem;
@@ -1025,11 +1025,13 @@ function loadTopicSentences() {
         div.className = 'sentence-item';
         div.innerHTML = `
             <div class="sentence-content">
-                <div class="sentence-text">
-                    <span class="text" dir="${textDir}">${s.text}</span>
-                    <button class="audio-btn-sm" onclick="speakSentence('${s.text.replace(/'/g, "\\'")}', event)">🔊</button>
+                <div class="sentence-text" dir="${textDir}">
+                    ${textDir === 'ltr' ? 
+                        `<span class="text" style="text-align: left;">${s.text}</span><button class="audio-btn-sm" onclick="speakSentence('${s.text.replace(/'/g, "\\'")}', event)">🔊</button>` :
+                        `<button class="audio-btn-sm" onclick="speakSentence('${s.text.replace(/'/g, "\\'")}', event)">🔊</button><span class="text" style="text-align: right;">${s.text}</span>`
+                    }
                 </div>
-                ${s.translation ? `<div class="sentence-translation" dir="${transDir}">${s.translation}</div>` : ''}
+                ${s.translation ? `<div class="sentence-translation" dir="${transDir}" style="text-align: ${transDir === 'rtl' ? 'right' : 'left'};">${s.translation}</div>` : ''}
             </div>
             <div class="sentence-actions">
                 <button class="sentence-menu-btn" onclick="event.stopPropagation();toggleSentenceMenu(${s.id})">⋮</button>
@@ -1067,7 +1069,6 @@ function renderTopics() {
         const card = document.createElement('div');
         card.className = 'topic-card';
         card.onclick = () => selectTopic(t.id);
-        // هایلایت کارت انتخاب‌شده
         if (selectedTopicForSentences === t.id) {
             card.style.borderColor = 'var(--primary)';
             card.style.boxShadow = '0 0 0 3px var(--primary-glow)';
@@ -1088,7 +1089,6 @@ function renderTopics() {
         grid.appendChild(card);
     });
 
-    // Topic selectors for vocab forms
     const selectors = ['vocabTopicSelector', 'editTopicSelector'];
     selectors.forEach(selId => {
         const sel = document.getElementById(selId);
@@ -1114,13 +1114,12 @@ function renderTopics() {
 
 function selectTopic(id) {
     selectedTopicForSentences = id;
-    // اگر در تب تاپیک نیستیم، به آن سوئیچ کن
     const topicsTab = document.getElementById('tab-topics');
     if (!topicsTab.classList.contains('active')) {
         switchTab('topics');
     }
     loadTopicSentences();
-    renderTopics(); // برای به‌روزرسانی هایلایت
+    renderTopics();
 }
 
 function toggleTopicMenu(id) {
