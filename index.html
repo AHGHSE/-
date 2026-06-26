@@ -174,7 +174,7 @@
             background:var(--card); border-radius:var(--radius); border:2px solid var(--border);
             padding:14px 18px; transition:var(--transition); cursor:pointer;
             display:flex; justify-content:space-between; align-items:center;
-            direction:ltr; /* چپ‌چین بودن کل کارت */
+            direction:ltr;
         }
         .topic-card:hover { transform:translateY(-4px); border-color:var(--primary); box-shadow:var(--shadow); }
         .topic-card .topic-left {
@@ -186,8 +186,7 @@
         }
         .topic-card .topic-name {
             font-weight:700; font-size:1rem; word-break:break-word;
-            direction:ltr; /* نام تاپیک چپ‌چین */
-            text-align:left;
+            direction:ltr; text-align:left;
         }
         .topic-card .topic-actions {
             position:relative; flex-shrink:0;
@@ -214,7 +213,7 @@
         .topic-menu-content .edit-topic-btn { color:var(--primary-light); }
         .topic-menu-content .delete-topic-btn { color:#f87171; }
 
-        /* Sentences List - RTL for Persian, LTR for English */
+        /* Sentences List - با راست‌چین و چپ‌چین دقیق */
         .sentence-item {
             display:flex; justify-content:space-between; align-items:center;
             padding:12px 16px; background:var(--input-bg); border-radius:var(--radius-sm);
@@ -675,7 +674,7 @@ let currentFormRating = 0;
 let currentEditRating = 0;
 let selectedFormTopic = null;
 let selectedEditTopic = null;
-let selectedTopicForSentences = null; // تاپیک انتخاب‌شده برای بخش جملات
+let selectedTopicForSentences = null;
 let tempMainMedia = [];
 let tempEditMedia = [];
 
@@ -810,7 +809,6 @@ async function loadAllData() {
         items = allItems.reverse();
         topics = await loadTopicsFromDB();
         sentences = await loadSentencesFromDB();
-        // اگر تاپیک وجود دارد، اولین تاپیک را انتخاب کن
         if (topics.length > 0 && !selectedTopicForSentences) {
             selectedTopicForSentences = topics[0].id;
         }
@@ -889,7 +887,6 @@ async function addTopic() {
         const id = await saveTopicToDB({ name, color });
         const newTopic = { id, name, color };
         topics.push(newTopic);
-        // اگر اولین تاپیک است، آن را انتخاب کن
         if (topics.length === 1) {
             selectedTopicForSentences = id;
         }
@@ -910,7 +907,6 @@ async function deleteTopic(id) {
         for (const item of items) {
             if (item.topicId === id) { item.topicId = null; await dbPut(item); }
         }
-        // اگر تاپیک انتخاب‌شده حذف شد، اولین تاپیک موجود را انتخاب کن
         if (selectedTopicForSentences === id) {
             selectedTopicForSentences = topics.length > 0 ? topics[0].id : null;
         }
@@ -1070,7 +1066,12 @@ function renderTopics() {
     topics.forEach(t => {
         const card = document.createElement('div');
         card.className = 'topic-card';
-        card.onclick = () => selectTopic(t.id); // کلیک روی کارت
+        card.onclick = () => selectTopic(t.id);
+        // هایلایت کارت انتخاب‌شده
+        if (selectedTopicForSentences === t.id) {
+            card.style.borderColor = 'var(--primary)';
+            card.style.boxShadow = '0 0 0 3px var(--primary-glow)';
+        }
         card.innerHTML = `
             <div class="topic-left">
                 <span class="color-dot" style="background:${t.color};"></span>
@@ -1119,17 +1120,7 @@ function selectTopic(id) {
         switchTab('topics');
     }
     loadTopicSentences();
-    // هایلایت کارت انتخاب‌شده
-    document.querySelectorAll('.topic-card').forEach(card => {
-        card.style.borderColor = 'var(--border)';
-    });
-    const cards = document.querySelectorAll('.topic-card');
-    const index = topics.findIndex(t => t.id === id);
-    if (cards[index]) {
-        cards[index].style.borderColor = 'var(--primary)';
-        cards[index].style.boxShadow = '0 0 0 3px var(--primary-glow)';
-    }
-    renderTopics(); // برای به‌روزرسانی انتخاب‌گرها
+    renderTopics(); // برای به‌روزرسانی هایلایت
 }
 
 function toggleTopicMenu(id) {
