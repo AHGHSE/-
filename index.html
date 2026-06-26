@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دفترچه زبان حرفه‌ای</title>
+    <title>دفترچه زبان زبان حرفه‌ای</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700;800;900&display=swap');
 
@@ -174,7 +174,7 @@
             background:var(--card); border-radius:var(--radius); border:2px solid var(--border);
             padding:14px 18px; transition:var(--transition); cursor:pointer;
             display:flex; justify-content:space-between; align-items:center;
-            direction:ltr;
+            direction:ltr; position:relative;
         }
         .topic-card:hover { transform:translateY(-4px); border-color:var(--primary); box-shadow:var(--shadow); }
         .topic-card .topic-left {
@@ -213,47 +213,50 @@
         .topic-menu-content .edit-topic-btn { color:var(--primary-light); }
         .topic-menu-content .delete-topic-btn { color:#f87171; }
 
-        /* Sentences List */
-        .sentence-item {
-            display:flex; justify-content:space-between; align-items:center;
-            padding:12px 16px; background:var(--input-bg); border-radius:var(--radius-sm);
-            margin-bottom:8px; border:1px solid var(--border); transition:var(--transition);
+        /* Sentences & Grammar Items List */
+        .sentence-item, .grammar-item {
+            display:flex; flex-direction:column; gap:10px;
+            padding:16px; background:var(--input-bg); border-radius:var(--radius-sm);
+            margin-bottom:12px; border:1px solid var(--border); transition:var(--transition);
+            position: relative;
         }
-        .sentence-item:hover { border-color:var(--primary); }
-        .sentence-item .sentence-content {
-            flex:1; display:flex; flex-direction:column; gap:4px; min-width:0;
+        .sentence-item:hover, .grammar-item:hover { border-color:var(--primary); }
+        .sentence-item .sentence-content, .grammar-item .grammar-item-content {
+            flex:1; display:flex; flex-direction:column; gap:6px; min-width:0;
         }
-        .sentence-item .sentence-text {
+        .sentence-item .sentence-text, .grammar-item .grammar-item-title {
             display:flex; align-items:center; gap:10px; flex-wrap:wrap; width: 100%;
         }
-        .sentence-item .sentence-text .text {
-            font-weight:600; word-break:break-word; flex: 1;
+        .sentence-item .sentence-text .text, .grammar-item .grammar-item-title .text {
+            font-weight:700; font-size:1.1rem; word-break:break-word; flex: 1;
+            color: var(--primary-light);
         }
-        .sentence-item .sentence-translation {
-            color:var(--text-secondary); font-size:0.9rem; word-break:break-word; width: 100%;
+        .sentence-item .sentence-translation, .grammar-item .grammar-item-desc {
+            color:var(--text-secondary); font-size:0.95rem; word-break:break-word; width: 100%; white-space: pre-wrap;
         }
-        .sentence-item .sentence-actions {
-            position:relative; flex-shrink:0; margin-right:8px; margin-left: 8px;
+        .sentence-item .sentence-actions, .grammar-item .grammar-item-actions {
+            position:absolute; top: 14px; left: 14px; flex-shrink:0;
         }
-        .sentence-item .sentence-menu-btn {
+        .sentence-item .sentence-menu-btn, .grammar-item .grammar-item-menu-btn {
             background:none; border:none; color:var(--text-secondary); font-size:1.2rem;
             cursor:pointer; padding:0 4px; transition:var(--transition);
         }
-        .sentence-item .sentence-menu-btn:hover { color:var(--text); transform:rotate(90deg); }
-        .sentence-menu-content {
+        .sentence-item .sentence-menu-btn:hover, .grammar-item .grammar-item-menu-btn:hover { color:var(--text); transform:rotate(90deg); }
+        
+        .sentence-menu-content, .grammar-item-menu-content {
             display:none; position:absolute; top:28px; left:0; background:var(--card);
             border:1px solid var(--border); border-radius:var(--radius-sm);
             box-shadow:var(--shadow); min-width:110px; z-index:10; overflow:hidden;
         }
-        .sentence-menu-content.show { display:block; animation:menuFadeIn 0.2s ease; }
-        .sentence-menu-content button {
+        .sentence-menu-content.show, .grammar-item-menu-content.show { display:block; animation:menuFadeIn 0.2s ease; }
+        .sentence-menu-content button, .grammar-item-menu-content button {
             display:block; width:100%; padding:8px 14px; background:none; border:none;
             color:var(--text); font-family:var(--font); font-weight:600; font-size:0.8rem;
             cursor:pointer; text-align:right; transition:var(--transition);
         }
-        .sentence-menu-content button:hover { background:var(--hover-bg); }
-        .sentence-menu-content .edit-sentence-btn { color:var(--primary-light); }
-        .sentence-menu-content .delete-sentence-btn { color:#f87171; }
+        .sentence-menu-content button:hover, .grammar-item-menu-content button:hover { background:var(--hover-bg); }
+        .sentence-menu-content .edit-sentence-btn, .grammar-item-menu-content .edit-sub-btn { color:var(--primary-light); }
+        .sentence-menu-content .delete-sentence-btn, .grammar-item-menu-content .delete-sub-btn { color:#f87171; }
 
         .audio-btn-sm {
             background:var(--hover-bg); border:2px solid var(--border);
@@ -299,7 +302,7 @@
         .empty-msg span { font-size:3rem; display:block; margin-bottom:12px; }
         .empty-msg p { font-size:1rem; font-weight:600; opacity:0.6; }
 
-        /* Misc */
+        /* Controls Row */
         .controls-row {
             display:flex; gap:16px; margin-bottom:30px;
         }
@@ -319,7 +322,7 @@
         .sort-wrapper { min-width:200px; }
         .sort-wrapper select {
             border-radius:30px; padding:16px 22px; background:var(--card);
-            border:2px solid var(--border); cursor:pointer; font-weight:600; font-size:0.9rem;
+            border:2px solid var(--border); cursor:pointer; font-weight:600; font-size:0.9id;
             appearance:none;
             background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238fa4c8' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
             background-repeat:no-repeat; background-position:left 16px center; padding-left:45px;
@@ -336,15 +339,16 @@
             display:flex; flex-direction:column; transition:var(--transition);
         }
         .card:hover { transform:translateY(-10px); border-color:var(--primary); box-shadow:var(--shadow),0 20px 60px rgba(74,144,217,0.1); }
-        .card .media-container {
+        
+        .media-container {
             width:100%; background:#000; border-bottom:2px solid var(--border);
             position:relative; overflow:hidden;
         }
-        .card .media-container::after {
+        .media-container::after {
             content:''; position:absolute; bottom:0; left:0; right:0;
             height:40px; background:linear-gradient(transparent, rgba(0,0,0,0.3));
         }
-        .card img, .card video {
+        .media-container img, .media-container video {
             width:100%; max-height:240px; object-fit:contain; display:block; background:#0a0a0a;
         }
         .card-body { padding:22px 24px 24px; flex-grow:1; display:flex; flex-direction:column; gap:4px; }
@@ -406,7 +410,7 @@
         .example-line[dir="ltr"] { text-align:left !important; }
         .example-line[dir="rtl"] { text-align:right !important; }
 
-        /* Menu for vocab cards */
+        /* Menus */
         .menu-container { position:relative; }
         .menu-btn {
             background:rgba(15,23,42,0.5); backdrop-filter:blur(8px);
@@ -497,11 +501,6 @@
             .tab-btn { padding:10px 16px; font-size:0.8rem; flex:none; }
             .topic-grid { grid-template-columns:repeat(auto-fill, minmax(160px,1fr)); }
         }
-        @media (max-width:400px) {
-            .topbar h1 { font-size:0.95rem; }
-            .stars-rating span { font-size:1.4rem; }
-            .word-display { font-size:1.3rem; }
-        }
     </style>
 </head>
 <body>
@@ -518,6 +517,7 @@
     <div class="tabs">
         <button class="tab-btn active" onclick="switchTab('vocab')">📝 لغات</button>
         <button class="tab-btn" onclick="switchTab('topics')">📂 تاپیک‌ها</button>
+        <button class="tab-btn" onclick="switchTab('grammar')">🧠 گرامر</button>
     </div>
 
     <!-- Tab: Vocabulary -->
@@ -596,6 +596,47 @@
         </div>
     </div>
 
+    <!-- Tab: Grammar (الگوبرداری کامل از ساختار تاپیک) -->
+    <div class="tab-content" id="tab-grammar">
+        <div class="form">
+            <h2>🧠 مدیریت مباحث گرامری</h2>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:16px;">
+                <input type="text" id="newGrammarName" placeholder="نام مبحث جدید (مثلا: حال ساده)..." style="flex:1;min-width:150px;">
+                <button class="btn-primary" onclick="addGrammarTopic()" style="width:auto;padding:12px 28px;">➕ افزودن مبحث</button>
+            </div>
+            <div class="topic-grid" id="grammarTopicGrid"></div>
+        </div>
+
+        <div class="form" style="margin-top:20px;">
+            <h2>📋 جزئیات و قواعد گرامر</h2>
+            <p style="color:var(--text-secondary);margin-bottom:15px;" id="selectedGrammarLabel">هیچ مبحثی انتخاب نشده است</p>
+            <div class="form-group">
+                <label>عنوان قاعده / ساختار</label>
+                <input type="text" id="grammarItemTitle" placeholder="مثال: ساختار جملات مثبت">
+            </div>
+            <div class="form-group">
+                <label>توضیحات و فرمول</label>
+                <textarea id="grammarItemDesc" placeholder="توضیحات و قواعد را بنویسید..."></textarea>
+            </div>
+            <!-- بخش اختصاصی آپلود عکس و فیلم برای گرامر -->
+            <div class="form-group">
+                <label>پیوست فایل یا کپی/پیست عکس (مخصوص این قاعده)</label>
+                <input type="file" id="grammarFiles" multiple accept="image/*,video/*" onchange="handleFileSelect(this,'grammar')">
+                <div class="paste-area" id="grammarPasteArea" tabindex="0">
+                    <div class="paste-area-icon">📋</div>
+                    <div class="paste-area-text">برای پیست عکس کپی‌شده، روی دکمه زیر بزنید</div>
+                    <button type="button" class="paste-btn" onclick="pasteImageFromClipboard('grammar',event)">📥 پیست عکس</button>
+                </div>
+                <div class="preview-thumbnails" id="grammarPreview"></div>
+            </div>
+            <button class="btn-primary" onclick="addGrammarItem()">➕ افزودن به مبحث گرامر</button>
+            <div style="margin-top:20px;">
+                <h3 style="font-size:1rem;color:var(--primary-light);margin-bottom:12px;">قواعد ثبت‌شده این مبحث</h3>
+                <div id="grammarItemsList"></div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <!-- Edit Modal for Vocabulary -->
@@ -660,30 +701,77 @@
     </div>
 </div>
 
+<!-- Edit Grammar Topic Modal -->
+<div class="modal" id="editGrammarTopicModal">
+    <div class="modal-content">
+        <h3>✏️ ویرایش عنوان مبحث گرامر</h3>
+        <div class="form-group"><label>نام مبحث</label><input type="text" id="editGrammarTopicName"></div>
+        <div class="modal-actions">
+            <button class="cancel-btn" onclick="closeEditGrammarTopicModal()">انصراف</button>
+            <button class="save-edit-btn" onclick="saveEditGrammarTopic()">💾 ذخیره</button>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Grammar Item Modal -->
+<div class="modal" id="editGrammarItemModal">
+    <div class="modal-content">
+        <h3>✏️ ویرایش جزئیات قاعده</h3>
+        <div class="form-group"><label>عنوان قاعده</label><input type="text" id="editGrammarItemTitle"></div>
+        <div class="form-group"><label>توضیحات و فرمول</label><textarea id="editGrammarItemDesc"></textarea></div>
+        <div class="form-group">
+            <label>مدیریت فایل و رسانه‌ها</label>
+            <input type="file" id="editGrammarFiles" multiple accept="image/*,video/*" onchange="handleFileSelect(this,'editGrammar')">
+            <div class="paste-area" id="editGrammarPasteArea" tabindex="0">
+                <div class="paste-area-icon">📋</div>
+                <div class="paste-area-text">برای پیست عکس کپی‌شده، روی دکمه زیر بزنید</div>
+                <button type="button" class="paste-btn" onclick="pasteImageFromClipboard('editGrammar',event)">📥 پیست عکس</button>
+            </div>
+            <div class="preview-thumbnails" id="editGrammarPreview"></div>
+        </div>
+        <div class="modal-actions">
+            <button class="cancel-btn" onclick="closeEditGrammarItemModal()">انصراف</button>
+            <button class="save-edit-btn" onclick="saveEditGrammarItem()">💾 ذخیره</button>
+        </div>
+    </div>
+</div>
+
 <script>
 // ===== داده‌ها =====
 let items = [];
 let topics = [];
 let sentences = {};
+let grammarTopics = [];
+let grammarItems = {};
+
 let editIndex = null;
 let editTopicId = null;
 let editSentenceId = null;
 let editSentenceTopicId = null;
+let editGrammarTopicId = null;
+let editGrammarItemId = null;
+let editGrammarItemSubId = null;
 
 let currentFormRating = 0;
 let currentEditRating = 0;
 let selectedFormTopic = null;
 let selectedEditTopic = null;
 let selectedTopicForSentences = null;
+let selectedGrammarTopicId = null;
+
 let tempMainMedia = [];
 let tempEditMedia = [];
+let tempGrammarMedia = [];
+let tempEditGrammarMedia = [];
 
 // ===== IndexedDB =====
-const DB_NAME = 'languageNotebookDB';
-const DB_VERSION = 4;
+const DB_NAME = 'languageNotebookDB_v6';
+const DB_VERSION = 6;
 const STORE_NAME = 'items';
 const STORE_TOPICS = 'topics';
 const STORE_SENTENCES = 'sentences';
+const STORE_G_TOPICS = 'grammar_topics';
+const STORE_G_ITEMS = 'grammar_items';
 let db = null;
 
 function openDatabase() {
@@ -691,227 +779,339 @@ function openDatabase() {
         const request = indexedDB.open(DB_NAME, DB_VERSION);
         request.onupgradeneeded = (e) => {
             const database = e.target.result;
-            if (!database.objectStoreNames.contains(STORE_NAME))
-                database.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
-            if (!database.objectStoreNames.contains(STORE_TOPICS))
-                database.createObjectStore(STORE_TOPICS, { keyPath: 'id', autoIncrement: true });
-            if (!database.objectStoreNames.contains(STORE_SENTENCES))
-                database.createObjectStore(STORE_SENTENCES, { keyPath: 'id', autoIncrement: true });
+            if (!database.objectStoreNames.contains(STORE_NAME)) database.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
+            if (!database.objectStoreNames.contains(STORE_TOPICS)) database.createObjectStore(STORE_TOPICS, { keyPath: 'id', autoIncrement: true });
+            if (!database.objectStoreNames.contains(STORE_SENTENCES)) database.createObjectStore(STORE_SENTENCES, { keyPath: 'id', autoIncrement: true });
+            if (!database.objectStoreNames.contains(STORE_G_TOPICS)) database.createObjectStore(STORE_G_TOPICS, { keyPath: 'id', autoIncrement: true });
+            if (!database.objectStoreNames.contains(STORE_G_ITEMS)) database.createObjectStore(STORE_G_ITEMS, { keyPath: 'id', autoIncrement: true });
         };
         request.onsuccess = (e) => { db = e.target.result; resolve(db); };
         request.onerror = (e) => reject(e.target.error);
     });
 }
 
-// ===== Topic Functions =====
-async function loadTopicsFromDB() {
-    try {
-        const tx = db.transaction(STORE_TOPICS, 'readonly');
-        const store = tx.objectStore(STORE_TOPICS);
-        return new Promise((resolve) => {
-            const req = store.getAll();
-            req.onsuccess = () => resolve(req.result);
-            req.onerror = () => resolve([]);
-        });
-    } catch { return []; }
-}
-
-async function saveTopicToDB(topic) {
-    const tx = db.transaction(STORE_TOPICS, 'readwrite');
-    const store = tx.objectStore(STORE_TOPICS);
-    return new Promise((resolve, reject) => {
-        const req = store.add(topic);
-        req.onsuccess = () => resolve(req.result);
-        req.onerror = () => reject(req.error);
-    });
-}
-
-async function updateTopicInDB(topic) {
-    const tx = db.transaction(STORE_TOPICS, 'readwrite');
-    const store = tx.objectStore(STORE_TOPICS);
-    return new Promise((resolve, reject) => {
-        const req = store.put(topic);
-        req.onsuccess = () => resolve(req.result);
-        req.onerror = () => reject(req.error);
-    });
-}
-
-async function deleteTopicFromDB(id) {
-    const tx = db.transaction(STORE_TOPICS, 'readwrite');
-    const store = tx.objectStore(STORE_TOPICS);
-    return new Promise((resolve, reject) => {
-        const req = store.delete(id);
-        req.onsuccess = () => resolve();
-        req.onerror = () => reject(req.error);
-    });
-}
-
-// ===== Sentence Functions =====
-async function loadSentencesFromDB() {
-    try {
-        const tx = db.transaction(STORE_SENTENCES, 'readonly');
-        const store = tx.objectStore(STORE_SENTENCES);
-        return new Promise((resolve) => {
-            const req = store.getAll();
-            req.onsuccess = () => {
-                const result = {};
-                req.result.forEach(s => {
-                    if (!result[s.topicId]) result[s.topicId] = [];
-                    result[s.topicId].push({ id: s.id, text: s.text, translation: s.translation });
-                });
-                resolve(result);
-            };
-            req.onerror = () => resolve({});
-        });
-    } catch { return {}; }
-}
-
-async function saveSentenceToDB(sentence) {
-    const tx = db.transaction(STORE_SENTENCES, 'readwrite');
-    const store = tx.objectStore(STORE_SENTENCES);
-    return new Promise((resolve, reject) => {
-        const req = store.add(sentence);
-        req.onsuccess = () => resolve(req.result);
-        req.onerror = () => reject(req.error);
-    });
-}
-
-async function updateSentenceInDB(sentence) {
-    const tx = db.transaction(STORE_SENTENCES, 'readwrite');
-    const store = tx.objectStore(STORE_SENTENCES);
-    return new Promise((resolve, reject) => {
-        const req = store.put(sentence);
-        req.onsuccess = () => resolve(req.result);
-        req.onerror = () => reject(req.error);
-    });
-}
-
-async function deleteSentenceFromDB(id) {
-    const tx = db.transaction(STORE_SENTENCES, 'readwrite');
-    const store = tx.objectStore(STORE_SENTENCES);
-    return new Promise((resolve, reject) => {
-        const req = store.delete(id);
-        req.onsuccess = () => resolve();
-        req.onerror = () => reject(req.error);
-    });
-}
-
-// ===== Load All =====
+// ===== Load Data =====
 async function loadAllData() {
     try {
         await openDatabase();
         const allItems = await dbGetAll();
-        allItems.forEach(item => {
-            if (item.level === undefined) item.level = 0;
-            if (!item.media) item.media = [];
-            if (!item.topicId) item.topicId = null;
-        });
         items = allItems.reverse();
-        topics = await loadTopicsFromDB();
-        sentences = await loadSentencesFromDB();
-        if (topics.length > 0 && !selectedTopicForSentences) {
-            selectedTopicForSentences = topics[0].id;
-        }
+        topics = await loadFromDB(STORE_TOPICS);
+        sentences = await loadGroupedData(STORE_SENTENCES, 'topicId');
+        grammarTopics = await loadFromDB(STORE_G_TOPICS);
+        grammarItems = await loadGroupedData(STORE_G_ITEMS, 'grammarTopicId');
+        
+        if (topics.length > 0) selectedTopicForSentences = topics[0].id;
+        if (grammarTopics.length > 0) selectedGrammarTopicId = grammarTopics[0].id;
     } catch (e) {
-        console.error('خطا:', e);
-        items = []; topics = []; sentences = {};
+        console.error(e);
     }
     renderAll();
 }
 
-// ===== Item DB =====
 function dbGetAll() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         const tx = db.transaction(STORE_NAME, 'readonly');
-        const store = tx.objectStore(STORE_NAME);
-        const req = store.getAll();
+        tx.objectStore(STORE_NAME).getAll().onsuccess = (e) => resolve(e.target.result || []);
+    });
+}
+
+function loadFromDB(storeName) {
+    return new Promise((resolve) => {
+        const tx = db.transaction(storeName, 'readonly');
+        tx.objectStore(storeName).getAll().onsuccess = (e) => resolve(e.target.result || []);
+    });
+}
+
+function loadGroupedData(storeName, groupKey) {
+    return new Promise((resolve) => {
+        const tx = db.transaction(storeName, 'readonly');
+        tx.objectStore(storeName).getAll().onsuccess = (e) => {
+            const data = e.target.result || [];
+            const grouped = {};
+            data.forEach(item => {
+                if (!grouped[item[groupKey]]) grouped[item[groupKey]] = [];
+                grouped[item[groupKey]].push(item);
+            });
+            resolve(grouped);
+        };
+    });
+}
+
+function addToDB(storeName, data) {
+    return new Promise((resolve) => {
+        const tx = db.transaction(storeName, 'readwrite');
+        const req = tx.objectStore(storeName).add(data);
         req.onsuccess = () => resolve(req.result);
-        req.onerror = () => reject(req.error);
-    });
-}
-function dbAdd(item) {
-    const tx = db.transaction(STORE_NAME, 'readwrite');
-    const store = tx.objectStore(STORE_NAME);
-    return new Promise((resolve, reject) => {
-        const req = store.add(item);
-        req.onsuccess = () => resolve(req.result);
-        req.onerror = () => reject(req.error);
-    });
-}
-function dbPut(item) {
-    const tx = db.transaction(STORE_NAME, 'readwrite');
-    const store = tx.objectStore(STORE_NAME);
-    return new Promise((resolve, reject) => {
-        const req = store.put(item);
-        req.onsuccess = () => resolve(req.result);
-        req.onerror = () => reject(req.error);
-    });
-}
-function dbDelete(id) {
-    const tx = db.transaction(STORE_NAME, 'readwrite');
-    const store = tx.objectStore(STORE_NAME);
-    return new Promise((resolve, reject) => {
-        const req = store.delete(id);
-        req.onsuccess = () => resolve();
-        req.onerror = () => reject(req.error);
     });
 }
 
-// ===== Helpers =====
-function getDirection(text) {
-    if (!text || text.trim() === '') return 'ltr';
-    const clean = text.trim().replace(/[\s\d\.\,\?\!\-\_\(\)\[\]\{\}\:\;\"\'\’\‘\“\”\•\-\+\=\/\*]/g, '');
-    if (clean.length === 0) return 'ltr';
-    const code = clean.charCodeAt(0);
-    return (code >= 0x0600 && code <= 0x06FF) || (code >= 0xFB50 && code <= 0xFDFF) ? 'rtl' : 'ltr';
+function updateInDB(storeName, data) {
+    return new Promise((resolve) => {
+        const tx = db.transaction(storeName, 'readwrite');
+        tx.objectStore(storeName).put(data).onsuccess = () => resolve();
+    });
 }
 
-function speakWord(text, e) { if(e) e.stopPropagation(); if(!text) return; const u = new SpeechSynthesisUtterance(text); u.lang='en-US'; window.speechSynthesis.cancel(); window.speechSynthesis.speak(u); }
-function speakSentence(text, e) { if(e) e.stopPropagation(); if(!text) return; const u = new SpeechSynthesisUtterance(text); u.lang='en-US'; window.speechSynthesis.cancel(); window.speechSynthesis.speak(u); }
-
-function getTopicColor(id) { const t = topics.find(t=>t.id===id); return t ? t.color : '#4A90D9'; }
-function getTopicName(id) { const t = topics.find(t=>t.id===id); return t ? t.name : 'بدون تاپیک'; }
-
-function generateRandomColor() {
-    const colors = ['#FF6B6B','#4ECDC4','#45B7D1','#96CEB4','#FFEAA7','#DDA0DD','#FF8A5C','#A29BFE','#FD79A8','#00CEC9','#FDCB6E','#6C5CE7','#00B894','#E17055','#0984E3'];
-    return colors[Math.floor(Math.random() * colors.length)];
+function deleteFromDB(storeName, id) {
+    return new Promise((resolve) => {
+        const tx = db.transaction(storeName, 'readwrite');
+        tx.objectStore(storeName).delete(id).onsuccess = () => resolve();
+    });
 }
 
-// ===== Topic Management =====
+// ===== Grammar Management =====
+async function addGrammarTopic() {
+    const name = document.getElementById('newGrammarName').value.trim();
+    if (!name) { alert('لطفاً نام مبحث گرامر را وارد کنید'); return; }
+    if (grammarTopics.some(g => g.name === name)) { alert('این مبحث قبلاً ایجاد شده است'); return; }
+    const color = generateRandomColor();
+    try {
+        const id = await addToDB(STORE_G_TOPICS, { name, color });
+        grammarTopics.push({ id, name, color });
+        if (grammarTopics.length === 1) selectedGrammarTopicId = id;
+        document.getElementById('newGrammarName').value = '';
+        renderAll();
+    } catch(e) { console.error(e); }
+}
+
+async function deleteGrammarTopic(id) {
+    if (!confirm('آیا از حذف این مبحث گرامری و تمام قواعد زیرمجموعه آن مطمئن هستید؟')) return;
+    try {
+        await deleteFromDB(STORE_G_TOPICS, id);
+        grammarTopics = grammarTopics.filter(g => g.id !== id);
+        if (grammarItems[id]) {
+            for (const item of grammarItems[id]) await deleteFromDB(STORE_G_ITEMS, item.id);
+            delete grammarItems[id];
+        }
+        if (selectedGrammarTopicId === id) {
+            selectedGrammarTopicId = grammarTopics.length > 0 ? grammarTopics[0].id : null;
+        }
+        renderAll();
+    } catch(e) { console.error(e); }
+}
+
+function openEditGrammarTopicModal(id) {
+    editGrammarTopicId = id;
+    const g = grammarTopics.find(gt => gt.id === id);
+    if (!g) return;
+    document.getElementById('editGrammarTopicName').value = g.name;
+    document.getElementById('editGrammarTopicModal').classList.add('show');
+}
+
+function closeEditGrammarTopicModal() {
+    document.getElementById('editGrammarTopicModal').classList.remove('show');
+    editGrammarTopicId = null;
+}
+
+async function saveEditGrammarTopic() {
+    const name = document.getElementById('editGrammarTopicName').value.trim();
+    if (!name) return;
+    const g = grammarTopics.find(gt => gt.id === editGrammarTopicId);
+    if (!g) return;
+    g.name = name;
+    await updateInDB(STORE_G_TOPICS, g);
+    renderAll();
+    closeEditGrammarTopicModal();
+}
+
+async function addGrammarItem() {
+    if (!selectedGrammarTopicId) { alert('لطفاً ابتدا یک مبحث گramر بسازید یا انتخاب کنید'); return; }
+    const title = document.getElementById('grammarItemTitle').value.trim();
+    const desc = document.getElementById('grammarItemDesc').value.trim();
+    if (!title || !desc) { alert('لطفاً عنوان قاعده و توضیحات را وارد کنید'); return; }
+    
+    const media = tempGrammarMedia.map(m => ({ type: m.type, blob: m.blob }));
+    const newItem = { grammarTopicId: selectedGrammarTopicId, title, desc, media };
+    
+    const id = await addToDB(STORE_G_ITEMS, newItem);
+    newItem.id = id;
+    
+    if (!grammarItems[selectedGrammarTopicId]) grammarItems[selectedGrammarTopicId] = [];
+    grammarItems[selectedGrammarTopicId].push(newItem);
+    
+    document.getElementById('grammarItemTitle').value = '';
+    document.getElementById('grammarItemDesc').value = '';
+    tempGrammarMedia = [];
+    renderThumbnails('grammar');
+    loadGrammarItems();
+}
+
+async function deleteGrammarItem(topicId, itemId) {
+    if (!confirm('آیا از حذف این قاعده مطمئن هستید؟')) return;
+    await deleteFromDB(STORE_G_ITEMS, itemId);
+    grammarItems[topicId] = grammarItems[topicId].filter(i => i.id !== itemId);
+    loadGrammarItems();
+}
+
+function openEditGrammarItemModal(topicId, itemId) {
+    editGrammarItemId = topicId;
+    editGrammarItemSubId = itemId;
+    const item = grammarItems[topicId].find(i => i.id === itemId);
+    if (!item) return;
+    document.getElementById('editGrammarItemTitle').value = item.title;
+    document.getElementById('editGrammarItemDesc').value = item.desc;
+    tempEditGrammarMedia = item.media ? item.media.map(m => ({ type: m.type, blob: m.blob })) : [];
+    renderThumbnails('editGrammar');
+    document.getElementById('editGrammarItemModal').classList.add('show');
+}
+
+function closeEditGrammarItemModal() {
+    document.getElementById('editGrammarItemModal').classList.remove('show');
+    editGrammarItemId = null; editGrammarItemSubId = null;
+}
+
+async function saveEditGrammarItem() {
+    const title = document.getElementById('editGrammarItemTitle').value.trim();
+    const desc = document.getElementById('editGrammarItemDesc').value.trim();
+    if (!title || !desc) return;
+    
+    const item = grammarItems[editGrammarItemId].find(i => i.id === editGrammarItemSubId);
+    if (!item) return;
+    
+    item.title = title;
+    item.desc = desc;
+    item.media = tempEditGrammarMedia.map(m => ({ type: m.type, blob: m.blob }));
+    
+    await updateInDB(STORE_G_ITEMS, item);
+    loadGrammarItems();
+    closeEditGrammarItemModal();
+}
+
+function loadGrammarItems() {
+    const container = document.getElementById('grammarItemsList');
+    const label = document.getElementById('selectedGrammarLabel');
+    container.innerHTML = '';
+    
+    if (window.grammarObjectURLs) window.grammarObjectURLs.forEach(u => URL.revokeObjectURL(u));
+    window.grammarObjectURLs = [];
+
+    if (!selectedGrammarTopicId) {
+        label.textContent = 'هیچ مبحثی انتخاب نشده است';
+        container.innerHTML = '<div class="empty-msg"><span>🧠</span><p>یک مبحث گرامری انتخاب یا ایجاد کنید</p></div>';
+        return;
+    }
+    
+    const gTopic = grammarTopics.find(gt => gt.id === selectedGrammarTopicId);
+    label.textContent = `📌 مبحث فعال: ${gTopic ? gTopic.name : ''}`;
+    
+    if (!grammarItems[selectedGrammarTopicId] || grammarItems[selectedGrammarTopicId].length === 0) {
+        container.innerHTML = '<div class="empty-msg"><span>📝</span><p>هیچ قاعده‌ای برای این مبحث ثبت نشده است</p></div>';
+        return;
+    }
+    
+    grammarItems[selectedGrammarTopicId].forEach(item => {
+        let mediaHtml = '';
+        if (item.media && item.media.length) {
+            mediaHtml += `<div class="media-container" style="border-radius:8px; margin-top:8px;">`;
+            item.media.forEach(m => {
+                const url = URL.createObjectURL(m.blob);
+                window.grammarObjectURLs.push(url);
+                if (m.type.startsWith('image/')) mediaHtml += `<img src="${url}" loading="lazy">`;
+                else if (m.type.startsWith('video/')) mediaHtml += `<video controls><source src="${url}"></video>`;
+            });
+            mediaHtml += `</div>`;
+        }
+        
+        const div = document.createElement('div');
+        div.className = 'grammar-item';
+        div.innerHTML = `
+            <div class="grammar-item-content">
+                <div class="grammar-item-title"><span class="text">${item.title}</span></div>
+                <div class="grammar-item-desc">${item.desc}</div>
+                ${mediaHtml}
+            </div>
+            <div class="grammar-item-actions">
+                <button class="grammar-item-menu-btn" onclick="event.stopPropagation();toggleGrammarMenu(${item.id})">⋮</button>
+                <div class="grammar-item-menu-content" id="gItemMenu-${item.id}">
+                    <button class="edit-sub-btn" onclick="event.stopPropagation();openEditGrammarItemModal(${selectedGrammarTopicId}, ${item.id});closeAllGrammarMenus();">✏️ ویرایش</button>
+                    <button class="delete-sub-btn" onclick="event.stopPropagation();deleteGrammarItem(${selectedGrammarTopicId}, ${item.id});closeAllGrammarMenus();">🗑 حذف</button>
+                </div>
+            </div>
+        `;
+        container.appendChild(div);
+    });
+}
+
+function renderGrammarTopics() {
+    const grid = document.getElementById('grammarTopicGrid');
+    grid.innerHTML = '';
+    if (grammarTopics.length === 0) {
+        grid.innerHTML = '<div class="empty-msg"><span>📂</span><p>هیچ مبحث گرامری ساخته نشده است</p></div>';
+        return;
+    }
+    grammarTopics.forEach(gt => {
+        const card = document.createElement('div');
+        card.className = 'topic-card';
+        card.onclick = () => { selectedGrammarTopicId = gt.id; renderGrammarTopics(); loadGrammarItems(); };
+        if (selectedGrammarTopicId === gt.id) {
+            card.style.borderColor = 'var(--primary)';
+            card.style.boxShadow = '0 0 0 3px var(--primary-glow)';
+        }
+        card.innerHTML = `
+            <div class="topic-left">
+                <span class="color-dot" style="background:${gt.color};"></span>
+                <span class="topic-name">${gt.name}</span>
+            </div>
+            <div class="topic-actions">
+                <button class="topic-menu-btn" onclick="event.stopPropagation();toggleGrammarTopicMenu(${gt.id})">⋮</button>
+                <div class="topic-menu-content" id="gTopicMenu-${gt.id}">
+                    <button class="edit-topic-btn" onclick="event.stopPropagation();openEditGrammarTopicModal(${gt.id});closeAllGrammarTopicMenus();">✏️ ویرایش</button>
+                    <button class="delete-topic-btn" onclick="event.stopPropagation();deleteGrammarTopic(${gt.id});closeAllGrammarTopicMenus();">🗑 حذف</button>
+                </div>
+            </div>
+        `;
+        grid.appendChild(card);
+    });
+}
+
+function toggleGrammarTopicMenu(id) {
+    const menu = document.getElementById('gTopicMenu-' + id);
+    if (!menu) return;
+    const isOpen = menu.classList.contains('show');
+    closeAllGrammarTopicMenus();
+    if (!isOpen) menu.classList.add('show');
+}
+function closeAllGrammarTopicMenus() { document.querySelectorAll('#grammarTopicGrid .topic-menu-content').forEach(m => m.classList.remove('show')); }
+function toggleGrammarMenu(id) {
+    const menu = document.getElementById('gItemMenu-' + id);
+    const isOpen = menu.classList.contains('show');
+    closeAllGrammarMenus();
+    if (!isOpen) menu.classList.add('show');
+}
+function closeAllGrammarMenus() { document.querySelectorAll('.grammar-item-menu-content').forEach(m => m.classList.remove('show')); }
+
+
+// ===== Topic Functions =====
 async function addTopic() {
     const name = document.getElementById('newTopicName').value.trim();
     if (!name) { alert('لطفاً نام تاپیک را وارد کنید'); return; }
     if (topics.some(t=>t.name===name)) { alert('این تاپیک قبلاً وجود دارد'); return; }
     const color = generateRandomColor();
     try {
-        const id = await saveTopicToDB({ name, color });
-        const newTopic = { id, name, color };
-        topics.push(newTopic);
-        if (topics.length === 1) {
-            selectedTopicForSentences = id;
-        }
-        renderAll();
+        const id = await addToDB(STORE_TOPICS, { name, color });
+        topics.push({ id, name, color });
+        if (topics.length === 1) selectedTopicForSentences = id;
         document.getElementById('newTopicName').value = '';
-    } catch(e) { console.error(e); alert('خطا در افزودن تاپیک'); }
+        renderAll();
+    } catch(e) { console.error(e); }
 }
 
 async function deleteTopic(id) {
     if (!confirm('آیا از حذف این تاپیک مطمئن هستید؟')) return;
     try {
-        await deleteTopicFromDB(id);
+        await deleteFromDB(STORE_TOPICS, id);
         topics = topics.filter(t=>t.id!==id);
         if (sentences[id]) {
-            for (const s of sentences[id]) await deleteSentenceFromDB(s.id);
+            for (const s of sentences[id]) await deleteFromDB(STORE_SENTENCES, s.id);
             delete sentences[id];
         }
         for (const item of items) {
-            if (item.topicId === id) { item.topicId = null; await dbPut(item); }
+            if (item.topicId === id) { item.topicId = null; await updateInDB(STORE_NAME, item); }
         }
-        if (selectedTopicForSentences === id) {
-            selectedTopicForSentences = topics.length > 0 ? topics[0].id : null;
-        }
+        if (selectedTopicForSentences === id) selectedTopicForSentences = topics.length > 0 ? topics[0].id : null;
         renderAll();
-    } catch(e) { console.error(e); alert('خطا در حذف تاپیک'); }
+    } catch(e) { console.error(e); }
 }
 
 function openEditTopicModal(id) {
@@ -923,115 +1123,86 @@ function openEditTopicModal(id) {
     document.getElementById('editTopicModal').classList.add('show');
 }
 
-function closeEditTopicModal() {
-    document.getElementById('editTopicModal').classList.remove('show');
-    editTopicId = null;
-}
+function closeEditTopicModal() { document.getElementById('editTopicModal').classList.remove('show'); editTopicId = null; }
 
 async function saveEditTopic() {
     const name = document.getElementById('editTopicName').value.trim();
-    if (!name) { alert('نام تاپیک نمی‌تواند خالی باشد'); return; }
-    const color = document.getElementById('editTopicColor').value;
+    if (!name) return;
     const topic = topics.find(t=>t.id===editTopicId);
     if (!topic) return;
     topic.name = name;
-    topic.color = color;
-    try { await updateTopicInDB(topic); renderAll(); closeEditTopicModal(); }
-    catch(e) { console.error(e); alert('خطا در ذخیره تغییرات'); }
+    topic.color = document.getElementById('editTopicColor').value;
+    await updateInDB(STORE_TOPICS, topic);
+    renderAll();
+    closeEditTopicModal();
 }
 
-// ===== Sentence Management =====
+// ===== Sentence Functions =====
 async function addSentence() {
-    if (!selectedTopicForSentences) {
-        alert('لطفاً یک تاپیک را انتخاب کنید');
-        return;
-    }
+    if (!selectedTopicForSentences) { alert('لطفاً یک تاپیک را انتخاب کنید'); return; }
     const text = document.getElementById('newSentence').value.trim();
     const translation = document.getElementById('newSentenceTranslation').value.trim();
-    if (!text) { alert('لطفاً جمله را وارد کنید'); return; }
-    try {
-        const id = await saveSentenceToDB({ topicId: selectedTopicForSentences, text, translation });
-        if (!sentences[selectedTopicForSentences]) sentences[selectedTopicForSentences] = [];
-        sentences[selectedTopicForSentences].push({ id, text, translation });
-        document.getElementById('newSentence').value = '';
-        document.getElementById('newSentenceTranslation').value = '';
-        loadTopicSentences();
-    } catch(e) { console.error(e); alert('خطا در افزودن جمله'); }
+    if (!text) return;
+    const id = await addToDB(STORE_SENTENCES, { topicId: selectedTopicForSentences, text, translation });
+    if (!sentences[selectedTopicForSentences]) sentences[selectedTopicForSentences] = [];
+    sentences[selectedTopicForSentences].push({ id, text, translation });
+    document.getElementById('newSentence').value = '';
+    document.getElementById('newSentenceTranslation').value = '';
+    loadTopicSentences();
 }
 
 async function deleteSentence(topicId, sentenceId) {
-    if (!confirm('آیا از حذف این جمله مطمئن هستید؟')) return;
-    try {
-        await deleteSentenceFromDB(sentenceId);
-        sentences[topicId] = sentences[topicId].filter(s=>s.id!==sentenceId);
-        loadTopicSentences();
-    } catch(e) { console.error(e); alert('خطا در حذف جمله'); }
+    if (!confirm('آیا مطمئن هستید؟')) return;
+    await deleteFromDB(STORE_SENTENCES, sentenceId);
+    sentences[topicId] = sentences[topicId].filter(s=>s.id!==sentenceId);
+    loadTopicSentences();
 }
 
 function openEditSentenceModal(topicId, sentenceId) {
-    editSentenceTopicId = topicId;
-    editSentenceId = sentenceId;
-    const sentence = sentences[topicId].find(s=>s.id===sentenceId);
-    if (!sentence) return;
-    document.getElementById('editSentenceText').value = sentence.text;
-    document.getElementById('editSentenceTranslation').value = sentence.translation || '';
+    editSentenceTopicId = topicId; editSentenceId = sentenceId;
+    const s = sentences[topicId].find(x=>x.id===sentenceId);
+    if (!s) return;
+    document.getElementById('editSentenceText').value = s.text;
+    document.getElementById('editSentenceTranslation').value = s.translation || '';
     document.getElementById('editSentenceModal').classList.add('show');
 }
-
-function closeEditSentenceModal() {
-    document.getElementById('editSentenceModal').classList.remove('show');
-    editSentenceId = null;
-    editSentenceTopicId = null;
-}
-
+function closeEditSentenceModal() { document.getElementById('editSentenceModal').classList.remove('show'); }
 async function saveEditSentence() {
     const text = document.getElementById('editSentenceText').value.trim();
-    if (!text) { alert('جمله نمی‌تواند خالی باشد'); return; }
     const translation = document.getElementById('editSentenceTranslation').value.trim();
-    const sentence = sentences[editSentenceTopicId].find(s=>s.id===editSentenceId);
-    if (!sentence) return;
-    sentence.text = text;
-    sentence.translation = translation;
-    try {
-        await updateSentenceInDB({ id: sentence.id, topicId: editSentenceTopicId, text, translation });
-        loadTopicSentences();
-        closeEditSentenceModal();
-    } catch(e) { console.error(e); alert('خطا در ذخیره تغییرات'); }
+    if(!text) return;
+    const s = sentences[editSentenceTopicId].find(x=>x.id===editSentenceId);
+    s.text = text; s.translation = translation;
+    await updateInDB(STORE_SENTENCES, { id: s.id, topicId: editSentenceTopicId, text, translation });
+    loadTopicSentences();
+    closeEditSentenceModal();
 }
 
 function loadTopicSentences() {
     const container = document.getElementById('topicSentencesList');
     const label = document.getElementById('selectedTopicLabel');
     container.innerHTML = '';
-    
     if (!selectedTopicForSentences) {
         label.textContent = 'هیچ تاپیکی انتخاب نشده است';
-        container.innerHTML = '<div class="empty-msg"><span>📂</span><p>لطفاً یک تاپیک را از بخش مدیریت انتخاب کنید</p></div>';
         return;
     }
-    
     const topic = topics.find(t => t.id === selectedTopicForSentences);
-    label.textContent = `📌 تاپیک: ${topic ? topic.name : 'نامشخص'}`;
+    label.textContent = `📌 تاپیک فعال: ${topic ? topic.name : ''}`;
     
     if (!sentences[selectedTopicForSentences] || sentences[selectedTopicForSentences].length === 0) {
-        container.innerHTML = '<div class="empty-msg"><span>💬</span><p>هیچ جمله‌ای در این تاپیک وجود ندارد</p></div>';
+        container.innerHTML = '<div class="empty-msg"><span>💬</span><p>هیچ جمله‌ای وجود ندارد</p></div>';
         return;
     }
-    
     sentences[selectedTopicForSentences].forEach(s => {
-        const textDir = getDirection(s.text);
-        const transDir = getDirection(s.translation || '');
         const div = document.createElement('div');
         div.className = 'sentence-item';
         div.innerHTML = `
             <div class="sentence-content">
-                <div class="sentence-text" dir="${textDir}">
-                    ${textDir === 'ltr' ? 
-                        `<span class="text" style="text-align: left;">${s.text}</span><button class="audio-btn-sm" onclick="speakSentence('${s.text.replace(/'/g, "\\'")}', event)">🔊</button>` :
-                        `<button class="audio-btn-sm" onclick="speakSentence('${s.text.replace(/'/g, "\\'")}', event)">🔊</button><span class="text" style="text-align: right;">${s.text}</span>`
-                    }
+                <div class="sentence-text" dir="ltr">
+                    <span class="text" style="text-align: left;">${s.text}</span>
+                    <button class="audio-btn-sm" onclick="speakSentence('${s.text.replace(/'/g, "\\'")}')">🔊</button>
                 </div>
-                ${s.translation ? `<div class="sentence-translation" dir="${transDir}" style="text-align: ${transDir === 'rtl' ? 'right' : 'left'};">${s.translation}</div>` : ''}
+                ${s.translation ? `<div class="sentence-translation" dir="rtl" style="text-align: right;">${s.translation}</div>` : ''}
             </div>
             <div class="sentence-actions">
                 <button class="sentence-menu-btn" onclick="event.stopPropagation();toggleSentenceMenu(${s.id})">⋮</button>
@@ -1047,17 +1218,12 @@ function loadTopicSentences() {
 
 function toggleSentenceMenu(id) {
     const menu = document.getElementById('sentenceMenu-' + id);
-    if (!menu) return;
     const isOpen = menu.classList.contains('show');
     closeAllSentenceMenus();
     if (!isOpen) menu.classList.add('show');
 }
+function closeAllSentenceMenus() { document.querySelectorAll('.sentence-menu-content').forEach(m => m.classList.remove('show')); }
 
-function closeAllSentenceMenus() {
-    document.querySelectorAll('.sentence-menu-content').forEach(m => m.classList.remove('show'));
-}
-
-// ===== Render Topics =====
 function renderTopics() {
     const grid = document.getElementById('topicGrid');
     grid.innerHTML = '';
@@ -1068,7 +1234,7 @@ function renderTopics() {
     topics.forEach(t => {
         const card = document.createElement('div');
         card.className = 'topic-card';
-        card.onclick = () => selectTopic(t.id);
+        card.onclick = () => { selectedTopicForSentences = t.id; renderTopics(); loadTopicSentences(); };
         if (selectedTopicForSentences === t.id) {
             card.style.borderColor = 'var(--primary)';
             card.style.boxShadow = '0 0 0 3px var(--primary-glow)';
@@ -1089,22 +1255,19 @@ function renderTopics() {
         grid.appendChild(card);
     });
 
+    // Selectors
     const selectors = ['vocabTopicSelector', 'editTopicSelector'];
     selectors.forEach(selId => {
         const sel = document.getElementById(selId);
-        if (!sel) return;
-        sel.innerHTML = '';
+        if (!sel) return; sel.innerHTML = '';
         topics.forEach(t => {
             const div = document.createElement('div');
             div.className = 'topic-option';
-            const active = (selId === 'vocabTopicSelector' && selectedFormTopic === t.id) ||
-                           (selId === 'editTopicSelector' && selectedEditTopic === t.id);
-            if (active) div.classList.add('active');
+            if ((selId==='vocabTopicSelector' && selectedFormTopic===t.id) || (selId==='editTopicSelector' && selectedEditTopic===t.id)) div.classList.add('active');
             div.innerHTML = `<span class="color-dot-small" style="background:${t.color};"></span> ${t.name}`;
-            div.dir = getDirection(t.name);
             div.onclick = () => {
                 if (selId === 'vocabTopicSelector') selectedFormTopic = t.id;
-                else if (selId === 'editTopicSelector') selectedEditTopic = t.id;
+                else selectedEditTopic = t.id;
                 renderTopics();
             };
             sel.appendChild(div);
@@ -1112,29 +1275,15 @@ function renderTopics() {
     });
 }
 
-function selectTopic(id) {
-    selectedTopicForSentences = id;
-    const topicsTab = document.getElementById('tab-topics');
-    if (!topicsTab.classList.contains('active')) {
-        switchTab('topics');
-    }
-    loadTopicSentences();
-    renderTopics();
-}
-
 function toggleTopicMenu(id) {
     const menu = document.getElementById('topicMenu-' + id);
-    if (!menu) return;
     const isOpen = menu.classList.contains('show');
     closeAllTopicMenus();
     if (!isOpen) menu.classList.add('show');
 }
+function closeAllTopicMenus() { document.querySelectorAll('#topicGrid .topic-menu-content').forEach(m => m.classList.remove('show')); }
 
-function closeAllTopicMenus() {
-    document.querySelectorAll('.topic-menu-content').forEach(m => m.classList.remove('show'));
-}
-
-// ===== Render Vocabulary =====
+// ===== Vocabulary Main Render =====
 function render() {
     const search = document.getElementById('search').value.toLowerCase().trim();
     const sortBy = document.getElementById('sortBy').value;
@@ -1155,39 +1304,21 @@ function render() {
     }
 
     processed.forEach(item => {
-        const topicColor = getTopicColor(item.topicId);
-        const topicName = getTopicName(item.topicId);
+        const topic = topics.find(t=>t.id===item.topicId);
         let mediaHtml = '';
         if (item.media && item.media.length) {
             mediaHtml += `<div class="media-container">`;
             item.media.forEach(m => {
                 const url = URL.createObjectURL(m.blob);
-                if (!window.listObjectURLs) window.listObjectURLs = [];
                 window.listObjectURLs.push(url);
                 if (m.type.startsWith('image/')) mediaHtml += `<img src="${url}" loading="lazy">`;
-                else if (m.type.startsWith('video/')) mediaHtml += `<video controls preload="metadata"><source src="${url}"></video>`;
+                else if (m.type.startsWith('video/')) mediaHtml += `<video controls><source src="${url}"></video>`;
             });
             mediaHtml += `</div>`;
         }
 
-        const wordDir = getDirection(item.word);
-        const meaningDir = getDirection(item.meaning);
-
-        let exampleHtml = '';
-        if (item.example && item.example.trim()) {
-            const lines = item.example.split('\n');
-            let linesHtml = '';
-            lines.forEach(line => {
-                if (line.trim()) { const d = getDirection(line); linesHtml += `<div class="example-line" dir="${d}">${line}</div>`; }
-                else linesHtml += `<div style="height:6px;"></div>`;
-            });
-            exampleHtml = `<div class="example-display">${linesHtml}</div>`;
-        }
-
         let starsHtml = '';
-        for (let i=5; i>=1; i--) {
-            starsHtml += `<span class="${i <= (item.level||0) ? 'active' : ''}" onclick="changeCardLevel(${item.realIndex}, ${i})">★</span>`;
-        }
+        for (let i=5; i>=1; i--) starsHtml += `<span class="${i <= (item.level||0) ? 'active' : ''}" onclick="changeCardLevel(${item.realIndex}, ${i})">★</span>`;
 
         const card = document.createElement('div');
         card.className = 'card';
@@ -1197,7 +1328,7 @@ function render() {
                 <div class="card-header-actions">
                     <div class="card-meta">
                         <div class="badge">#${item.realIndex+1}</div>
-                        ${item.topicId ? `<span class="topic-badge" style="background:${topicColor};">${topicName}</span>` : ''}
+                        ${item.topicId ? `<span class="topic-badge" style="background:${topic?topic.color:'#4A90D9'};">${topic?topic.name:''}</span>` : ''}
                         <div class="card-stars">${starsHtml}</div>
                     </div>
                     <div class="menu-container">
@@ -1208,246 +1339,166 @@ function render() {
                         </div>
                     </div>
                 </div>
-                <div class="word-row" dir="${wordDir}">
-                    ${wordDir === 'ltr' ?
-                        `<div class="word-display">${item.word}</div><button class="audio-btn" onclick="speakWord('${item.word.replace(/'/g, "\\'")}', event)">🔊</button>` :
-                        `<button class="audio-btn" onclick="speakWord('${item.word.replace(/'/g, "\\'")}', event)">🔊</button><div class="word-display">${item.word}</div>`
-                    }
+                <div class="word-row" dir="ltr">
+                    <div class="word-display">${item.word}</div>
+                    <button class="audio-btn" onclick="speakWord('${item.word.replace(/'/g, "\\'")}')">🔊</button>
                 </div>
-                <div class="meaning-display" dir="${meaningDir}">${item.meaning}</div>
-                ${exampleHtml}
+                <div class="meaning-display" dir="rtl">${item.meaning}</div>
+                ${item.example ? `<div class="example-display"><div class="example-line" dir="ltr">${item.example}</div></div>` : ''}
             </div>
         `;
         list.appendChild(card);
     });
 }
 
-function renderAll() {
-    renderTopics();
-    render();
-    loadTopicSentences();
-}
-
-// ===== Switch Tab =====
-function switchTab(tab) {
-    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-    document.getElementById('tab-'+tab).classList.add('active');
-    document.querySelector(`.tab-btn[onclick="switchTab('${tab}')"]`).classList.add('active');
-    if (tab === 'topics') { renderTopics(); loadTopicSentences(); }
-}
-
-// ===== Item Functions =====
+// ===== General Core Functions =====
 async function addItem() {
     const word = document.getElementById('word').value.trim();
     const meaning = document.getElementById('meaning').value.trim();
-    if (!word || !meaning) { alert('لطفاً لغت و معنی را وارد کنید'); return; }
+    if (!word || !meaning) return;
     const example = document.getElementById('example').value;
-    const mediaToSave = tempMainMedia.map(m => ({ type: m.type, blob: m.blob }));
-    const newItem = { word, meaning, example, media: mediaToSave, level: currentFormRating, topicId: selectedFormTopic };
-    try {
-        const id = await dbAdd(newItem);
-        newItem.id = id;
-        items.unshift(newItem);
-    } catch(e) { console.error(e); alert('خطا در ذخیره واژه'); return; }
-    document.getElementById('word').value = '';
-    document.getElementById('meaning').value = '';
-    document.getElementById('example').value = '';
-    tempMainMedia = [];
-    currentFormRating = 0;
-    selectedFormTopic = null;
-    updateStarsDisplay('formStars', 0);
-    renderThumbnails('main');
-    render();
-    renderTopics();
+    const media = tempMainMedia.map(m => ({ type: m.type, blob: m.blob }));
+    const newItem = { word, meaning, example, media, level: currentFormRating, topicId: selectedFormTopic };
+    const id = await addToDB(STORE_NAME, newItem);
+    newItem.id = id; items.unshift(newItem);
+    
+    document.getElementById('word').value = ''; document.getElementById('meaning').value = ''; document.getElementById('example').value = '';
+    tempMainMedia = []; currentFormRating = 0; selectedFormTopic = null;
+    updateStarsDisplay('formStars', 0); renderThumbnails('main'); render();
 }
 
 async function deleteItem(index) {
-    if (!confirm('آیا از حذف این واژه مطمئن هستید؟')) return;
-    const item = items[index];
-    try { await dbDelete(item.id); items.splice(index, 1); render(); }
-    catch(e) { console.error(e); alert('خطا در حذف واژه'); }
+    if (!confirm('حذف شود؟')) return;
+    await deleteFromDB(STORE_NAME, items[index].id);
+    items.splice(index, 1); render();
 }
 
 function openEditModal(index) {
-    editIndex = index;
-    const item = items[index];
+    editIndex = index; const item = items[index];
     document.getElementById('editWord').value = item.word;
     document.getElementById('editMeaning').value = item.meaning;
     document.getElementById('editExample').value = item.example || '';
-    selectedEditTopic = item.topicId || null;
-    currentEditRating = item.level || 0;
+    selectedEditTopic = item.topicId; currentEditRating = item.level || 0;
     updateStarsDisplay('editStars', currentEditRating);
     tempEditMedia = item.media ? item.media.map(m => ({ type: m.type, blob: m.blob })) : [];
-    renderThumbnails('edit');
-    renderTopics();
+    renderThumbnails('edit'); renderTopics();
     document.getElementById('editModal').classList.add('show');
 }
-
-function closeEditModal() {
-    if (window.editThumbURLs) window.editThumbURLs.forEach(u => URL.revokeObjectURL(u));
-    document.getElementById('editModal').classList.remove('show');
-    editIndex = null;
-}
-
+function closeEditModal() { document.getElementById('editModal').classList.remove('show'); }
 async function saveEdit() {
-    const word = document.getElementById('editWord').value.trim();
-    const meaning = document.getElementById('editMeaning').value.trim();
-    if (!word || !meaning) { alert('لغت و معنی نمی‌توانند خالی باشند'); return; }
-    const example = document.getElementById('editExample').value;
-    items[editIndex].word = word;
-    items[editIndex].meaning = meaning;
-    items[editIndex].example = example;
-    items[editIndex].level = currentEditRating;
-    items[editIndex].topicId = selectedEditTopic;
-    items[editIndex].media = tempEditMedia.map(m => ({ type: m.type, blob: m.blob }));
-    try { await dbPut(items[editIndex]); render(); closeEditModal(); }
-    catch(e) { console.error(e); alert('خطا در ذخیره ویرایش'); }
+    const item = items[editIndex];
+    item.word = document.getElementById('editWord').value.trim();
+    item.meaning = document.getElementById('editMeaning').value.trim();
+    item.example = document.getElementById('editExample').value;
+    item.level = currentEditRating; item.topicId = selectedEditTopic;
+    item.media = tempEditMedia.map(m => ({ type: m.type, blob: m.blob }));
+    await updateInDB(STORE_NAME, item); render(); closeEditModal();
 }
 
-async function changeCardLevel(realIndex, newLevel) {
-    items[realIndex].level = newLevel;
-    try { await dbPut(items[realIndex]); render(); }
-    catch(e) { console.error(e); }
-}
+async function changeCardLevel(idx, lvl) { items[idx].level = lvl; await updateInDB(STORE_NAME, items[idx]); render(); }
 
-// ===== Media Functions =====
+// ===== Helpers, Media Pasting & Tabs =====
+function generateRandomColor() {
+    const colors = ['#FF6B6B','#4ECDC4','#45B7D1','#96CEB4','#FFEAA7','#A29BFE','#FD79A8','#00CEC9','#6C5CE7','#00B894','#E17055','#0984E3'];
+    return colors[Math.floor(Math.random() * colors.length)];
+}
+function speakWord(t) { const u = new SpeechSynthesisUtterance(t); u.lang='en-US'; window.speechSynthesis.cancel(); window.speechSynthesis.speak(u); }
+function speakSentence(t) { speakWord(t); }
+
 function handleFileSelect(input, target) {
-    for (const file of input.files) {
-        const obj = { type: file.type, blob: file };
-        if (target === 'main') tempMainMedia.push(obj);
-        else tempEditMedia.push(obj);
-    }
-    input.value = '';
-    renderThumbnails(target);
+    const list = target === 'main' ? tempMainMedia : target === 'edit' ? tempEditMedia : target === 'grammar' ? tempGrammarMedia : tempEditGrammarMedia;
+    for (const file of input.files) list.push({ type: file.type, blob: file });
+    input.value = ''; renderThumbnails(target);
 }
 
 async function pasteImageFromClipboard(target, event) {
     if (event) event.stopPropagation();
-    if (!navigator.clipboard || !navigator.clipboard.read) {
-        alert('مرورگر شما از پیست مستقیم تصویر پشتیبانی نمی‌کند.');
-        return;
-    }
+    const list = target === 'main' ? tempMainMedia : target === 'edit' ? tempEditMedia : target === 'grammar' ? tempGrammarMedia : tempEditGrammarMedia;
     try {
-        const items = await navigator.clipboard.read();
-        let found = false;
-        for (const item of items) {
+        const clipItems = await navigator.clipboard.read();
+        for (const item of clipItems) {
             for (const type of item.types) {
                 if (type.startsWith('image/')) {
                     const blob = await item.getType(type);
-                    const obj = { type: blob.type, blob };
-                    if (target === 'main') tempMainMedia.push(obj);
-                    else tempEditMedia.push(obj);
-                    found = true;
+                    list.push({ type: blob.type, blob });
+                    renderThumbnails(target);
                 }
             }
         }
-        if (found) renderThumbnails(target);
-        else alert('هیچ عکسی در کلیپ‌بورد پیدا نشد.');
-    } catch(e) { console.error(e); alert('خطا در خواندن کلیپ‌بورد'); }
+    } catch { alert('خطا در دسترسی به کلیپ‌بورد'); }
 }
-
-function setupPasteSupport(areaId, target) {
-    const area = document.getElementById(areaId);
-    if (!area) return;
-    area.addEventListener('paste', async (e) => {
-        const items = (e.clipboardData || window.clipboardData).items;
-        for (const item of items) {
-            if (item.type.indexOf('image') !== -1) {
-                const file = item.getAsFile();
-                const obj = { type: item.type, blob: file };
-                if (target === 'main') tempMainMedia.push(obj);
-                else tempEditMedia.push(obj);
-                renderThumbnails(target);
-                e.preventDefault();
-            }
-        }
-    });
-}
-
-let mainThumbURLs = [], editThumbURLs = [];
 
 function renderThumbnails(target) {
-    const container = document.getElementById(target === 'main' ? 'mainPreview' : 'editPreview');
-    const list = target === 'main' ? tempMainMedia : tempEditMedia;
-    const urlStore = target === 'main' ? mainThumbURLs : editThumbURLs;
-    urlStore.forEach(u => URL.revokeObjectURL(u));
-    urlStore.length = 0;
+    const container = document.getElementById(target + 'Preview');
+    const list = target === 'main' ? tempMainMedia : target === 'edit' ? tempEditMedia : target === 'grammar' ? tempGrammarMedia : tempEditGrammarMedia;
     container.innerHTML = '';
     list.forEach((m, idx) => {
         const url = URL.createObjectURL(m.blob);
-        urlStore.push(url);
-        const div = document.createElement('div');
-        div.className = 'thumb-container';
-        if (m.type.startsWith('image/')) {
-            div.innerHTML = `<img src="${url}"><button class="thumb-remove" onclick="removeThumb('${target}', ${idx}, event)">✕</button>`;
-        } else {
-            div.innerHTML = `<video src="${url}"></video><button class="thumb-remove" onclick="removeThumb('${target}', ${idx}, event)">✕</button>`;
-        }
+        const div = document.createElement('div'); div.className = 'thumb-container';
+        if (m.type.startsWith('image/')) div.innerHTML = `<img src="${url}">`;
+        else div.innerHTML = `<video src="${url}"></video>`;
+        div.innerHTML += `<button class="thumb-remove" onclick="removeThumb('${target}', ${idx}, event)">✕</button>`;
         container.appendChild(div);
     });
 }
-
-function removeThumb(target, idx, event) {
-    if (event) event.stopPropagation();
-    if (target === 'main') tempMainMedia.splice(idx, 1);
-    else tempEditMedia.splice(idx, 1);
-    renderThumbnails(target);
+function removeThumb(target, idx, e) {
+    e.stopPropagation();
+    const list = target === 'main' ? tempMainMedia : target === 'edit' ? tempEditMedia : target === 'grammar' ? tempGrammarMedia : tempEditGrammarMedia;
+    list.splice(idx, 1); renderThumbnails(target);
 }
 
-// ===== Stars =====
-function initStars(containerId, callback) {
-    document.querySelectorAll(`#${containerId} span`).forEach(star => {
-        star.addEventListener('click', () => {
-            const val = parseInt(star.dataset.value);
-            callback(val);
-            updateStarsDisplay(containerId, val);
-        });
-    });
-}
-function updateStarsDisplay(containerId, val) {
-    document.querySelectorAll(`#${containerId} span`).forEach(star => {
-        const v = parseInt(star.dataset.value);
-        star.classList.toggle('active', v <= val);
-    });
+function switchTab(tab) {
+    document.querySelectorAll('.tab-content, .tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-'+tab).classList.add('active');
+    document.querySelector(`.tab-btn[onclick="switchTab('${tab}')"]`).classList.add('active');
+    if (tab === 'topics') { renderTopics(); loadTopicSentences(); }
+    if (tab === 'grammar') { renderGrammarTopics(); loadGrammarItems(); }
 }
 
-// ===== Menu =====
 function toggleMenu(index, event) {
     event.stopPropagation();
     const menu = document.getElementById('menu-' + index);
-    document.querySelectorAll('.menu-content').forEach(m => {
-        if (m.id !== 'menu-' + index) m.classList.remove('show');
-    });
+    document.querySelectorAll('.menu-content').forEach(m => { if (m.id !== 'menu-' + index) m.classList.remove('show'); });
     menu.classList.toggle('show');
 }
 
-document.addEventListener('click', () => {
-    document.querySelectorAll('.menu-content').forEach(m => m.classList.remove('show'));
-    closeAllTopicMenus();
-    closeAllSentenceMenus();
-});
+function initStars(id, cb) {
+    document.querySelectorAll(`#${id} span`).forEach(s => s.addEventListener('click', () => { const v = parseInt(s.dataset.value); cb(v); updateStarsDisplay(id, v); }));
+}
+function updateStarsDisplay(id, val) { document.querySelectorAll(`#${id} span`).forEach(s => s.classList.toggle('active', parseInt(s.dataset.value) <= val)); }
 
-// ===== Theme =====
 function toggleTheme() {
     const html = document.documentElement;
-    const current = html.getAttribute('data-theme');
-    const btn = document.querySelector('.theme-btn');
-    if (current === 'light') {
-        html.removeAttribute('data-theme');
-        btn.textContent = '☀️ تغییر به حالت روشن';
-    } else {
-        html.setAttribute('data-theme', 'light');
-        btn.textContent = '🌙 تغییر به حالت تاریک';
-    }
+    const isLight = html.getAttribute('data-theme') === 'light';
+    if(isLight) { html.removeAttribute('data-theme'); document.querySelector('.theme-btn').textContent = '☀️ تغییر به حالت روشن'; }
+    else { html.setAttribute('data-theme', 'light'); document.querySelector('.theme-btn').textContent = '🌙 تغییر به حالت تاریک'; }
 }
 
-// ===== Init =====
+function renderAll() { renderTopics(); renderGrammarTopics(); render(); loadTopicSentences(); loadGrammarItems(); }
+
+document.addEventListener('click', () => {
+    document.querySelectorAll('.menu-content, .sentence-menu-content, .grammar-item-menu-content').forEach(m => m.classList.remove('show'));
+    closeAllTopicMenus(); closeAllGrammarTopicMenus();
+});
+
+// مچ کردن کلیپ بورد سیستم
+['mainPasteArea','grammarPasteArea','editPasteArea','editGrammarPasteArea'].forEach(id => {
+    const area = document.getElementById(id); if(!area) return;
+    const tgt = id.replace('PasteArea','');
+    area.addEventListener('paste', (e) => {
+        const items = (e.clipboardData || window.clipboardData).items;
+        const list = tgt === 'main' ? tempMainMedia : tgt === 'edit' ? tempEditMedia : tgt === 'grammar' ? tempGrammarMedia : tempEditGrammarMedia;
+        for (const item of items) {
+            if (item.type.indexOf('image') !== -1) {
+                list.push({ type: item.type, blob: item.getAsFile() });
+                renderThumbnails(tgt); e.preventDefault();
+            }
+        }
+    });
+});
+
 initStars('formStars', v => currentFormRating = v);
 initStars('editStars', v => currentEditRating = v);
-setupPasteSupport('mainPasteArea', 'main');
-setupPasteSupport('editPasteArea', 'edit');
-
 loadAllData();
 </script>
 </body>
