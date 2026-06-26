@@ -30,9 +30,6 @@
             --radius-sm: 12px;
             --transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             --font: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
-            
-            /* رنگ‌های تاپیک‌ها */
-            --topic-colors: #FF6B6B, #4ECDC4, #45B7D1, #96CEB4, #FFEAA7, #DDA0DD, #FF8A5C, #A29BFE, #FD79A8, #00CEC9;
         }
 
         [data-theme="light"] {
@@ -56,12 +53,7 @@
             --hover-bg: #e0e8f8;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: var(--font);
             background: var(--bg);
@@ -70,11 +62,9 @@
             min-height: 100vh;
             line-height: 1.6;
         }
-
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: var(--bg-secondary); }
         ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--primary-light); }
 
         header {
             background: var(--gradient);
@@ -84,11 +74,9 @@
             top: 0;
             z-index: 100;
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             box-shadow: 0 4px 30px rgba(74, 144, 217, 0.3);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
         }
-
         .topbar {
             display: flex;
             justify-content: space-between;
@@ -96,7 +84,6 @@
             max-width: 1200px;
             margin: auto;
         }
-
         .topbar h1 {
             font-size: 1.6rem;
             font-weight: 900;
@@ -105,27 +92,20 @@
             gap: 12px;
             letter-spacing: -0.5px;
         }
-
-        .topbar h1 .logo-icon {
-            font-size: 2rem;
-            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
-        }
-
+        .topbar h1 .logo-icon { font-size: 2rem; filter: drop-shadow(0 0 20px rgba(255,255,255,0.2)); }
         .topbar h1 span {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255,255,255,0.15);
             padding: 4px 16px;
             border-radius: 30px;
             font-size: 0.75rem;
             font-weight: 700;
-            letter-spacing: 0.5px;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255,255,255,0.1);
         }
-
         .theme-btn {
-            background: rgba(255, 255, 255, 0.12);
+            background: rgba(255,255,255,0.12);
             color: white;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255,255,255,0.15);
             padding: 10px 22px;
             border-radius: 30px;
             cursor: pointer;
@@ -139,18 +119,14 @@
             gap: 8px;
         }
         .theme-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(255,255,255,0.25);
             transform: scale(1.04);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
 
-        .container {
-            max-width: 1200px;
-            margin: auto;
-            padding: 30px 20px;
-        }
+        .container { max-width: 1200px; margin: auto; padding: 30px 20px; }
 
-        /* ===== Tabs ===== */
+        /* Tabs */
         .tabs {
             display: flex;
             gap: 4px;
@@ -176,30 +152,14 @@
             transition: var(--transition);
             white-space: nowrap;
         }
-        .tab-btn:hover {
-            background: var(--hover-bg);
-            color: var(--text);
-        }
-        .tab-btn.active {
-            background: var(--gradient);
-            color: white;
-            box-shadow: 0 4px 15px rgba(74, 144, 217, 0.3);
-        }
+        .tab-btn:hover { background: var(--hover-bg); color: var(--text); }
+        .tab-btn.active { background: var(--gradient); color: white; box-shadow: 0 4px 15px rgba(74,144,217,0.3); }
 
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-        .tab-content.active {
-            display: block;
-        }
+        .tab-content { display: none; animation: fadeIn 0.3s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ===== Form ===== */
+        /* Form */
         .form {
             background: var(--card);
             padding: 30px 32px;
@@ -207,22 +167,18 @@
             box-shadow: var(--shadow), var(--shadow-glow);
             margin-bottom: 35px;
             border: 1px solid var(--border);
-            transition: var(--transition);
             position: relative;
             overflow: hidden;
         }
-
         .form::before {
             content: '';
             position: absolute;
-            top: 0;
-            right: 0;
+            top: 0; right: 0;
             width: 100%;
             height: 3px;
             background: var(--gradient);
             border-radius: var(--radius) var(--radius) 0 0;
         }
-
         .form h2 {
             font-size: 1.3rem;
             font-weight: 800;
@@ -232,7 +188,6 @@
             align-items: center;
             gap: 10px;
         }
-
         .form h2::after {
             content: '';
             flex: 1;
@@ -240,11 +195,7 @@
             background: var(--gradient-soft);
             margin-right: 15px;
         }
-
-        .form-group {
-            margin-bottom: 18px;
-        }
-
+        .form-group { margin-bottom: 18px; }
         .form-group label {
             display: block;
             font-weight: 700;
@@ -253,7 +204,6 @@
             font-size: 0.85rem;
             letter-spacing: 0.3px;
         }
-
         input, textarea, select {
             width: 100%;
             padding: 14px 18px;
@@ -266,18 +216,12 @@
             outline: none;
             transition: var(--transition);
         }
-
         input:focus, textarea:focus, select:focus {
             border-color: var(--primary);
             box-shadow: 0 0 0 4px var(--primary-glow);
             background: var(--card);
         }
-
-        textarea {
-            min-height: 80px;
-            line-height: 1.8;
-            resize: vertical;
-        }
+        textarea { min-height: 80px; line-height: 1.8; resize: vertical; }
 
         .btn-primary {
             background: var(--gradient);
@@ -289,23 +233,16 @@
             font-weight: 800;
             font-size: 1rem;
             width: 100%;
-            box-shadow: 0 4px 20px rgba(74, 144, 217, 0.35);
+            box-shadow: 0 4px 20px rgba(74,144,217,0.35);
             transition: var(--transition);
             font-family: var(--font);
-            letter-spacing: 0.3px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
         }
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 35px rgba(74, 144, 217, 0.45);
-        }
-        .btn-primary:active {
-            transform: scale(0.98);
-        }
-
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 35px rgba(74,144,217,0.45); }
+        .btn-primary:active { transform: scale(0.98); }
         .btn-secondary {
             background: var(--hover-bg);
             color: var(--text);
@@ -318,11 +255,7 @@
             transition: var(--transition);
             font-family: var(--font);
         }
-        .btn-secondary:hover {
-            background: var(--border);
-            transform: translateY(-2px);
-        }
-
+        .btn-secondary:hover { background: var(--border); transform: translateY(-2px); }
         .btn-danger {
             background: #ef4444;
             color: white;
@@ -334,12 +267,9 @@
             transition: var(--transition);
             font-family: var(--font);
         }
-        .btn-danger:hover {
-            background: #dc2626;
-            transform: translateY(-2px);
-        }
+        .btn-danger:hover { background: #dc2626; transform: translateY(-2px); }
 
-        /* ===== Topic Colors ===== */
+        /* Topic badge */
         .topic-badge {
             display: inline-block;
             padding: 4px 14px;
@@ -349,32 +279,27 @@
             color: white;
         }
 
-        /* ===== Grid ===== */
+        /* Grid & Card */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
             gap: 28px;
         }
-
-        /* ===== Card ===== */
         .card {
             background: var(--card);
             border-radius: var(--radius);
             overflow: hidden;
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
-            position: relative;
             display: flex;
             flex-direction: column;
             transition: var(--transition);
         }
-
         .card:hover {
             transform: translateY(-10px);
             border-color: var(--primary);
-            box-shadow: var(--shadow), 0 20px 60px rgba(74, 144, 217, 0.1);
+            box-shadow: var(--shadow), 0 20px 60px rgba(74,144,217,0.1);
         }
-
         .card .media-container {
             width: 100%;
             background: #000;
@@ -385,11 +310,9 @@
         .card .media-container::after {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            bottom: 0; left: 0; right: 0;
             height: 40px;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.3));
+            background: linear-gradient(transparent, rgba(0,0,0,0.3));
         }
         .card img, .card video {
             width: 100%;
@@ -398,33 +321,27 @@
             display: block;
             background: #0a0a0a;
         }
-
         .card-body {
             padding: 22px 24px 24px;
-            position: relative;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
             gap: 4px;
         }
-
         .card-header-actions {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 12px;
-            width: 100%;
             flex-wrap: wrap;
             gap: 8px;
         }
-
         .card-meta {
             display: flex;
             align-items: center;
             gap: 12px;
             flex-wrap: wrap;
         }
-
         .badge {
             display: inline-flex;
             align-items: center;
@@ -437,7 +354,6 @@
             font-weight: 800;
             letter-spacing: 0.3px;
         }
-
         .card-stars {
             display: flex;
             gap: 2px;
@@ -449,13 +365,8 @@
             cursor: pointer;
             transition: var(--transition);
         }
-        .card-stars span:hover {
-            transform: scale(1.2);
-        }
-        .card-stars span.active {
-            color: #fbbf24;
-            text-shadow: 0 0 15px rgba(251, 191, 36, 0.2);
-        }
+        .card-stars span:hover { transform: scale(1.2); }
+        .card-stars span.active { color: #fbbf24; text-shadow: 0 0 15px rgba(251,191,36,0.2); }
 
         .word-row {
             display: flex;
@@ -467,7 +378,6 @@
         }
         .word-row[dir="ltr"] { justify-content: flex-start; text-align: left; }
         .word-row[dir="rtl"] { justify-content: flex-end; text-align: right; }
-
         .word-display {
             font-size: 1.7rem;
             font-weight: 900;
@@ -475,7 +385,6 @@
             word-break: break-word;
             letter-spacing: -0.3px;
         }
-
         .audio-btn {
             background: var(--hover-bg);
             border: 2px solid var(--border);
@@ -498,7 +407,6 @@
             transform: scale(1.1);
             box-shadow: 0 0 25px var(--primary-glow);
         }
-
         .meaning-display {
             font-size: 1.05rem;
             margin: 4px 0 14px 0;
@@ -519,17 +427,12 @@
             border: 1px solid var(--border);
             border-right: 4px solid var(--primary);
             width: 100%;
-            box-sizing: border-box;
             display: flex;
             flex-direction: column;
             gap: 4px;
             transition: var(--transition);
         }
-        .example-display:hover {
-            border-color: var(--primary-light);
-            background: var(--card-hover);
-        }
-
+        .example-display:hover { border-color: var(--primary-light); background: var(--card-hover); }
         .example-line {
             display: block;
             width: 100%;
@@ -539,14 +442,10 @@
             white-space: pre-wrap;
             color: var(--text-secondary);
         }
-        .example-line[dir="ltr"] {
-            text-align: left !important;
-        }
-        .example-line[dir="rtl"] {
-            text-align: right !important;
-        }
+        .example-line[dir="ltr"] { text-align: left !important; }
+        .example-line[dir="rtl"] { text-align: right !important; }
 
-        /* ===== Topic Manager ===== */
+        /* Topic Manager */
         .topic-manager {
             display: flex;
             gap: 12px;
@@ -554,10 +453,7 @@
             align-items: center;
             margin-bottom: 15px;
         }
-        .topic-manager input {
-            flex: 1;
-            min-width: 150px;
-        }
+        .topic-manager input { flex: 1; min-width: 150px; }
         .topic-color-picker {
             width: 50px;
             height: 50px;
@@ -567,60 +463,102 @@
             cursor: pointer;
             background: none;
         }
-        .topic-color-picker::-webkit-color-swatch-wrapper {
-            padding: 0;
-        }
-        .topic-color-picker::-webkit-color-swatch {
-            border: none;
-            border-radius: var(--radius-sm);
-        }
+        .topic-color-picker::-webkit-color-swatch-wrapper { padding: 0; }
+        .topic-color-picker::-webkit-color-swatch { border: none; border-radius: var(--radius-sm); }
 
-        .topic-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 10px;
+        /* Topic Cards */
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
         }
-        .topic-item {
+        .topic-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            border: 2px solid var(--border);
+            overflow: hidden;
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+        }
+        .topic-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--primary);
+            box-shadow: var(--shadow);
+        }
+        .topic-card .topic-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            background: var(--input-bg);
+            display: block;
+        }
+        .topic-card .topic-info {
+            padding: 14px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .topic-card .topic-name {
+            font-weight: 700;
+            font-size: 1rem;
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 6px 14px 6px 10px;
-            border-radius: 30px;
-            border: 2px solid var(--border);
-            background: var(--input-bg);
-            transition: var(--transition);
         }
-        .topic-item:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-        .topic-item .color-dot {
-            width: 16px;
-            height: 16px;
+        .topic-card .topic-name .color-dot {
+            width: 14px;
+            height: 14px;
             border-radius: 50%;
-            border: 1px solid rgba(255,255,255,0.2);
             flex-shrink: 0;
         }
-        .topic-item .topic-name {
-            font-weight: 600;
-            font-size: 0.9rem;
+        .topic-card .topic-menu {
+            position: relative;
         }
-        .topic-item .topic-remove {
+        .topic-card .topic-menu-btn {
             background: none;
             border: none;
-            color: var(--text-muted);
+            color: var(--text-secondary);
+            font-size: 1.4rem;
             cursor: pointer;
-            font-size: 1rem;
-            padding: 0 4px;
+            padding: 0 6px;
             transition: var(--transition);
         }
-        .topic-item .topic-remove:hover {
-            color: #ef4444;
-            transform: scale(1.2);
+        .topic-card .topic-menu-btn:hover { color: var(--text); transform: rotate(90deg); }
+        .topic-menu-content {
+            display: none;
+            position: absolute;
+            top: 30px;
+            left: 0;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow);
+            min-width: 120px;
+            z-index: 10;
+            overflow: hidden;
         }
+        .topic-menu-content.show { display: block; }
+        .topic-menu-content button {
+            display: block;
+            width: 100%;
+            padding: 10px 16px;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-family: var(--font);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-align: right;
+            transition: var(--transition);
+        }
+        .topic-menu-content button:hover { background: var(--hover-bg); }
+        .topic-menu-content .edit-topic-btn { color: var(--primary-light); }
+        .topic-menu-content .delete-topic-btn { color: #f87171; }
 
-        /* ===== Topic Selector in Form ===== */
+        /* Topic Selector in Form */
         .topic-selector {
             display: flex;
             flex-wrap: wrap;
@@ -639,15 +577,8 @@
             color: var(--text-secondary);
             font-family: var(--font);
         }
-        .topic-option:hover {
-            transform: scale(1.04);
-            border-color: var(--primary);
-        }
-        .topic-option.active {
-            border-color: var(--primary);
-            background: var(--primary-glow);
-            color: var(--text);
-        }
+        .topic-option:hover { transform: scale(1.04); border-color: var(--primary); }
+        .topic-option.active { border-color: var(--primary); background: var(--primary-glow); color: var(--text); }
         .topic-option .color-dot-small {
             display: inline-block;
             width: 10px;
@@ -657,12 +588,10 @@
             vertical-align: middle;
         }
 
-        /* ===== Menu ===== */
-        .menu-container {
-            position: relative;
-        }
+        /* Menu (3-dot) for vocab cards */
+        .menu-container { position: relative; }
         .menu-btn {
-            background: rgba(15, 23, 42, 0.5);
+            background: rgba(15,23,42,0.5);
             backdrop-filter: blur(8px);
             color: var(--text-secondary);
             border: 1px solid var(--border);
@@ -676,20 +605,14 @@
             justify-content: center;
             transition: var(--transition);
         }
-        .menu-btn:hover {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-            transform: rotate(90deg);
-        }
-
+        .menu-btn:hover { background: var(--primary); color: white; border-color: var(--primary); transform: rotate(90deg); }
         .menu-content {
             display: none;
             position: absolute;
             top: 42px;
             left: 0;
             background: var(--card);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             border-radius: var(--radius-sm);
             min-width: 130px;
             overflow: hidden;
@@ -697,14 +620,8 @@
             border: 1px solid var(--border);
             backdrop-filter: blur(20px);
         }
-        .menu-content.show {
-            display: block;
-            animation: menuFadeIn 0.2s ease;
-        }
-        @keyframes menuFadeIn {
-            from { opacity: 0; transform: scale(0.95) translateY(-10px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-        }
+        .menu-content.show { display: block; animation: menuFadeIn 0.2s ease; }
+        @keyframes menuFadeIn { from { opacity:0; transform:scale(0.95) translateY(-10px); } to { opacity:1; transform:scale(1) translateY(0); } }
         .menu-content button {
             display: block;
             width: 100%;
@@ -719,23 +636,18 @@
             font-family: var(--font);
             transition: var(--transition);
         }
-        .menu-content button:hover {
-            background: var(--hover-bg);
-        }
+        .menu-content button:hover { background: var(--hover-bg); }
         .menu-content .edit-btn { color: var(--primary-light); }
         .menu-content .delete-btn { color: #f87171; }
 
-        /* ===== Modal ===== */
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -749,7 +661,7 @@
             border-radius: var(--radius);
             max-width: 520px;
             width: 100%;
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.6);
             border: 1px solid var(--border);
             max-height: 90vh;
             overflow-y: auto;
@@ -758,8 +670,7 @@
         .modal-content::before {
             content: '';
             position: absolute;
-            top: 0;
-            right: 0;
+            top: 0; right: 0;
             width: 100%;
             height: 3px;
             background: var(--gradient);
@@ -785,24 +696,11 @@
             font-family: var(--font);
             transition: var(--transition);
         }
-        .modal-actions button:hover {
-            transform: translateY(-2px);
-        }
-        .cancel-btn { 
-            background: var(--hover-bg); 
-            color: var(--text-secondary); 
-        }
-        .cancel-btn:hover {
-            background: var(--border);
-        }
-        .save-edit-btn { 
-            background: var(--gradient); 
-            color: white;
-            box-shadow: 0 4px 20px rgba(74, 144, 217, 0.3);
-        }
-        .save-edit-btn:hover {
-            box-shadow: 0 8px 30px rgba(74, 144, 217, 0.4);
-        }
+        .modal-actions button:hover { transform: translateY(-2px); }
+        .cancel-btn { background: var(--hover-bg); color: var(--text-secondary); }
+        .cancel-btn:hover { background: var(--border); }
+        .save-edit-btn { background: var(--gradient); color: white; box-shadow: 0 4px 20px rgba(74,144,217,0.3); }
+        .save-edit-btn:hover { box-shadow: 0 8px 30px rgba(74,144,217,0.4); }
 
         .empty-msg {
             text-align: center;
@@ -810,18 +708,10 @@
             color: var(--text-secondary);
             grid-column: 1 / -1;
         }
-        .empty-msg span {
-            font-size: 4rem;
-            display: block;
-            margin-bottom: 16px;
-        }
-        .empty-msg p {
-            font-size: 1.1rem;
-            font-weight: 600;
-            opacity: 0.6;
-        }
+        .empty-msg span { font-size: 4rem; display: block; margin-bottom: 16px; }
+        .empty-msg p { font-size: 1.1rem; font-weight: 600; opacity: 0.6; }
 
-        /* ===== Controls Row ===== */
+        /* Controls */
         .controls-row {
             display: flex;
             gap: 16px;
@@ -853,10 +743,7 @@
             opacity: 0.5;
             pointer-events: none;
         }
-
-        .sort-wrapper {
-            min-width: 200px;
-        }
+        .sort-wrapper { min-width: 200px; }
         .sort-wrapper select {
             border-radius: 30px;
             padding: 16px 22px;
@@ -876,7 +763,98 @@
             box-shadow: 0 0 0 4px var(--primary-glow);
         }
 
-        /* ===== Responsive ===== */
+        /* Paste area */
+        .paste-area {
+            border: 2px dashed var(--border);
+            padding: 20px 18px;
+            border-radius: var(--radius-sm);
+            text-align: center;
+            color: var(--text-secondary);
+            background: var(--input-bg);
+            cursor: pointer;
+            margin-top: 8px;
+            outline: none;
+            transition: var(--transition);
+        }
+        .paste-area:hover { border-color: var(--primary); background: var(--hover-bg); color: var(--text); transform: translateY(-2px); }
+        .paste-area:focus { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-glow); }
+        .paste-area-icon { font-size: 2.2rem; line-height: 1; margin-bottom: 4px; }
+        .paste-area-text { line-height: 1.6; font-weight: 500; }
+        .paste-area-hint { display: block; font-size: 0.7rem; color: var(--text-muted); opacity: 0.7; margin-top: 4px; }
+        .paste-btn {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-top: 10px;
+            transition: var(--transition);
+            font-family: var(--font);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .paste-btn:hover { transform: scale(1.05) translateY(-2px); box-shadow: 0 8px 30px rgba(74,144,217,0.4); }
+        .paste-btn:active { transform: scale(0.97); }
+
+        .preview-thumbnails {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 12px;
+        }
+        .thumb-container {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            border: 2px solid var(--border);
+            background: var(--input-bg);
+            transition: var(--transition);
+        }
+        .thumb-container:hover { border-color: var(--primary); transform: scale(1.04); }
+        .thumb-container img, .thumb-container video { width: 100%; height: 100%; object-fit: cover; }
+        .thumb-remove {
+            position: absolute;
+            top: 4px; left: 4px;
+            background: rgba(239,68,68,0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 22px; height: 22px;
+            font-size: 11px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+            transition: var(--transition);
+            font-weight: 700;
+        }
+        .thumb-remove:hover { transform: scale(1.15); background: #ef4444; }
+
+        .stars-rating {
+            display: flex;
+            gap: 6px;
+            direction: ltr;
+            justify-content: flex-end;
+            margin-top: 4px;
+        }
+        .stars-rating span {
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--border);
+            transition: var(--transition);
+            line-height: 1;
+        }
+        .stars-rating span:hover { transform: scale(1.2); color: #fbbf24; }
+        .stars-rating span.active { color: #fbbf24; text-shadow: 0 0 20px rgba(251,191,36,0.3); }
+
+        /* Responsive */
         @media (max-width: 768px) {
             header { padding: 14px 16px; }
             .topbar { flex-direction: row; flex-wrap: wrap; gap: 10px; justify-content: space-between; }
@@ -892,8 +870,8 @@
             .modal-content { padding: 22px 18px; }
             .tabs { flex-wrap: nowrap; overflow-x: auto; }
             .tab-btn { padding: 10px 16px; font-size: 0.8rem; flex: none; }
+            .topic-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
         }
-
         @media (max-width: 400px) {
             .topbar h1 { font-size: 0.95rem; }
             .stars-rating span { font-size: 1.4rem; }
@@ -905,43 +883,35 @@
 
     <header>
         <div class="topbar">
-            <h1>
-                <span class="logo-icon">📘</span>
-                دفترچه زبان
-                <span>پرو</span>
-            </h1>
+            <h1><span class="logo-icon">📘</span> دفترچه زبان <span>پرو</span></h1>
             <button class="theme-btn" onclick="toggleTheme()">☀️ تغییر به حالت روشن</button>
         </div>
     </header>
 
     <div class="container">
 
-        <!-- ===== Tabs ===== -->
+        <!-- Tabs -->
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('vocab')">📝 لغات</button>
             <button class="tab-btn" onclick="switchTab('topics')">📂 تاپیک‌ها</button>
         </div>
 
-        <!-- ===== Tab: Vocabulary ===== -->
+        <!-- Tab: Vocabulary -->
         <div class="tab-content active" id="tab-vocab">
             <div class="form" id="mainForm">
                 <h2>➕ افزودن واژه جدید</h2>
-                
                 <div class="form-group">
                     <label>لغت</label>
                     <input type="text" id="word" placeholder="مثال: Book">
                 </div>
-                
                 <div class="form-group">
                     <label>معنی</label>
                     <input type="text" id="meaning" placeholder="مثال: کتاب">
                 </div>
-                
                 <div class="form-group">
                     <label>تاپیک (اختیاری)</label>
                     <div class="topic-selector" id="vocabTopicSelector"></div>
                 </div>
-                
                 <div class="form-group">
                     <label>تعیین سطح سختی / لول</label>
                     <div class="stars-rating" id="formStars">
@@ -952,28 +922,23 @@
                         <span data-value="1">★</span>
                     </div>
                 </div>
-                
                 <div class="form-group">
                     <label>مثال (برای خط بعد می توانید Enter بزنید)</label>
                     <textarea id="example" placeholder="مثال خود را وارد کنید..."></textarea>
                 </div>
-                
                 <div class="form-group">
                     <label>پیوست فایل یا کپی/پیست عکس گوگل</label>
-                    <div class="file-upload-wrapper">
-                        <input type="file" id="files" multiple accept="image/*,video/*" onchange="handleFileSelect(this, 'main')">
-                    </div>
-                    <div class="paste-area" id="mainPasteArea" tabindex="0" style="border:2px dashed var(--border);padding:20px 18px;border-radius:var(--radius-sm);text-align:center;color:var(--text-secondary);background:var(--input-bg);cursor:pointer;margin-top:8px;outline:none;transition:var(--transition);">
-                        <div style="font-size:2.2rem;line-height:1;margin-bottom:4px;">📋</div>
-                        <div style="line-height:1.6;font-weight:500;">
-                            برای پیست عکس کپی‌شده (مثلاً از گالری یا گوگل)، روی دکمه زیر بزنید
-                            <span style="display:block;font-size:0.7rem;color:var(--text-muted);opacity:0.7;margin-top:4px;">در دسکتاپ می‌توانید همینجا کلیک کرده و Ctrl+V هم بزنید</span>
+                    <input type="file" id="files" multiple accept="image/*,video/*" onchange="handleFileSelect(this, 'main')">
+                    <div class="paste-area" id="mainPasteArea" tabindex="0">
+                        <div class="paste-area-icon">📋</div>
+                        <div class="paste-area-text">
+                            برای پیست عکس کپی‌شده، روی دکمه زیر بزنید
+                            <span class="paste-area-hint">در دسکتاپ می‌توانید همینجا کلیک کرده و Ctrl+V هم بزنید</span>
                         </div>
-                        <button type="button" class="paste-btn" onclick="pasteImageFromClipboard('main', event)" style="background:var(--gradient);color:white;border:none;padding:12px 28px;border-radius:30px;cursor:pointer;font-weight:700;font-size:0.85rem;margin-top:10px;transition:var(--transition);font-family:var(--font);display:inline-flex;align-items:center;gap:8px;">📥 پیست عکس از کلیپ‌بورد</button>
+                        <button type="button" class="paste-btn" onclick="pasteImageFromClipboard('main', event)">📥 پیست عکس</button>
                     </div>
                     <div class="preview-thumbnails" id="mainPreview"></div>
                 </div>
-                
                 <button class="btn-primary" onclick="addItem()">✨ ذخیره واژه</button>
             </div>
 
@@ -995,41 +960,33 @@
             <div id="list" class="grid"></div>
         </div>
 
-        <!-- ===== Tab: Topics ===== -->
+        <!-- Tab: Topics -->
         <div class="tab-content" id="tab-topics">
             <div class="form">
                 <h2>📂 مدیریت تاپیک‌ها</h2>
-                
                 <div class="topic-manager">
                     <input type="text" id="newTopicName" placeholder="نام تاپیک جدید...">
-                    <input type="color" id="newTopicColor" class="topic-color-picker" value="#4A90D9">
                     <button class="btn-primary" onclick="addTopic()" style="width:auto;padding:12px 28px;">➕ افزودن تاپیک</button>
                 </div>
-                
-                <div class="topic-list" id="topicList"></div>
+                <div class="topic-grid" id="topicGrid"></div>
             </div>
 
             <div class="form" style="margin-top:20px;">
                 <h2>📋 جملات تاپیک</h2>
                 <p style="color:var(--text-secondary);margin-bottom:15px;">یک تاپیک را انتخاب کنید و جملات مرتبط را اضافه کنید</p>
-                
                 <div class="form-group">
                     <label>انتخاب تاپیک</label>
                     <select id="topicSentenceSelector" onchange="loadTopicSentences()"></select>
                 </div>
-                
                 <div class="form-group">
                     <label>جمله جدید</label>
                     <textarea id="newSentence" placeholder="جمله را وارد کنید..."></textarea>
                 </div>
-                
                 <div class="form-group">
                     <label>ترجمه</label>
                     <input type="text" id="newSentenceTranslation" placeholder="ترجمه جمله...">
                 </div>
-                
                 <button class="btn-primary" onclick="addSentence()">➕ افزودن جمله</button>
-                
                 <div style="margin-top:20px;">
                     <h3 style="font-size:1rem;color:var(--primary-light);margin-bottom:12px;">جملات این تاپیک</h3>
                     <div id="topicSentencesList"></div>
@@ -1039,52 +996,56 @@
 
     </div>
 
-    <!-- ===== Edit Modal ===== -->
+    <!-- Edit Modal for Vocabulary -->
     <div class="modal" id="editModal">
         <div class="modal-content">
             <h3>✏️ ویرایش واژه</h3>
-            <div class="form-group">
-                <label>لغت</label>
-                <input type="text" id="editWord">
-            </div>
-            <div class="form-group">
-                <label>معنی</label>
-                <input type="text" id="editMeaning">
-            </div>
+            <div class="form-group"><label>لغت</label><input type="text" id="editWord"></div>
+            <div class="form-group"><label>معنی</label><input type="text" id="editMeaning"></div>
             <div class="form-group">
                 <label>تاپیک</label>
                 <div class="topic-selector" id="editTopicSelector"></div>
             </div>
             <div class="form-group">
-                <label>سطح سختی / لول</label>
+                <label>سطح سختی</label>
                 <div class="stars-rating" id="editStars">
-                    <span data-value="5">★</span>
-                    <span data-value="4">★</span>
-                    <span data-value="3">★</span>
-                    <span data-value="2">★</span>
+                    <span data-value="5">★</span><span data-value="4">★</span>
+                    <span data-value="3">★</span><span data-value="2">★</span>
                     <span data-value="1">★</span>
                 </div>
             </div>
+            <div class="form-group"><label>مثال</label><textarea id="editExample"></textarea></div>
             <div class="form-group">
-                <label>مثال</label>
-                <textarea id="editExample"></textarea>
-            </div>
-            <div class="form-group">
-                <label>مدیریت رسانه‌ها (افزودن فیلم یا عکس جدید)</label>
+                <label>مدیریت رسانه‌ها</label>
                 <input type="file" id="editFiles" multiple accept="image/*,video/*" onchange="handleFileSelect(this, 'edit')">
-                <div class="paste-area" id="editPasteArea" tabindex="0" style="border:2px dashed var(--border);padding:20px 18px;border-radius:var(--radius-sm);text-align:center;color:var(--text-secondary);background:var(--input-bg);cursor:pointer;margin-top:8px;outline:none;transition:var(--transition);">
-                    <div style="font-size:2.2rem;line-height:1;margin-bottom:4px;">📋</div>
-                    <div style="line-height:1.6;font-weight:500;">
-                        برای پیست عکس کپی‌شده، روی دکمه زیر بزنید
-                        <span style="display:block;font-size:0.7rem;color:var(--text-muted);opacity:0.7;margin-top:4px;">در دسکتاپ می‌توانید همینجا کلیک کرده و Ctrl+V هم بزنید</span>
-                    </div>
-                    <button type="button" class="paste-btn" onclick="pasteImageFromClipboard('edit', event)" style="background:var(--gradient);color:white;border:none;padding:12px 28px;border-radius:30px;cursor:pointer;font-weight:700;font-size:0.85rem;margin-top:10px;transition:var(--transition);font-family:var(--font);display:inline-flex;align-items:center;gap:8px;">📥 پیست عکس از کلیپ‌بورد</button>
+                <div class="paste-area" id="editPasteArea" tabindex="0">
+                    <div class="paste-area-icon">📋</div>
+                    <div class="paste-area-text">برای پیست عکس کپی‌شده، روی دکمه زیر بزنید</div>
+                    <button type="button" class="paste-btn" onclick="pasteImageFromClipboard('edit', event)">📥 پیست عکس</button>
                 </div>
                 <div class="preview-thumbnails" id="editPreview"></div>
             </div>
             <div class="modal-actions">
                 <button class="cancel-btn" onclick="closeEditModal()">انصراف</button>
-                <button class="save-edit-btn" onclick="saveEdit()">💾 ذخیره تغییرات</button>
+                <button class="save-edit-btn" onclick="saveEdit()">💾 ذخیره</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Topic Modal -->
+    <div class="modal" id="editTopicModal">
+        <div class="modal-content">
+            <h3>✏️ ویرایش تاپیک</h3>
+            <div class="form-group"><label>نام تاپیک</label><input type="text" id="editTopicName"></div>
+            <div class="form-group"><label>رنگ</label><input type="color" id="editTopicColor" class="topic-color-picker"></div>
+            <div class="form-group">
+                <label>تصویر (اختیاری)</label>
+                <input type="file" id="editTopicImage" accept="image/*" onchange="previewEditTopicImage(event)">
+                <div style="margin-top:8px;"><img id="editTopicImagePreview" style="max-width:100%;max-height:150px;border-radius:var(--radius-sm);display:none;"></div>
+            </div>
+            <div class="modal-actions">
+                <button class="cancel-btn" onclick="closeEditTopicModal()">انصراف</button>
+                <button class="save-edit-btn" onclick="saveEditTopic()">💾 ذخیره تغییرات</button>
             </div>
         </div>
     </div>
@@ -1093,20 +1054,21 @@
         // ===== داده‌ها =====
         let items = [];
         let topics = [];
-        let sentences = {}; // { topicId: [ {text, translation} ] }
+        let sentences = {};
         let editIndex = null;
-        
+        let editTopicId = null;
+
         let currentFormRating = 0;
         let currentEditRating = 0;
         let selectedFormTopic = null;
         let selectedEditTopic = null;
-        
         let tempMainMedia = [];
         let tempEditMedia = [];
+        let tempEditTopicImage = null; // Blob
 
         // ===== IndexedDB =====
         const DB_NAME = 'languageNotebookDB';
-        const DB_VERSION = 2;
+        const DB_VERSION = 3;
         const STORE_NAME = 'items';
         const STORE_TOPICS = 'topics';
         const STORE_SENTENCES = 'sentences';
@@ -1117,15 +1079,12 @@
                 const request = indexedDB.open(DB_NAME, DB_VERSION);
                 request.onupgradeneeded = (e) => {
                     const database = e.target.result;
-                    if (!database.objectStoreNames.contains(STORE_NAME)) {
+                    if (!database.objectStoreNames.contains(STORE_NAME))
                         database.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
-                    }
-                    if (!database.objectStoreNames.contains(STORE_TOPICS)) {
+                    if (!database.objectStoreNames.contains(STORE_TOPICS))
                         database.createObjectStore(STORE_TOPICS, { keyPath: 'id', autoIncrement: true });
-                    }
-                    if (!database.objectStoreNames.contains(STORE_SENTENCES)) {
+                    if (!database.objectStoreNames.contains(STORE_SENTENCES))
                         database.createObjectStore(STORE_SENTENCES, { keyPath: 'id', autoIncrement: true });
-                    }
                 };
                 request.onsuccess = (e) => { db = e.target.result; resolve(db); };
                 request.onerror = (e) => reject(e.target.error);
@@ -1138,10 +1097,7 @@
                 const tx = db.transaction(STORE_TOPICS, 'readonly');
                 const store = tx.objectStore(STORE_TOPICS);
                 const req = store.getAll();
-                return new Promise((resolve) => {
-                    req.onsuccess = () => resolve(req.result);
-                    req.onerror = () => resolve([]);
-                });
+                return new Promise((resolve) => { req.onsuccess = () => resolve(req.result); req.onerror = () => resolve([]); });
             } catch { return []; }
         }
 
@@ -1150,6 +1106,16 @@
             const store = tx.objectStore(STORE_TOPICS);
             return new Promise((resolve, reject) => {
                 const req = store.add(topic);
+                req.onsuccess = () => resolve(req.result);
+                req.onerror = () => reject(req.error);
+            });
+        }
+
+        async function updateTopicInDB(topic) {
+            const tx = db.transaction(STORE_TOPICS, 'readwrite');
+            const store = tx.objectStore(STORE_TOPICS);
+            return new Promise((resolve, reject) => {
+                const req = store.put(topic);
                 req.onsuccess = () => resolve(req.result);
                 req.onerror = () => reject(req.error);
             });
@@ -1272,14 +1238,14 @@
         // ===== Helper Functions =====
         function getDirection(text) {
             if (!text || text.trim() === '') return 'ltr';
-            const cleanText = text.trim().replace(/[\s\d\.\,\?\!\-\_\(\)\[\]\{\}\:\;\"\'\’\‘\“\”\•\-\+\=\/\*]/g, ''); 
-            if (cleanText.length === 0) return 'ltr';
-            const firstCharCode = cleanText.charCodeAt(0);
-            return (firstCharCode >= 0x0600 && firstCharCode <= 0x06FF) || (firstCharCode >= 0xFB50 && firstCharCode <= 0xFDFF) ? 'rtl' : 'ltr';
+            const clean = text.trim().replace(/[\s\d\.\,\?\!\-\_\(\)\[\]\{\}\:\;\"\'\’\‘\“\”\•\-\+\=\/\*]/g, '');
+            if (clean.length === 0) return 'ltr';
+            const code = clean.charCodeAt(0);
+            return (code >= 0x0600 && code <= 0x06FF) || (code >= 0xFB50 && code <= 0xFDFF) ? 'rtl' : 'ltr';
         }
 
         function speakWord(text, event) {
-            if(event) event.stopPropagation();
+            if (event) event.stopPropagation();
             if (!text) return;
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = 'en-US';
@@ -1288,7 +1254,7 @@
         }
 
         function speakSentence(text, event) {
-            if(event) event.stopPropagation();
+            if (event) event.stopPropagation();
             if (!text) return;
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = 'en-US';
@@ -1297,36 +1263,41 @@
         }
 
         function getTopicColor(topicId) {
-            const topic = topics.find(t => t.id === topicId);
-            return topic ? topic.color : '#4A90D9';
+            const t = topics.find(t => t.id === topicId);
+            return t ? t.color : '#4A90D9';
         }
 
         function getTopicName(topicId) {
-            const topic = topics.find(t => t.id === topicId);
-            return topic ? topic.name : 'بدون تاپیک';
+            const t = topics.find(t => t.id === topicId);
+            return t ? t.name : 'بدون تاپیک';
+        }
+
+        function getTopicImage(topicId) {
+            const t = topics.find(t => t.id === topicId);
+            return t && t.image ? t.image : null;
+        }
+
+        function generateRandomColor() {
+            const colors = [
+                '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7',
+                '#DDA0DD', '#FF8A5C', '#A29BFE', '#FD79A8', '#00CEC9',
+                '#FDCB6E', '#6C5CE7', '#00B894', '#E17055', '#0984E3'
+            ];
+            return colors[Math.floor(Math.random() * colors.length)];
         }
 
         // ===== Topic Management =====
         async function addTopic() {
             const name = document.getElementById('newTopicName').value.trim();
-            const color = document.getElementById('newTopicColor').value;
-            if (!name) {
-                alert('لطفاً نام تاپیک را وارد کنید');
-                return;
-            }
-            if (topics.some(t => t.name === name)) {
-                alert('این تاپیک قبلاً وجود دارد');
-                return;
-            }
+            if (!name) { alert('لطفاً نام تاپیک را وارد کنید'); return; }
+            if (topics.some(t => t.name === name)) { alert('این تاپیک قبلاً وجود دارد'); return; }
+            const color = generateRandomColor();
             try {
-                const id = await saveTopicToDB({ name, color });
-                topics.push({ id, name, color });
+                const id = await saveTopicToDB({ name, color, image: null });
+                topics.push({ id, name, color, image: null });
                 renderAll();
                 document.getElementById('newTopicName').value = '';
-            } catch (e) {
-                console.error('خطا در افزودن تاپیک:', e);
-                alert('خطا در افزودن تاپیک');
-            }
+            } catch (e) { console.error(e); alert('خطا در افزودن تاپیک'); }
         }
 
         async function deleteTopic(id) {
@@ -1334,41 +1305,164 @@
             try {
                 await deleteTopicFromDB(id);
                 topics = topics.filter(t => t.id !== id);
-                // حذف جملات مرتبط
                 if (sentences[id]) {
-                    for (const s of sentences[id]) {
-                        await deleteSentenceFromDB(s.id);
-                    }
+                    for (const s of sentences[id]) await deleteSentenceFromDB(s.id);
                     delete sentences[id];
                 }
-                // به‌روزرسانی آیتم‌ها
                 for (const item of items) {
-                    if (item.topicId === id) {
-                        item.topicId = null;
-                        await dbPut(item);
-                    }
+                    if (item.topicId === id) { item.topicId = null; await dbPut(item); }
                 }
                 renderAll();
-            } catch (e) {
-                console.error('خطا در حذف تاپیک:', e);
-                alert('خطا در حذف تاپیک');
+            } catch (e) { console.error(e); alert('خطا در حذف تاپیک'); }
+        }
+
+        function openEditTopicModal(id) {
+            editTopicId = id;
+            const topic = topics.find(t => t.id === id);
+            if (!topic) return;
+            document.getElementById('editTopicName').value = topic.name;
+            document.getElementById('editTopicColor').value = topic.color || '#4A90D9';
+            const preview = document.getElementById('editTopicImagePreview');
+            if (topic.image) {
+                const url = URL.createObjectURL(topic.image);
+                preview.src = url;
+                preview.style.display = 'block';
+                preview.onload = () => URL.revokeObjectURL(url);
+            } else {
+                preview.style.display = 'none';
+                preview.src = '';
             }
+            tempEditTopicImage = topic.image ? topic.image : null;
+            document.getElementById('editTopicModal').classList.add('show');
+        }
+
+        function closeEditTopicModal() {
+            document.getElementById('editTopicModal').classList.remove('show');
+            editTopicId = null;
+            tempEditTopicImage = null;
+        }
+
+        function previewEditTopicImage(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            tempEditTopicImage = file;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const preview = document.getElementById('editTopicImagePreview');
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        async function saveEditTopic() {
+            const name = document.getElementById('editTopicName').value.trim();
+            if (!name) { alert('نام تاپیک نمی‌تواند خالی باشد'); return; }
+            const color = document.getElementById('editTopicColor').value;
+            const topic = topics.find(t => t.id === editTopicId);
+            if (!topic) return;
+            topic.name = name;
+            topic.color = color;
+            if (tempEditTopicImage) topic.image = tempEditTopicImage;
+            try {
+                await updateTopicInDB(topic);
+                renderAll();
+                closeEditTopicModal();
+            } catch (e) { console.error(e); alert('خطا در ذخیره تغییرات'); }
+        }
+
+        // ===== Render Topics =====
+        function renderTopics() {
+            const grid = document.getElementById('topicGrid');
+            grid.innerHTML = '';
+            if (topics.length === 0) {
+                grid.innerHTML = '<div class="empty-msg"><span>📂</span><p>هیچ تاپیکی ساخته نشده است</p></div>';
+                return;
+            }
+            topics.forEach(t => {
+                const card = document.createElement('div');
+                card.className = 'topic-card';
+                const imageUrl = t.image ? URL.createObjectURL(t.image) : '';
+                card.innerHTML = `
+                    ${imageUrl ? `<img class="topic-image" src="${imageUrl}" alt="${t.name}">` : `<div class="topic-image" style="display:flex;align-items:center;justify-content:center;font-size:3rem;background:var(--input-bg);">📁</div>`}
+                    <div class="topic-info">
+                        <span class="topic-name">
+                            <span class="color-dot" style="background:${t.color};"></span>
+                            <span dir="${getDirection(t.name)}">${t.name}</span>
+                        </span>
+                        <div class="topic-menu">
+                            <button class="topic-menu-btn" onclick="event.stopPropagation();toggleTopicMenu(${t.id})">⋮</button>
+                            <div class="topic-menu-content" id="topicMenu-${t.id}">
+                                <button class="edit-topic-btn" onclick="event.stopPropagation();openEditTopicModal(${t.id});closeAllTopicMenus();">✏️ ویرایش</button>
+                                <button class="delete-topic-btn" onclick="event.stopPropagation();deleteTopic(${t.id});closeAllTopicMenus();">🗑 حذف</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            // Topic selectors
+            const selectors = ['vocabTopicSelector', 'editTopicSelector', 'topicSentenceSelector'];
+            selectors.forEach(selectorId => {
+                const sel = document.getElementById(selectorId);
+                if (!sel) return;
+                if (selectorId === 'topicSentenceSelector') {
+                    sel.innerHTML = '<option value="">انتخاب تاپیک...</option>';
+                    topics.forEach(t => {
+                        const opt = document.createElement('option');
+                        opt.value = t.id;
+                        opt.textContent = t.name;
+                        sel.appendChild(opt);
+                    });
+                } else {
+                    sel.innerHTML = '';
+                    topics.forEach(t => {
+                        const div = document.createElement('div');
+                        div.className = 'topic-option';
+                        const active = (selectorId === 'vocabTopicSelector' && selectedFormTopic === t.id) ||
+                                       (selectorId === 'editTopicSelector' && selectedEditTopic === t.id);
+                        if (active) div.classList.add('active');
+                        div.innerHTML = `<span class="color-dot-small" style="background:${t.color};"></span> ${t.name}`;
+                        div.dir = getDirection(t.name);
+                        div.onclick = () => {
+                            if (selectorId === 'vocabTopicSelector') selectedFormTopic = t.id;
+                            else if (selectorId === 'editTopicSelector') selectedEditTopic = t.id;
+                            renderTopics();
+                        };
+                        sel.appendChild(div);
+                    });
+                }
+            });
+
+            // Clean up object URLs
+            document.querySelectorAll('.topic-card .topic-image[src]').forEach(img => {
+                if (img.src && img.src.startsWith('blob:')) {
+                    setTimeout(() => URL.revokeObjectURL(img.src), 1000);
+                }
+            });
+        }
+
+        function toggleTopicMenu(id) {
+            const menu = document.getElementById('topicMenu-' + id);
+            if (!menu) return;
+            const isOpen = menu.classList.contains('show');
+            closeAllTopicMenus();
+            if (!isOpen) menu.classList.add('show');
+        }
+
+        function closeAllTopicMenus() {
+            document.querySelectorAll('.topic-menu-content').forEach(m => m.classList.remove('show'));
         }
 
         // ===== Sentence Management =====
         async function addSentence() {
             const selector = document.getElementById('topicSentenceSelector');
             const topicId = parseInt(selector.value);
-            if (!topicId) {
-                alert('لطفاً یک تاپیک انتخاب کنید');
-                return;
-            }
+            if (!topicId) { alert('لطفاً یک تاپیک انتخاب کنید'); return; }
             const text = document.getElementById('newSentence').value.trim();
             const translation = document.getElementById('newSentenceTranslation').value.trim();
-            if (!text) {
-                alert('لطفاً جمله را وارد کنید');
-                return;
-            }
+            if (!text) { alert('لطفاً جمله را وارد کنید'); return; }
             try {
                 const id = await saveSentenceToDB({ topicId, text, translation });
                 if (!sentences[topicId]) sentences[topicId] = [];
@@ -1376,10 +1470,7 @@
                 document.getElementById('newSentence').value = '';
                 document.getElementById('newSentenceTranslation').value = '';
                 loadTopicSentences();
-            } catch (e) {
-                console.error('خطا در افزودن جمله:', e);
-                alert('خطا در افزودن جمله');
-            }
+            } catch (e) { console.error(e); alert('خطا در افزودن جمله'); }
         }
 
         async function deleteSentence(topicId, sentenceId) {
@@ -1388,10 +1479,7 @@
                 await deleteSentenceFromDB(sentenceId);
                 sentences[topicId] = sentences[topicId].filter(s => s.id !== sentenceId);
                 loadTopicSentences();
-            } catch (e) {
-                console.error('خطا در حذف جمله:', e);
-                alert('خطا در حذف جمله');
-            }
+            } catch (e) { console.error(e); alert('خطا در حذف جمله'); }
         }
 
         function loadTopicSentences() {
@@ -1399,27 +1487,27 @@
             const topicId = parseInt(selector.value);
             const container = document.getElementById('topicSentencesList');
             container.innerHTML = '';
-
-            if (!topicId || !sentences[topicId]) {
+            if (!topicId || !sentences[topicId] || sentences[topicId].length === 0) {
                 container.innerHTML = '<p style="color:var(--text-secondary);">هیچ جمله‌ای در این تاپیک وجود ندارد</p>';
                 return;
             }
-
-            sentences[topicId].forEach((s, idx) => {
+            sentences[topicId].forEach(s => {
                 const div = document.createElement('div');
                 div.style.cssText = `
-                    display: flex; justify-content: space-between; align-items: center;
-                    padding: 12px 16px; background: var(--input-bg); border-radius: var(--radius-sm);
-                    margin-bottom: 8px; border: 1px solid var(--border);
-                    transition: var(--transition);
+                    display:flex; justify-content:space-between; align-items:center;
+                    padding:12px 16px; background:var(--input-bg); border-radius:var(--radius-sm);
+                    margin-bottom:8px; border:1px solid var(--border);
+                    transition:var(--transition);
                 `;
+                const textDir = getDirection(s.text);
+                const transDir = getDirection(s.translation || '');
                 div.innerHTML = `
                     <div style="flex:1;display:flex;flex-direction:column;gap:4px;">
                         <div style="display:flex;align-items:center;gap:10px;">
-                            <span style="font-weight:600;">${s.text}</span>
+                            <span style="font-weight:600;" dir="${textDir}">${s.text}</span>
                             <button class="audio-btn" onclick="speakSentence('${s.text.replace(/'/g, "\\'")}', event)" style="width:28px;height:28px;font-size:0.7rem;">🔊</button>
                         </div>
-                        <span style="color:var(--text-secondary);font-size:0.9rem;">${s.translation || ''}</span>
+                        ${s.translation ? `<span style="color:var(--text-secondary);font-size:0.9rem;" dir="${transDir}">${s.translation}</span>` : ''}
                     </div>
                     <button onclick="deleteSentence(${topicId}, ${s.id})" style="background:none;border:none;color:#ef4444;cursor:pointer;font-size:1.2rem;padding:0 8px;">✕</button>
                 `;
@@ -1427,124 +1515,43 @@
             });
         }
 
-        // ===== Render Functions =====
-        function renderTopics() {
-            // Topic List
-            const container = document.getElementById('topicList');
-            container.innerHTML = '';
-            topics.forEach(t => {
-                const div = document.createElement('div');
-                div.className = 'topic-item';
-                div.innerHTML = `
-                    <span class="color-dot" style="background:${t.color};"></span>
-                    <span class="topic-name">${t.name}</span>
-                    <button class="topic-remove" onclick="deleteTopic(${t.id})">✕</button>
-                `;
-                container.appendChild(div);
-            });
-
-            // Topic Selectors
-            const selectors = ['vocabTopicSelector', 'editTopicSelector', 'topicSentenceSelector'];
-            selectors.forEach(selectorId => {
-                const selector = document.getElementById(selectorId);
-                if (!selector) return;
-                const currentVal = selectorId === 'vocabTopicSelector' ? selectedFormTopic : 
-                                  selectorId === 'editTopicSelector' ? selectedEditTopic : 
-                                  parseInt(selector.value);
-                
-                if (selectorId === 'topicSentenceSelector') {
-                    selector.innerHTML = '<option value="">انتخاب تاپیک...</option>';
-                } else {
-                    selector.innerHTML = '';
-                }
-                
-                topics.forEach(t => {
-                    const option = document.createElement(selectorId === 'topicSentenceSelector' ? 'option' : 'div');
-                    if (selectorId === 'topicSentenceSelector') {
-                        option.value = t.id;
-                        option.textContent = t.name;
-                    } else {
-                        option.className = 'topic-option';
-                        if (selectorId === 'vocabTopicSelector' && selectedFormTopic === t.id) {
-                            option.classList.add('active');
-                        }
-                        if (selectorId === 'editTopicSelector' && selectedEditTopic === t.id) {
-                            option.classList.add('active');
-                        }
-                        option.innerHTML = `
-                            <span class="color-dot-small" style="background:${t.color};"></span>
-                            ${t.name}
-                        `;
-                        option.onclick = () => {
-                            if (selectorId === 'vocabTopicSelector') {
-                                selectedFormTopic = t.id;
-                            } else if (selectorId === 'editTopicSelector') {
-                                selectedEditTopic = t.id;
-                            }
-                            renderTopics();
-                        };
-                    }
-                    selector.appendChild(option);
-                });
-
-                if (selectorId === 'topicSentenceSelector' && currentVal) {
-                    selector.value = currentVal;
-                }
-            });
-        }
-
+        // ===== Render Vocabulary =====
         function render() {
             const search = document.getElementById('search').value.toLowerCase().trim();
             const sortBy = document.getElementById('sortBy').value;
             const list = document.getElementById('list');
-
-            // Revoke old URLs
-            if (window.listObjectURLs) {
-                window.listObjectURLs.forEach(u => URL.revokeObjectURL(u));
-            }
+            if (window.listObjectURLs) window.listObjectURLs.forEach(u => URL.revokeObjectURL(u));
             window.listObjectURLs = [];
             list.innerHTML = '';
 
-            let processedItems = items.map((item, index) => ({ ...item, realIndex: index }));
-
-            // Filter by search
+            let processed = items.map((item, idx) => ({ ...item, realIndex: idx }));
             if (search) {
-                processedItems = processedItems.filter(item =>
+                processed = processed.filter(item =>
                     item.word.toLowerCase().includes(search) ||
                     item.meaning.toLowerCase().includes(search)
                 );
             }
+            if (sortBy === 'oldest') processed.reverse();
+            else if (sortBy === 'level-desc') processed.sort((a,b) => (b.level||0) - (a.level||0));
+            else if (sortBy === 'level-asc') processed.sort((a,b) => (a.level||0) - (b.level||0));
 
-            // Sort
-            if (sortBy === 'oldest') {
-                processedItems.reverse();
-            } else if (sortBy === 'level-desc') {
-                processedItems.sort((a, b) => (b.level || 0) - (a.level || 0));
-            } else if (sortBy === 'level-asc') {
-                processedItems.sort((a, b) => (a.level || 0) - (b.level || 0));
-            }
-
-            if (processedItems.length === 0) {
+            if (processed.length === 0) {
                 list.innerHTML = `<div class="empty-msg"><span>📭</span><p>واژه‌ای یافت نشد</p></div>`;
                 return;
             }
 
-            processedItems.forEach((item) => {
+            processed.forEach(item => {
                 const topicColor = getTopicColor(item.topicId);
                 const topicName = getTopicName(item.topicId);
-
                 let mediaHtml = '';
-                if (item.media && item.media.length > 0) {
+                if (item.media && item.media.length) {
                     mediaHtml += `<div class="media-container">`;
                     item.media.forEach(m => {
                         const url = URL.createObjectURL(m.blob);
                         if (!window.listObjectURLs) window.listObjectURLs = [];
                         window.listObjectURLs.push(url);
-                        if (m.type.startsWith('image/')) {
-                            mediaHtml += `<img src="${url}" alt="تصویر" loading="lazy">`;
-                        } else if (m.type.startsWith('video/')) {
-                            mediaHtml += `<video controls preload="metadata"><source src="${url}"></video>`;
-                        }
+                        if (m.type.startsWith('image/')) mediaHtml += `<img src="${url}" loading="lazy">`;
+                        else if (m.type.startsWith('video/')) mediaHtml += `<video controls preload="metadata"><source src="${url}"></video>`;
                     });
                     mediaHtml += `</div>`;
                 }
@@ -1553,24 +1560,21 @@
                 const meaningDir = getDirection(item.meaning);
 
                 let exampleHtml = '';
-                if (item.example && item.example.trim() !== '') {
+                if (item.example && item.example.trim()) {
                     const lines = item.example.split('\n');
                     let linesHtml = '';
                     lines.forEach(line => {
-                        if (line.trim() !== '') {
-                            const lineDir = getDirection(line);
-                            linesHtml += `<div class="example-line" dir="${lineDir}">${line}</div>`;
-                        } else {
-                            linesHtml += `<div style="height:6px;"></div>`;
-                        }
+                        if (line.trim()) {
+                            const dir = getDirection(line);
+                            linesHtml += `<div class="example-line" dir="${dir}">${line}</div>`;
+                        } else linesHtml += `<div style="height:6px;"></div>`;
                     });
                     exampleHtml = `<div class="example-display">${linesHtml}</div>`;
                 }
 
                 let starsHtml = '';
-                for(let i = 5; i >= 1; i--) {
-                    let activeClass = i <= (item.level || 0) ? 'active' : '';
-                    starsHtml += `<span class="${activeClass}" onclick="changeCardLevel(${item.realIndex}, ${i})">★</span>`;
+                for (let i = 5; i >= 1; i--) {
+                    starsHtml += `<span class="${i <= (item.level||0) ? 'active' : ''}" onclick="changeCardLevel(${item.realIndex}, ${i})">★</span>`;
                 }
 
                 const card = document.createElement('div');
@@ -1580,7 +1584,7 @@
                     <div class="card-body">
                         <div class="card-header-actions">
                             <div class="card-meta">
-                                <div class="badge">#${item.realIndex + 1}</div>
+                                <div class="badge">#${item.realIndex+1}</div>
                                 ${item.topicId ? `<span class="topic-badge" style="background:${topicColor};">${topicName}</span>` : ''}
                                 <div class="card-stars">${starsHtml}</div>
                             </div>
@@ -1592,21 +1596,13 @@
                                 </div>
                             </div>
                         </div>
-                        
                         <div class="word-row" dir="${wordDir}">
-                            ${wordDir === 'ltr' ? `
-                                <div class="word-display">${item.word}</div>
-                                <button class="audio-btn" onclick="speakWord('${item.word.replace(/'/g, "\\'")}', event)" title="تلفظ صوتی">🔊</button>
-                            ` : `
-                                <button class="audio-btn" onclick="speakWord('${item.word.replace(/'/g, "\\'")}', event)" title="تلفظ صوتی">🔊</button>
-                                <div class="word-display">${item.word}</div>
-                            `}
+                            ${wordDir === 'ltr' ?
+                                `<div class="word-display">${item.word}</div><button class="audio-btn" onclick="speakWord('${item.word.replace(/'/g, "\\'")}', event)">🔊</button>` :
+                                `<button class="audio-btn" onclick="speakWord('${item.word.replace(/'/g, "\\'")}', event)">🔊</button><div class="word-display">${item.word}</div>`
+                            }
                         </div>
-                        
-                        <div class="meaning-display" dir="${meaningDir}">
-                            ${item.meaning}
-                        </div>
-                        
+                        <div class="meaning-display" dir="${meaningDir}">${item.meaning}</div>
                         ${exampleHtml}
                     </div>
                 `;
@@ -1626,41 +1622,22 @@
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
             document.getElementById('tab-' + tab).classList.add('active');
             document.querySelector(`.tab-btn[onclick="switchTab('${tab}')"]`).classList.add('active');
-            if (tab === 'topics') {
-                renderTopics();
-                loadTopicSentences();
-            }
+            if (tab === 'topics') { renderTopics(); loadTopicSentences(); }
         }
 
         // ===== Item Functions =====
         async function addItem() {
             const word = document.getElementById('word').value.trim();
             const meaning = document.getElementById('meaning').value.trim();
-            if (!word || !meaning) {
-                alert('لطفاً لغت و معنی را وارد کنید');
-                return;
-            }
-
+            if (!word || !meaning) { alert('لطفاً لغت و معنی را وارد کنید'); return; }
             const example = document.getElementById('example').value;
             const mediaToSave = tempMainMedia.map(m => ({ type: m.type, blob: m.blob }));
-
-            const newItem = { 
-                word, meaning, example,
-                media: mediaToSave,
-                level: currentFormRating,
-                topicId: selectedFormTopic
-            };
-
+            const newItem = { word, meaning, example, media: mediaToSave, level: currentFormRating, topicId: selectedFormTopic };
             try {
-                const newId = await dbAdd(newItem);
-                newItem.id = newId;
+                const id = await dbAdd(newItem);
+                newItem.id = id;
                 items.unshift(newItem);
-            } catch (e) {
-                console.error('خطا در ذخیره واژه:', e);
-                alert('ذخیره واژه با خطا مواجه شد.');
-                return;
-            }
-
+            } catch (e) { console.error(e); alert('خطا در ذخیره واژه'); return; }
             document.getElementById('word').value = '';
             document.getElementById('meaning').value = '';
             document.getElementById('example').value = '';
@@ -1674,17 +1651,10 @@
         }
 
         async function deleteItem(index) {
-            if (confirm('آیا از حذف این واژه مطمئن هستید؟')) {
-                const item = items[index];
-                try {
-                    await dbDelete(item.id);
-                    items.splice(index, 1);
-                    render();
-                } catch (e) {
-                    console.error('خطا در حذف واژه:', e);
-                    alert('حذف واژه با خطا مواجه شد.');
-                }
-            }
+            if (!confirm('آیا از حذف این واژه مطمئن هستید؟')) return;
+            const item = items[index];
+            try { await dbDelete(item.id); items.splice(index, 1); render(); }
+            catch (e) { console.error(e); alert('خطا در حذف واژه'); }
         }
 
         function openEditModal(index) {
@@ -1693,22 +1663,17 @@
             document.getElementById('editWord').value = item.word;
             document.getElementById('editMeaning').value = item.meaning;
             document.getElementById('editExample').value = item.example || '';
-            
             selectedEditTopic = item.topicId || null;
             currentEditRating = item.level || 0;
             updateStarsDisplay('editStars', currentEditRating);
-            
             tempEditMedia = item.media ? item.media.map(m => ({ type: m.type, blob: m.blob })) : [];
             renderThumbnails('edit');
             renderTopics();
-            
             document.getElementById('editModal').classList.add('show');
         }
 
         function closeEditModal() {
-            if (window.editThumbURLs) {
-                window.editThumbURLs.forEach(u => URL.revokeObjectURL(u));
-            }
+            if (window.editThumbURLs) window.editThumbURLs.forEach(u => URL.revokeObjectURL(u));
             document.getElementById('editModal').classList.remove('show');
             editIndex = null;
         }
@@ -1716,48 +1681,30 @@
         async function saveEdit() {
             const word = document.getElementById('editWord').value.trim();
             const meaning = document.getElementById('editMeaning').value.trim();
-            if (!word || !meaning) {
-                alert('لغت و معنی نمی‌توانند خالی باشند');
-                return;
-            }
+            if (!word || !meaning) { alert('لغت و معنی نمی‌توانند خالی باشند'); return; }
             const example = document.getElementById('editExample').value;
-            
             items[editIndex].word = word;
             items[editIndex].meaning = meaning;
             items[editIndex].example = example;
             items[editIndex].level = currentEditRating;
             items[editIndex].topicId = selectedEditTopic;
             items[editIndex].media = tempEditMedia.map(m => ({ type: m.type, blob: m.blob }));
-            
-            try {
-                await dbPut(items[editIndex]);
-                render();
-                closeEditModal();
-            } catch (e) {
-                console.error('خطا در ذخیره ویرایش:', e);
-                alert('ذخیره تغییرات با خطا مواجه شد.');
-            }
+            try { await dbPut(items[editIndex]); render(); closeEditModal(); }
+            catch (e) { console.error(e); alert('خطا در ذخیره ویرایش'); }
         }
 
         async function changeCardLevel(realIndex, newLevel) {
             items[realIndex].level = newLevel;
-            try {
-                await dbPut(items[realIndex]);
-                render();
-            } catch (e) {
-                console.error('خطا در ذخیره امتیاز:', e);
-            }
+            try { await dbPut(items[realIndex]); render(); }
+            catch (e) { console.error(e); }
         }
 
         // ===== Media Functions =====
         function handleFileSelect(input, target) {
             for (const file of input.files) {
-                const mediaObj = { type: file.type, blob: file };
-                if (target === 'main') {
-                    tempMainMedia.push(mediaObj);
-                } else {
-                    tempEditMedia.push(mediaObj);
-                }
+                const obj = { type: file.type, blob: file };
+                if (target === 'main') tempMainMedia.push(obj);
+                else tempEditMedia.push(obj);
             }
             input.value = '';
             renderThumbnails(target);
@@ -1765,55 +1712,40 @@
 
         async function pasteImageFromClipboard(target, event) {
             if (event) event.stopPropagation();
-
             if (!navigator.clipboard || !navigator.clipboard.read) {
                 alert('مرورگر شما از پیست مستقیم تصویر پشتیبانی نمی‌کند.');
                 return;
             }
-
             try {
-                const clipboardItems = await navigator.clipboard.read();
+                const items = await navigator.clipboard.read();
                 let found = false;
-                for (const item of clipboardItems) {
+                for (const item of items) {
                     for (const type of item.types) {
                         if (type.startsWith('image/')) {
                             const blob = await item.getType(type);
-                            const mediaObj = { type: blob.type, blob: blob };
-                            if (target === 'main') {
-                                tempMainMedia.push(mediaObj);
-                            } else {
-                                tempEditMedia.push(mediaObj);
-                            }
+                            const obj = { type: blob.type, blob };
+                            if (target === 'main') tempMainMedia.push(obj);
+                            else tempEditMedia.push(obj);
                             found = true;
                         }
                     }
                 }
-                if (found) {
-                    renderThumbnails(target);
-                } else {
-                    alert('هیچ عکسی در کلیپ‌بورد پیدا نشد.');
-                }
-            } catch (e) {
-                console.error('خطا در خواندن کلیپ‌بورد:', e);
-                alert('خطا در خواندن کلیپ‌بورد');
-            }
+                if (found) renderThumbnails(target);
+                else alert('هیچ عکسی در کلیپ‌بورد پیدا نشد.');
+            } catch (e) { console.error(e); alert('خطا در خواندن کلیپ‌بورد'); }
         }
 
         function setupPasteSupport(areaId, target) {
             const area = document.getElementById(areaId);
             if (!area) return;
-            area.setAttribute('tabindex', '0');
             area.addEventListener('paste', async (e) => {
-                const clipboardItems = (e.clipboardData || window.clipboardData).items;
-                for (const item of clipboardItems) {
+                const items = (e.clipboardData || window.clipboardData).items;
+                for (const item of items) {
                     if (item.type.indexOf('image') !== -1) {
                         const file = item.getAsFile();
-                        const mediaObj = { type: item.type, blob: file };
-                        if (target === 'main') {
-                            tempMainMedia.push(mediaObj);
-                        } else {
-                            tempEditMedia.push(mediaObj);
-                        }
+                        const obj = { type: item.type, blob: file };
+                        if (target === 'main') tempMainMedia.push(obj);
+                        else tempEditMedia.push(obj);
                         renderThumbnails(target);
                         e.preventDefault();
                     }
@@ -1821,22 +1753,18 @@
             });
         }
 
-        let mainThumbURLs = [];
-        let editThumbURLs = [];
+        let mainThumbURLs = [], editThumbURLs = [];
 
         function renderThumbnails(target) {
             const container = document.getElementById(target === 'main' ? 'mainPreview' : 'editPreview');
             const list = target === 'main' ? tempMainMedia : tempEditMedia;
             const urlStore = target === 'main' ? mainThumbURLs : editThumbURLs;
-
             urlStore.forEach(u => URL.revokeObjectURL(u));
             urlStore.length = 0;
             container.innerHTML = '';
-            
             list.forEach((m, idx) => {
                 const url = URL.createObjectURL(m.blob);
                 urlStore.push(url);
-
                 const div = document.createElement('div');
                 div.className = 'thumb-container';
                 if (m.type.startsWith('image/')) {
@@ -1849,21 +1777,17 @@
         }
 
         function removeThumb(target, idx, event) {
-            if(event) event.stopPropagation();
-            if (target === 'main') {
-                tempMainMedia.splice(idx, 1);
-            } else {
-                tempEditMedia.splice(idx, 1);
-            }
+            if (event) event.stopPropagation();
+            if (target === 'main') tempMainMedia.splice(idx, 1);
+            else tempEditMedia.splice(idx, 1);
             renderThumbnails(target);
         }
 
         // ===== Stars =====
         function initStars(containerId, callback) {
-            const stars = document.querySelectorAll(`#${containerId} span`);
-            stars.forEach(star => {
+            document.querySelectorAll(`#${containerId} span`).forEach(star => {
                 star.addEventListener('click', () => {
-                    const val = parseInt(star.getAttribute('data-value'));
+                    const val = parseInt(star.dataset.value);
                     callback(val);
                     updateStarsDisplay(containerId, val);
                 });
@@ -1871,14 +1795,9 @@
         }
 
         function updateStarsDisplay(containerId, val) {
-            const stars = document.querySelectorAll(`#${containerId} span`);
-            stars.forEach(star => {
-                const starVal = parseInt(star.getAttribute('data-value'));
-                if (starVal <= val) {
-                    star.classList.add('active');
-                } else {
-                    star.classList.remove('active');
-                }
+            document.querySelectorAll(`#${containerId} span`).forEach(star => {
+                const v = parseInt(star.dataset.value);
+                star.classList.toggle('active', v <= val);
             });
         }
 
@@ -1887,17 +1806,14 @@
             event.stopPropagation();
             const menu = document.getElementById('menu-' + index);
             document.querySelectorAll('.menu-content').forEach(m => {
-                if (m.id !== 'menu-' + index) {
-                    m.classList.remove('show');
-                }
+                if (m.id !== 'menu-' + index) m.classList.remove('show');
             });
             menu.classList.toggle('show');
         }
 
-        document.addEventListener('click', function() {
-            document.querySelectorAll('.menu-content').forEach(m => {
-                m.classList.remove('show');
-            });
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.menu-content').forEach(m => m.classList.remove('show'));
+            closeAllTopicMenus();
         });
 
         // ===== Theme =====
@@ -1915,14 +1831,15 @@
         }
 
         // ===== Init =====
-        initStars('formStars', (v) => currentFormRating = v);
-        initStars('editStars', (v) => currentEditRating = v);
-        
+        initStars('formStars', v => currentFormRating = v);
+        initStars('editStars', v => currentEditRating = v);
         setupPasteSupport('mainPasteArea', 'main');
         setupPasteSupport('editPasteArea', 'edit');
 
+        // Close topic menus on outside click
+        document.addEventListener('click', closeAllTopicMenus);
+
         loadAllData();
     </script>
-
 </body>
 </html>
