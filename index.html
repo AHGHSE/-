@@ -150,7 +150,7 @@
         .btn-primary:hover { transform:translateY(-3px); box-shadow:0 8px 35px rgba(74,144,217,0.45); }
         .btn-primary:active { transform:scale(0.98); }
 
-        /* Topic Selector */
+        /* Topic Selector in forms */
         .topic-selector {
             display:flex; flex-wrap:wrap; gap:8px; margin-top:6px;
         }
@@ -166,14 +166,15 @@
             margin-left:6px; vertical-align:middle;
         }
 
-        /* Topic Management - NEW Design */
+        /* Topic Management - LTR names */
         .topic-grid {
             display:grid; grid-template-columns:repeat(auto-fill, minmax(200px,1fr)); gap:16px; margin-top:16px;
         }
         .topic-card {
             background:var(--card); border-radius:var(--radius); border:2px solid var(--border);
-            padding:18px 20px; transition:var(--transition); cursor:pointer;
+            padding:14px 18px; transition:var(--transition); cursor:pointer;
             display:flex; justify-content:space-between; align-items:center;
+            direction:ltr; /* چپ‌چین بودن کل کارت */
         }
         .topic-card:hover { transform:translateY(-4px); border-color:var(--primary); box-shadow:var(--shadow); }
         .topic-card .topic-left {
@@ -185,6 +186,8 @@
         }
         .topic-card .topic-name {
             font-weight:700; font-size:1rem; word-break:break-word;
+            direction:ltr; /* نام تاپیک چپ‌چین */
+            text-align:left;
         }
         .topic-card .topic-actions {
             position:relative; flex-shrink:0;
@@ -211,7 +214,7 @@
         .topic-menu-content .edit-topic-btn { color:var(--primary-light); }
         .topic-menu-content .delete-topic-btn { color:#f87171; }
 
-        /* Sentences List */
+        /* Sentences List - RTL for Persian, LTR for English */
         .sentence-item {
             display:flex; justify-content:space-between; align-items:center;
             padding:12px 16px; background:var(--input-bg); border-radius:var(--radius-sm);
@@ -577,11 +580,7 @@
 
         <div class="form" style="margin-top:20px;">
             <h2>📋 جملات تاپیک</h2>
-            <p style="color:var(--text-secondary);margin-bottom:15px;">یک تاپیک را انتخاب کنید و جملات مرتبط را اضافه کنید</p>
-            <div class="form-group">
-                <label>انتخاب تاپیک</label>
-                <select id="topicSentenceSelector" onchange="loadTopicSentences()"></select>
-            </div>
+            <p style="color:var(--text-secondary);margin-bottom:15px;" id="selectedTopicLabel">هیچ تاپیکی انتخاب نشده است</p>
             <div class="form-group">
                 <label>جمله جدید</label>
                 <textarea id="newSentence" placeholder="جمله را وارد کنید..."></textarea>
@@ -676,6 +675,7 @@ let currentFormRating = 0;
 let currentEditRating = 0;
 let selectedFormTopic = null;
 let selectedEditTopic = null;
+let selectedTopicForSentences = null; // تاپیک انتخاب‌شده برای بخش جملات
 let tempMainMedia = [];
 let tempEditMedia = [];
 
@@ -810,6 +810,10 @@ async function loadAllData() {
         items = allItems.reverse();
         topics = await loadTopicsFromDB();
         sentences = await loadSentencesFromDB();
+        // اگر تاپیک وجود دارد، اولین تاپیک را انتخاب کن
+        if (topics.length > 0 && !selectedTopicForSentences) {
+            selectedTopicForSentences = topics[0].id;
+        }
     } catch (e) {
         console.error('خطا:', e);
         items = []; topics = []; sentences = {};
@@ -883,7 +887,12 @@ async function addTopic() {
     const color = generateRandomColor();
     try {
         const id = await saveTopicToDB({ name, color });
-        topics.push({ id, name, color });
+        const newTopic = { id, name, color };
+        topics.push(newTopic);
+        // اگر اولین تاپیک است، آن را انتخاب کن
+        if (topics.length === 1) {
+            selectedTopicForSentences = id;
+        }
         renderAll();
         document.getElementById('newTopicName').value = '';
     } catch(e) { console.error(e); alert('خطا در افزودن تاپیک'); }
@@ -900,6 +909,10 @@ async function deleteTopic(id) {
         }
         for (const item of items) {
             if (item.topicId === id) { item.topicId = null; await dbPut(item); }
+        }
+        // اگر تاپیک انتخاب‌شده حذف شد، اولین تاپیک موجود را انتخاب کن
+        if (selectedTopicForSentences === id) {
+            selectedTopicForSentences = topics.length > 0 ? topics[0].id : null;
         }
         renderAll();
     } catch(e) { console.error(e); alert('خطا در حذف تاپیک'); }
@@ -933,16 +946,17 @@ async function saveEditTopic() {
 
 // ===== Sentence Management =====
 async function addSentence() {
-    const selector = document.getElementById('topicSentenceSelector');
-    const topicId = parseInt(selector.value);
-    if (!topicId) { alert('لطفاً یک تاپیک انتخاب کنید'); return; }
+    if (!selectedTopicForSentences) {
+        alert('لطفاً یک تاپیک را انتخاب کنید');
+        return;
+    }
     const text = document.getElementById('newSentence').value.trim();
     const translation = document.getElementById('newSentenceTranslation').value.trim();
     if (!text) { alert('لطفاً جمله را وارد کنید'); return; }
     try {
-        const id = await saveSentenceToDB({ topicId, text, translation });
-        if (!sentences[topicId]) sentences[topicId] = [];
-        sentences[topicId].push({ id, text, translation });
+        const id = await saveSentenceToDB({ topicId: selectedTopicForSentences, text, translation });
+        if (!sentences[selectedTopicForSentences]) sentences[selectedTopicForSentences] = [];
+        sentences[selectedTopicForSentences].push({ id, text, translation });
         document.getElementById('newSentence').value = '';
         document.getElementById('newSentenceTranslation').value = '';
         loadTopicSentences();
@@ -990,15 +1004,25 @@ async function saveEditSentence() {
 }
 
 function loadTopicSentences() {
-    const selector = document.getElementById('topicSentenceSelector');
-    const topicId = parseInt(selector.value);
     const container = document.getElementById('topicSentencesList');
+    const label = document.getElementById('selectedTopicLabel');
     container.innerHTML = '';
-    if (!topicId || !sentences[topicId] || sentences[topicId].length === 0) {
+    
+    if (!selectedTopicForSentences) {
+        label.textContent = 'هیچ تاپیکی انتخاب نشده است';
+        container.innerHTML = '<div class="empty-msg"><span>📂</span><p>لطفاً یک تاپیک را از بخش مدیریت انتخاب کنید</p></div>';
+        return;
+    }
+    
+    const topic = topics.find(t => t.id === selectedTopicForSentences);
+    label.textContent = `📌 تاپیک: ${topic ? topic.name : 'نامشخص'}`;
+    
+    if (!sentences[selectedTopicForSentences] || sentences[selectedTopicForSentences].length === 0) {
         container.innerHTML = '<div class="empty-msg"><span>💬</span><p>هیچ جمله‌ای در این تاپیک وجود ندارد</p></div>';
         return;
     }
-    sentences[topicId].forEach(s => {
+    
+    sentences[selectedTopicForSentences].forEach(s => {
         const textDir = getDirection(s.text);
         const transDir = getDirection(s.translation || '');
         const div = document.createElement('div');
@@ -1014,8 +1038,8 @@ function loadTopicSentences() {
             <div class="sentence-actions">
                 <button class="sentence-menu-btn" onclick="event.stopPropagation();toggleSentenceMenu(${s.id})">⋮</button>
                 <div class="sentence-menu-content" id="sentenceMenu-${s.id}">
-                    <button class="edit-sentence-btn" onclick="event.stopPropagation();openEditSentenceModal(${topicId}, ${s.id});closeAllSentenceMenus();">✏️ ویرایش</button>
-                    <button class="delete-sentence-btn" onclick="event.stopPropagation();deleteSentence(${topicId}, ${s.id});closeAllSentenceMenus();">🗑 حذف</button>
+                    <button class="edit-sentence-btn" onclick="event.stopPropagation();openEditSentenceModal(${selectedTopicForSentences}, ${s.id});closeAllSentenceMenus();">✏️ ویرایش</button>
+                    <button class="delete-sentence-btn" onclick="event.stopPropagation();deleteSentence(${selectedTopicForSentences}, ${s.id});closeAllSentenceMenus();">🗑 حذف</button>
                 </div>
             </div>
         `;
@@ -1046,11 +1070,11 @@ function renderTopics() {
     topics.forEach(t => {
         const card = document.createElement('div');
         card.className = 'topic-card';
-        const dir = getDirection(t.name);
+        card.onclick = () => selectTopic(t.id); // کلیک روی کارت
         card.innerHTML = `
             <div class="topic-left">
                 <span class="color-dot" style="background:${t.color};"></span>
-                <span class="topic-name" dir="${dir}">${t.name}</span>
+                <span class="topic-name">${t.name}</span>
             </div>
             <div class="topic-actions">
                 <button class="topic-menu-btn" onclick="event.stopPropagation();toggleTopicMenu(${t.id})">⋮</button>
@@ -1063,38 +1087,49 @@ function renderTopics() {
         grid.appendChild(card);
     });
 
-    // Topic selectors
-    const selectors = ['vocabTopicSelector', 'editTopicSelector', 'topicSentenceSelector'];
+    // Topic selectors for vocab forms
+    const selectors = ['vocabTopicSelector', 'editTopicSelector'];
     selectors.forEach(selId => {
         const sel = document.getElementById(selId);
         if (!sel) return;
-        if (selId === 'topicSentenceSelector') {
-            sel.innerHTML = '<option value="">انتخاب تاپیک...</option>';
-            topics.forEach(t => {
-                const opt = document.createElement('option');
-                opt.value = t.id;
-                opt.textContent = t.name;
-                sel.appendChild(opt);
-            });
-        } else {
-            sel.innerHTML = '';
-            topics.forEach(t => {
-                const div = document.createElement('div');
-                div.className = 'topic-option';
-                const active = (selId === 'vocabTopicSelector' && selectedFormTopic === t.id) ||
-                               (selId === 'editTopicSelector' && selectedEditTopic === t.id);
-                if (active) div.classList.add('active');
-                div.innerHTML = `<span class="color-dot-small" style="background:${t.color};"></span> ${t.name}`;
-                div.dir = getDirection(t.name);
-                div.onclick = () => {
-                    if (selId === 'vocabTopicSelector') selectedFormTopic = t.id;
-                    else if (selId === 'editTopicSelector') selectedEditTopic = t.id;
-                    renderTopics();
-                };
-                sel.appendChild(div);
-            });
-        }
+        sel.innerHTML = '';
+        topics.forEach(t => {
+            const div = document.createElement('div');
+            div.className = 'topic-option';
+            const active = (selId === 'vocabTopicSelector' && selectedFormTopic === t.id) ||
+                           (selId === 'editTopicSelector' && selectedEditTopic === t.id);
+            if (active) div.classList.add('active');
+            div.innerHTML = `<span class="color-dot-small" style="background:${t.color};"></span> ${t.name}`;
+            div.dir = getDirection(t.name);
+            div.onclick = () => {
+                if (selId === 'vocabTopicSelector') selectedFormTopic = t.id;
+                else if (selId === 'editTopicSelector') selectedEditTopic = t.id;
+                renderTopics();
+            };
+            sel.appendChild(div);
+        });
     });
+}
+
+function selectTopic(id) {
+    selectedTopicForSentences = id;
+    // اگر در تب تاپیک نیستیم، به آن سوئیچ کن
+    const topicsTab = document.getElementById('tab-topics');
+    if (!topicsTab.classList.contains('active')) {
+        switchTab('topics');
+    }
+    loadTopicSentences();
+    // هایلایت کارت انتخاب‌شده
+    document.querySelectorAll('.topic-card').forEach(card => {
+        card.style.borderColor = 'var(--border)';
+    });
+    const cards = document.querySelectorAll('.topic-card');
+    const index = topics.findIndex(t => t.id === id);
+    if (cards[index]) {
+        cards[index].style.borderColor = 'var(--primary)';
+        cards[index].style.boxShadow = '0 0 0 3px var(--primary-glow)';
+    }
+    renderTopics(); // برای به‌روزرسانی انتخاب‌گرها
 }
 
 function toggleTopicMenu(id) {
@@ -1107,9 +1142,6 @@ function toggleTopicMenu(id) {
 
 function closeAllTopicMenus() {
     document.querySelectorAll('.topic-menu-content').forEach(m => m.classList.remove('show'));
-}
-function closeAllSentenceMenus() {
-    document.querySelectorAll('.sentence-menu-content').forEach(m => m.classList.remove('show'));
 }
 
 // ===== Render Vocabulary =====
