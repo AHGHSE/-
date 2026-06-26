@@ -987,4 +987,527 @@
         let db = null;
 
         function openDatabase() {
-            return new
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, DB_VERSION);
+                request.onupgradeneeded = (e) => {
+                    const database = e.target.result;
+                    if (!database.objectStoreNames.contains(STORE_NAME)) {
+                        database.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
+                    }
+                };
+                request.onsuccess = (e) => { db = e.target.result; resolve(db); };
+                request.onerror = (e) => reject(e.target.error);
+            });
+        }
+
+        function dbGetAll() {
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction(STORE_NAME, 'readonly');
+                const store = tx.objectStore(STORE_NAME);
+                const req = store.getAll();
+                req.onsuccess = () => resolve(req.result);
+                req.onerror = () => reject(req.error);
+            });
+        }
+
+        function dbAdd(item) {
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction(STORE_NAME, 'readwrite');
+                const store = tx.objectStore(STORE_NAME);
+                const req = store.add(item);
+                req.onsuccess = () => resolve(req.result);
+                req.onerror = () => reject(req.error);
+            });
+        }
+
+        function dbPut(item) {
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction(STORE_NAME, 'readwrite');
+                const store = tx.objectStore(STORE_NAME);
+                const req = store.put(item);
+                req.onsuccess = () => resolve(req.result);
+                req.onerror = () => reject(req.error);
+            });
+        }
+
+        function dbDelete(id) {
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction(STORE_NAME, 'readwrite');
+                const store = tx.objectStore(STORE_NAME);
+                const req = store.delete(id);
+                req.onsuccess = () => resolve();
+                req.onerror = () => reject(req.error);
+            });
+        }
+
+        async function dataURLtoBlob(dataurl) {
+            const res = await fetch(dataurl);
+            return await res.blob();
+        }
+
+        async function migrateFromLocalStorage() {
+            const saved = localStorage.getItem('languageNotebook');
+            if (!saved) return;
+            try {
+                const oldItems = JSON.parse(saved);
+                for (const oldItem of oldItems) {
+                    const media = [];
+                    if (oldItem.media && oldItem.media.length) {
+                        for (const m of oldItem.media) {
+                            try {
+                                const blob = await dataURLtoBlob(m.data);
+                                media.push({ type: m.type, blob: blob });
+                            } catch (mediaErr) {
+                                console.error('خطا در انتقال یک فایل رسانه‌ای:', mediaErr);
+                            }
+                        }
+                    }
+                    await dbAdd({
+                        word: oldItem.word,
+                        meaning: oldItem.meaning,
+                        example: oldItem.example || '',
+                        level: oldItem.level || 0,
+                        media: media
+                    });
+                }
+                localStorage.removeItem('languageNotebook');
+            } catch (e) {
+                console.error('خطا در انتقال داده‌های قبلی از LocalStorage:', e);
+            }
+        }
+
+        function getDirection(text) {
+            if (!text || text.trim() === '') return 'ltr';
+            const cleanText = text.trim().replace(/[\s\d\.\,\?\!\-\_\(\)\[\]\{\}\:\;\"\'\’\‘\“\”\•\-\+\=\/\*]/g, ''); 
+            if (cleanText.length === 0) return 'ltr';
+            const firstCharCode = cleanText.charCodeAt(0);
+            return (firstCharCode >= 0x0600 && firstCharCode <= 0x06FF) || (firstCharCode >= 0xFB50 && firstCharCode <= 0xFDFF) ? 'rtl' : 'ltr';
+        }
+
+        function speakWord(text, event) {
+            if(event) event.stopPropagation();
+            if (!text) return;
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            window.speechSynthesis.cancel();
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function initStars(containerId, callback) {
+            const stars = document.querySelectorAll(`#${containerId} span`);
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    const val = parseInt(star.getAttribute('data-value'));
+                    callback(val);
+                    updateStarsDisplay(containerId, val);
+                });
+            });
+        }
+
+        function updateStarsDisplay(containerId, val) {
+            const stars = document.querySelectorAll(`#${containerId} span`);
+            stars.forEach(star => {
+                const starVal = parseInt(star.getAttribute('data-value'));
+                if (starVal <= val) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        async function load() {
+            try {
+                await openDatabase();
+                await migrateFromLocalStorage();
+                const all = await dbGetAll();
+                all.forEach(item => {
+                    if (item.level === undefined) item.level = 0;
+                    if (!item.media) item.media = [];
+                });
+                items = all.reverse();
+            } catch (e) {
+                console.error('خطا در بازکردن پایگاه‌داده:', e);
+                alert('خطا در دسترسی به پایگاه‌داده مرورگر. لطفاً از یک مرورگر استاندارد (نه حالت Private/Incognito محدودشده) استفاده کنید.');
+                items = [];
+            }
+            render();
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-theme');
+            const btn = document.querySelector('.theme-btn');
+            if (current === 'light') {
+                html.removeAttribute('data-theme');
+                btn.textContent = '☀️ تغییر به حالت روشن';
+            } else {
+                html.setAttribute('data-theme', 'light');
+                btn.textContent = '🌙 تغییر به حالت تاریک';
+            }
+        }
+
+        async function handleFileSelect(input, target) {
+            for (const file of input.files) {
+                const mediaObj = { type: file.type, blob: file };
+                if (target === 'main') {
+                    tempMainMedia.push(mediaObj);
+                } else {
+                    tempEditMedia.push(mediaObj);
+                }
+            }
+            input.value = '';
+            renderThumbnails(target);
+        }
+
+        async function pasteImageFromClipboard(target, event) {
+            if (event) event.stopPropagation();
+
+            if (!navigator.clipboard || !navigator.clipboard.read) {
+                alert('مرورگر شما از پیست مستقیم تصویر پشتیبانی نمی‌کند. لطفاً از دکمه "Choose Files" برای انتخاب عکس استفاده کنید.');
+                return;
+            }
+
+            try {
+                const clipboardItems = await navigator.clipboard.read();
+                let found = false;
+
+                for (const item of clipboardItems) {
+                    for (const type of item.types) {
+                        if (type.startsWith('image/')) {
+                            const blob = await item.getType(type);
+                            const mediaObj = { type: blob.type, blob: blob };
+                            if (target === 'main') {
+                                tempMainMedia.push(mediaObj);
+                            } else {
+                                tempEditMedia.push(mediaObj);
+                            }
+                            found = true;
+                        }
+                    }
+                }
+
+                if (found) {
+                    renderThumbnails(target);
+                } else {
+                    alert('هیچ عکسی در کلیپ‌بورد پیدا نشد. ابتدا یک عکس را کپی کنید (مثلاً نگه‌داشتن انگشت روی عکس و زدن «Copy image»)، سپس دوباره این دکمه را بزنید.');
+                }
+            } catch (e) {
+                console.error('خطا در خواندن کلیپ‌بورد:', e);
+                alert('اجازهٔ دسترسی به کلیپ‌بورد داده نشد یا چیزی در کلیپ‌بورد نبود. لطفاً دوباره عکس را کپی کرده و امتحان کنید.');
+            }
+        }
+
+        function setupPasteSupport(areaId, target) {
+            const area = document.getElementById(areaId);
+            area.setAttribute('tabindex', '0');
+
+            area.addEventListener('paste', async (e) => {
+                const clipboardItems = (e.clipboardData || window.clipboardData).items;
+                for (const item of clipboardItems) {
+                    if (item.type.indexOf('image') !== -1) {
+                        const file = item.getAsFile();
+                        const mediaObj = { type: item.type, blob: file };
+                        
+                        if (target === 'main') {
+                            tempMainMedia.push(mediaObj);
+                        } else {
+                            tempEditMedia.push(mediaObj);
+                        }
+                        renderThumbnails(target);
+                        e.preventDefault();
+                    }
+                }
+            });
+        }
+
+        let mainThumbURLs = [];
+        let editThumbURLs = [];
+        let listObjectURLs = [];
+
+        function revokeURLs(arr) {
+            arr.forEach(u => URL.revokeObjectURL(u));
+            arr.length = 0;
+        }
+
+        function renderThumbnails(target) {
+            const container = document.getElementById(target === 'main' ? 'mainPreview' : 'editPreview');
+            const list = target === 'main' ? tempMainMedia : tempEditMedia;
+            const urlStore = target === 'main' ? mainThumbURLs : editThumbURLs;
+
+            revokeURLs(urlStore);
+            container.innerHTML = '';
+            
+            list.forEach((m, idx) => {
+                const url = URL.createObjectURL(m.blob);
+                urlStore.push(url);
+
+                const div = document.createElement('div');
+                div.className = 'thumb-container';
+                if (m.type.startsWith('image/')) {
+                    div.innerHTML = `<img src="${url}"><button class="thumb-remove" onclick="removeThumb('${target}', ${idx}, event)">✕</button>`;
+                } else {
+                    div.innerHTML = `<video src="${url}"></video><button class="thumb-remove" onclick="removeThumb('${target}', ${idx}, event)">✕</button>`;
+                }
+                container.appendChild(div);
+            });
+        }
+
+        function removeThumb(target, idx, event) {
+            if(event) event.stopPropagation();
+            if (target === 'main') {
+                tempMainMedia.splice(idx, 1);
+            } else {
+                tempEditMedia.splice(idx, 1);
+            }
+            renderThumbnails(target);
+        }
+
+        async function addItem() {
+            const word = document.getElementById('word').value.trim();
+            const meaning = document.getElementById('meaning').value.trim();
+            if (!word || !meaning) {
+                alert('لطفاً لغت و معنی را وارد کنید');
+                return;
+            }
+
+            const example = document.getElementById('example').value;
+            const mediaToSave = tempMainMedia.map(m => ({ type: m.type, blob: m.blob }));
+
+            const newItem = { 
+                word: word, 
+                meaning: meaning, 
+                example: example, 
+                media: mediaToSave,
+                level: currentFormRating 
+            };
+
+            try {
+                const newId = await dbAdd(newItem);
+                newItem.id = newId;
+                items.unshift(newItem);
+            } catch (e) {
+                console.error('خطا در ذخیره واژه:', e);
+                alert('ذخیره واژه با خطا مواجه شد. لطفاً دوباره تلاش کنید.');
+                return;
+            }
+
+            document.getElementById('word').value = '';
+            document.getElementById('meaning').value = '';
+            document.getElementById('example').value = '';
+            tempMainMedia = [];
+            currentFormRating = 0;
+            updateStarsDisplay('formStars', 0);
+            renderThumbnails('main');
+            render();
+        }
+
+        async function deleteItem(index) {
+            if (confirm('آیا از حذف این واژه مطمئن هستید؟')) {
+                const item = items[index];
+                try {
+                    await dbDelete(item.id);
+                    items.splice(index, 1);
+                    render();
+                } catch (e) {
+                    console.error('خطا در حذف واژه:', e);
+                    alert('حذف واژه با خطا مواجه شد.');
+                }
+            }
+        }
+
+        function openEditModal(index) {
+            editIndex = index;
+            const item = items[index];
+            document.getElementById('editWord').value = item.word;
+            document.getElementById('editMeaning').value = item.meaning;
+            document.getElementById('editExample').value = item.example || '';
+            
+            currentEditRating = item.level || 0;
+            updateStarsDisplay('editStars', currentEditRating);
+            
+            tempEditMedia = item.media ? item.media.map(m => ({ type: m.type, blob: m.blob })) : [];
+            renderThumbnails('edit');
+            
+            document.getElementById('editModal').classList.add('show');
+        }
+
+        function closeEditModal() {
+            revokeURLs(editThumbURLs);
+            document.getElementById('editModal').classList.remove('show');
+            editIndex = null;
+        }
+
+        async function saveEdit() {
+            const word = document.getElementById('editWord').value.trim();
+            const meaning = document.getElementById('editMeaning').value.trim();
+            if (!word || !meaning) {
+                alert('لغت و معنی نمی‌توانند خالی باشند');
+                return;
+            }
+            const example = document.getElementById('editExample').value;
+            
+            items[editIndex].word = word;
+            items[editIndex].meaning = meaning;
+            items[editIndex].example = example;
+            items[editIndex].level = currentEditRating;
+            items[editIndex].media = tempEditMedia.map(m => ({ type: m.type, blob: m.blob }));
+            
+            try {
+                await dbPut(items[editIndex]);
+                render();
+                closeEditModal();
+            } catch (e) {
+                console.error('خطا در ذخیره ویرایش:', e);
+                alert('ذخیره تغییرات با خطا مواجه شد.');
+            }
+        }
+
+        function toggleMenu(index, event) {
+            event.stopPropagation();
+            const menu = document.getElementById('menu-' + index);
+            document.querySelectorAll('.menu-content').forEach(m => {
+                if (m.id !== 'menu-' + index) {
+                    m.classList.remove('show');
+                }
+            });
+            menu.classList.toggle('show');
+        }
+
+        document.addEventListener('click', function() {
+            document.querySelectorAll('.menu-content').forEach(m => {
+                m.classList.remove('show');
+            });
+        });
+
+        async function changeCardLevel(realIndex, newLevel) {
+            items[realIndex].level = newLevel;
+            try {
+                await dbPut(items[realIndex]);
+                render();
+            } catch (e) {
+                console.error('خطا در ذخیره امتیاز:', e);
+            }
+        }
+
+        function render() {
+            const search = document.getElementById('search').value.toLowerCase().trim();
+            const sortBy = document.getElementById('sortBy').value;
+            const list = document.getElementById('list');
+
+            revokeURLs(listObjectURLs);
+            list.innerHTML = '';
+
+            let processedItems = items.map((item, index) => ({ ...item, realIndex: index }));
+
+            processedItems = processedItems.filter(item =>
+                item.word.toLowerCase().includes(search) ||
+                item.meaning.toLowerCase().includes(search)
+            );
+
+            if (sortBy === 'oldest') {
+                processedItems.reverse();
+            } else if (sortBy === 'level-desc') {
+                processedItems.sort((a, b) => (b.level || 0) - (a.level || 0));
+            } else if (sortBy === 'level-asc') {
+                processedItems.sort((a, b) => (a.level || 0) - (b.level || 0));
+            }
+
+            if (processedItems.length === 0) {
+                list.innerHTML = `<div class="empty-msg"><span>📭</span><p>واژه‌ای یافت نشد</p></div>`;
+                return;
+            }
+
+            processedItems.forEach((item) => {
+                let mediaHtml = '';
+                if (item.media && item.media.length > 0) {
+                    mediaHtml += `<div class="media-container">`;
+                    item.media.forEach(m => {
+                        const url = URL.createObjectURL(m.blob);
+                        listObjectURLs.push(url);
+                        if (m.type.startsWith('image/')) {
+                            mediaHtml += `<img src="${url}" alt="تصویر" loading="lazy">`;
+                        } else if (m.type.startsWith('video/')) {
+                            mediaHtml += `<video controls preload="metadata"><source src="${url}"></video>`;
+                        }
+                    });
+                    mediaHtml += `</div>`;
+                }
+
+                const wordDir = getDirection(item.word);
+                const meaningDir = getDirection(item.meaning);
+
+                let exampleHtml = '';
+                if (item.example && item.example.trim() !== '') {
+                    const lines = item.example.split('\n');
+                    let linesHtml = '';
+                    
+                    lines.forEach(line => {
+                        if (line.trim() !== '') {
+                            const lineDir = getDirection(line);
+                            linesHtml += `<div class="example-line" dir="${lineDir}">${line}</div>`;
+                        } else {
+                            linesHtml += `<div style="height: 6px;"></div>`;
+                        }
+                    });
+
+                    exampleHtml = `<div class="example-display">${linesHtml}</div>`;
+                }
+
+                let starsHtml = '';
+                for(let i = 5; i >= 1; i--) {
+                    let activeClass = i <= (item.level || 0) ? 'active' : '';
+                    starsHtml += `<span class="${activeClass}" onclick="changeCardLevel(${item.realIndex}, ${i})">★</span>`;
+                }
+
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    ${mediaHtml}
+                    <div class="card-body">
+                        <div class="card-header-actions">
+                            <div class="card-meta">
+                                <div class="badge">#${item.realIndex + 1}</div>
+                                <div class="card-stars">${starsHtml}</div>
+                            </div>
+                            <div class="menu-container">
+                                <button class="menu-btn" onclick="toggleMenu(${item.realIndex}, event)">⋮</button>
+                                <div class="menu-content" id="menu-${item.realIndex}">
+                                    <button class="edit-btn" onclick="openEditModal(${item.realIndex})">✏️ ویرایش</button>
+                                    <button class="delete-btn" onclick="deleteItem(${item.realIndex})">🗑 حذف</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="word-row" dir="${wordDir}">
+                            ${wordDir === 'ltr' ? `
+                                <div class="word-display">${item.word}</div>
+                                <button class="audio-btn" onclick="speakWord('${item.word.replace(/'/g, "\\'")}', event)" title="تلفظ صوتی">🔊</button>
+                            ` : `
+                                <button class="audio-btn" onclick="speakWord('${item.word.replace(/'/g, "\\'")}', event)" title="تلفظ صوتی">🔊</button>
+                                <div class="word-display">${item.word}</div>
+                            `}
+                        </div>
+                        
+                        <div class="meaning-display" dir="${meaningDir}">
+                            ${item.meaning}
+                        </div>
+                        
+                        ${exampleHtml}
+                    </div>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        initStars('formStars', (v) => currentFormRating = v);
+        initStars('editStars', (v) => currentEditRating = v);
+        
+        setupPasteSupport('mainPasteArea', 'main');
+        setupPasteSupport('editPasteArea', 'edit');
+
+        load();
+    </script>
+
+</body>
+</html>
