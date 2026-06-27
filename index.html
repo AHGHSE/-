@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دفترچه زبان زبان حرفه‌ای</title>
+    <title>دفترچه زبان حرفه‌ای</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700;800;900&display=swap');
 
@@ -57,6 +57,7 @@
         body {
             font-family:var(--font); background:var(--bg); color:var(--text);
             transition:var(--transition); min-height:100vh; line-height:1.6;
+            padding-bottom: 60px;
         }
         ::-webkit-scrollbar { width:6px; height:6px; }
         ::-webkit-scrollbar-track { background:var(--bg-secondary); }
@@ -149,6 +150,23 @@
         }
         .btn-primary:hover { transform:translateY(-3px); box-shadow:0 8px 35px rgba(74,144,217,0.45); }
         .btn-primary:active { transform:scale(0.98); }
+
+        /* Sync Box Style */
+        .sync-box {
+            background: var(--bg-secondary); border: 2px dashed var(--border);
+            padding: 24px; border-radius: var(--radius); text-align: center;
+            margin-top: 40px; box-shadow: var(--shadow);
+        }
+        .sync-buttons {
+            display: flex; gap: 14px; justify-content: center; margin-top: 16px; flex-wrap: wrap;
+        }
+        .btn-sync {
+            background: var(--card); border: 2px solid var(--border); color: var(--text);
+            padding: 12px 24px; border-radius: 30px; cursor: pointer; font-family: var(--font);
+            font-weight: 700; font-size: 0.9rem; transition: var(--transition);
+            display: flex; align-items: center; gap: 8px;
+        }
+        .btn-sync:hover { border-color: var(--primary); background: var(--hover-bg); transform: translateY(-2px); }
 
         /* Topic Selector in forms */
         .topic-selector {
@@ -520,7 +538,6 @@
         <button class="tab-btn" onclick="switchTab('grammar')">🧠 گرامر</button>
     </div>
 
-    <!-- Tab: Vocabulary -->
     <div class="tab-content active" id="tab-vocab">
         <div class="form">
             <h2>➕ افزودن واژه جدید</h2>
@@ -566,7 +583,6 @@
         <div id="list" class="grid"></div>
     </div>
 
-    <!-- Tab: Topics -->
     <div class="tab-content" id="tab-topics">
         <div class="form">
             <h2>📂 مدیریت تاپیک‌ها</h2>
@@ -596,7 +612,6 @@
         </div>
     </div>
 
-    <!-- Tab: Grammar (الگوبرداری کامل از ساختار تاپیک) -->
     <div class="tab-content" id="tab-grammar">
         <div class="form">
             <h2>🧠 مدیریت مباحث گرامری</h2>
@@ -618,7 +633,6 @@
                 <label>توضیحات و فرمول</label>
                 <textarea id="grammarItemDesc" placeholder="توضیحات و قواعد را بنویسید..."></textarea>
             </div>
-            <!-- بخش اختصاصی آپلود عکس و فیلم برای گرامر -->
             <div class="form-group">
                 <label>پیوست فایل یا کپی/پیست عکس (مخصوص این قاعده)</label>
                 <input type="file" id="grammarFiles" multiple accept="image/*,video/*" onchange="handleFileSelect(this,'grammar')">
@@ -637,9 +651,18 @@
         </div>
     </div>
 
+    <div class="sync-box">
+        <h2 style="font-size: 1.1rem; font-weight: 800; color: var(--primary-light);">🔄 پشتیبان‌گیری و همگام‌سازی دسکتاپ / موبایل</h2>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 6px;">برای انتقال لغات و گرامرها بین گوشی و لپ‌تاپ، فایل پشتیبان را دانلود کرده و در دستگاه دیگر بارگذاری کنید.</p>
+        <div class="sync-buttons">
+            <button class="btn-sync" onclick="exportBackup()">📤 دانلود فایل پشتیبان (Backup)</button>
+            <button class="btn-sync" onclick="document.getElementById('importFile').click()">📥 بارگذاری فایل پشتیبان (Restore)</button>
+            <input type="file" id="importFile" accept=".json" style="display:none;" onchange="importBackup(this)">
+        </div>
+    </div>
+
 </div>
 
-<!-- Edit Modal for Vocabulary -->
 <div class="modal" id="editModal">
     <div class="modal-content">
         <h3>✏️ ویرایش واژه</h3>
@@ -675,7 +698,6 @@
     </div>
 </div>
 
-<!-- Edit Topic Modal -->
 <div class="modal" id="editTopicModal">
     <div class="modal-content">
         <h3>✏️ ویرایش تاپیک</h3>
@@ -688,7 +710,6 @@
     </div>
 </div>
 
-<!-- Edit Sentence Modal -->
 <div class="modal" id="editSentenceModal">
     <div class="modal-content">
         <h3>✏️ ویرایش جمله</h3>
@@ -701,7 +722,6 @@
     </div>
 </div>
 
-<!-- Edit Grammar Topic Modal -->
 <div class="modal" id="editGrammarTopicModal">
     <div class="modal-content">
         <h3>✏️ ویرایش عنوان مبحث گرامر</h3>
@@ -713,7 +733,6 @@
     </div>
 </div>
 
-<!-- Edit Grammar Item Modal -->
 <div class="modal" id="editGrammarItemModal">
     <div class="modal-content">
         <h3>✏️ ویرایش جزئیات قاعده</h3>
@@ -860,6 +879,174 @@ function deleteFromDB(storeName, id) {
     });
 }
 
+function clearStore(storeName) {
+    return new Promise((resolve) => {
+        const tx = db.transaction(storeName, 'readwrite');
+        tx.objectStore(storeName).clear().onsuccess = () => resolve();
+    });
+}
+
+// ===== اختصاصی: همگام‌سازی و پشتیبان‌گیری فایل‌ها و عکس‌ها =====
+async function blobToBase64(blob) {
+    return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(blob);
+    });
+}
+
+function base64ToBlob(base64Str, type) {
+    const byteString = atob(base64Str.split(',')[1]);
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ab], { type: type });
+}
+
+async function processMediaForBackup(mediaList) {
+    if (!mediaList) return [];
+    const processed = [];
+    for (const m of mediaList) {
+        if (m.blob instanceof Blob) {
+            const base64 = await blobToBase64(m.blob);
+            processed.push({ type: m.type, base64: base64 });
+        }
+    }
+    return processed;
+}
+
+async function exportBackup() {
+    alert('در حال آماده‌سازی فایل پشتیبان (بسته به حجم عکس‌ها ممکن است چند ثانیه طول بکشد)...');
+    
+    // واکشی مجدد مستقیم برای اطمینان از کامل بودن داده‌ها
+    const allItems = await dbGetAll();
+    const allTopics = await loadFromDB(STORE_TOPICS);
+    
+    const allSentencesRaw = [];
+    const txS = db.transaction(STORE_SENTENCES, 'readonly');
+    await new Promise(r => txS.objectStore(STORE_SENTENCES).getAll().onsuccess = (e) => { allSentencesRaw.push(...(e.target.result || [])); r(); });
+
+    const allGTopics = await loadFromDB(STORE_G_TOPICS);
+    
+    const allGItemsRaw = [];
+    const txGI = db.transaction(STORE_G_ITEMS, 'readonly');
+    await new Promise(r => txGI.objectStore(STORE_G_ITEMS).getAll().onsuccess = (e) => { allGItemsRaw.push(...(e.target.result || [])); r(); });
+
+    // تبدیل تصاویر واژه‌ها به Base64
+    for (const item of allItems) {
+        if (item.media) item.media = await processMediaForBackup(item.media);
+    }
+    // تبدیل تصاویر گرامرها به Base64
+    for (const gi of allGItemsRaw) {
+        if (gi.media) gi.media = await processMediaForBackup(gi.media);
+    }
+
+    const backupData = {
+        items: allItems,
+        topics: allTopics,
+        sentences: allSentencesRaw,
+        grammarTopics: allGTopics,
+        grammarItems: allGItemsRaw
+    };
+
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupData));
+    const downloadAnchorElement = document.createElement('a');
+    downloadAnchorElement.setAttribute("href", dataStr);
+    downloadAnchorElement.setAttribute("download", `language_notebook_backup_${new Date().toISOString().slice(0,10)}.json`);
+    document.body.appendChild(downloadAnchorElement);
+    downloadAnchorElement.click();
+    downloadAnchorElement.remove();
+}
+
+function importBackup(input) {
+    const file = input.files[0];
+    if (!file) return;
+
+    if (!confirm('توجه: با بارگذاری این فایل، تمام داده‌های فعلی شما حذف و داده‌های فایل جدید جایگزین خواهد شد. آیا ادامه می‌دهید؟')) {
+        input.value = '';
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = async function(e) {
+        try {
+            const data = JSON.parse(e.target.result);
+            if (!data.items || !data.topics || !data.grammarTopics) {
+                alert('فایل ساختار معتبری ندارد.');
+                return;
+            }
+
+            // پاکسازی دیتابیس قدیمی
+            await clearStore(STORE_NAME);
+            await clearStore(STORE_TOPICS);
+            await clearStore(STORE_SENTENCES);
+            await clearStore(STORE_G_TOPICS);
+            await clearStore(STORE_G_ITEMS);
+
+            // بازگردانی لغات و بازسازی تصاویر
+            for (const item of data.items) {
+                if (item.media) {
+                    item.media = item.media.map(m => ({ type: m.type, blob: base64ToBlob(m.base64, m.type) }));
+                }
+                delete item.id; // برای تولید ID جدید متناسب در دستگاه مقصد
+                await addToDB(STORE_NAME, item);
+            }
+
+            // بازگردانی تاپیک‌ها
+            for (const t of data.topics) {
+                const oldId = t.id;
+                delete t.id;
+                const newId = await addToDB(STORE_TOPICS, t);
+                
+                // اصلاح آیدی جملات متصل به این تاپیک
+                const relatedSentences = data.sentences.filter(s => s.topicId === oldId);
+                for (const s of relatedSentences) {
+                    delete s.id;
+                    s.topicId = newId;
+                    await addToDB(STORE_SENTENCES, s);
+                }
+
+                // اصلاح آیدی لغات متصل به این تاپیک
+                const allCurrentDbItems = await dbGetAll();
+                for (const dbi of allCurrentDbItems) {
+                    if (dbi.topicId === oldId) {
+                        dbi.topicId = newId;
+                        await updateInDB(STORE_NAME, dbi);
+                    }
+                }
+            }
+
+            // بازگردانی گرامرها
+            for (const gt of data.grammarTopics) {
+                const oldGtId = gt.id;
+                delete gt.id;
+                const newGtId = await addToDB(STORE_G_TOPICS, gt);
+
+                const relatedGItems = data.grammarItems.filter(gi => gi.grammarTopicId === oldGtId);
+                for (const gi of relatedGItems) {
+                    if (gi.media) {
+                        gi.media = gi.media.map(m => ({ type: m.type, blob: base64ToBlob(m.base64, m.type) }));
+                    }
+                    delete gi.id;
+                    gi.grammarTopicId = newGtId;
+                    await addToDB(STORE_G_ITEMS, gi);
+                }
+            }
+
+            alert('اطلاعات با موفقیت همگام‌سازی و بازگردانی شد!');
+            location.reload();
+
+        } catch (err) {
+            console.error(err);
+            alert('خطا در خواندن فایل پشتیبان.');
+        }
+    };
+    reader.readAsText(file);
+}
+
+
 // ===== Grammar Management =====
 async function addGrammarTopic() {
     const name = document.getElementById('newGrammarName').value.trim();
@@ -916,7 +1103,7 @@ async function saveEditGrammarTopic() {
 }
 
 async function addGrammarItem() {
-    if (!selectedGrammarTopicId) { alert('لطفاً ابتدا یک مبحث گramر بسازید یا انتخاب کنید'); return; }
+    if (!selectedGrammarTopicId) { alert('لطفاً ابتدا یک مبحث گرامر بسازید یا انتخاب کنید'); return; }
     const title = document.getElementById('grammarItemTitle').value.trim();
     const desc = document.getElementById('grammarItemDesc').value.trim();
     if (!title || !desc) { alert('لطفاً عنوان قاعده و توضیحات را وارد کنید'); return; }
