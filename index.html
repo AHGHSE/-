@@ -430,6 +430,7 @@
             align-items: center;
             direction: ltr;
             position: relative;
+            overflow: visible; /* مهم برای نمایش منو */
         }
 
         .topic-card:hover {
@@ -492,7 +493,7 @@
             border-radius: var(--radius-sm);
             box-shadow: var(--shadow);
             min-width: 120px;
-            z-index: 10;
+            z-index: 9999;
             overflow: hidden;
         }
 
@@ -632,7 +633,7 @@
             border-radius: var(--radius-sm);
             box-shadow: var(--shadow);
             min-width: 110px;
-            z-index: 10;
+            z-index: 9999;
             overflow: hidden;
         }
 
@@ -1129,7 +1130,7 @@
             border-radius: var(--radius-sm);
             min-width: 130px;
             overflow: hidden;
-            z-index: 20;
+            z-index: 9999;
             border: 1px solid var(--border);
             backdrop-filter: blur(20px);
         }
@@ -2045,8 +2046,7 @@
                 grammarTopicId: selectedGrammarTopicId,
                 title,
                 desc,
-                media
-            };
+                media            };
 
             const id = await addToDB(STORE_G_ITEMS, newItem);
             newItem.id = id;
